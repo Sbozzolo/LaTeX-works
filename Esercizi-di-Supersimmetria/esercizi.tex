@@ -1,0 +1,842 @@
+\documentclass[]{scrartcl}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{cases}
+\usepackage{braket}
+\usepackage{tikz, pgfplots}
+
+\usepackage{physics}
+
+\newtheorem{lemma}{Lemma}
+
+% Slash
+\usepackage{slashed}
+
+\renewcommand{\qedsymbol}{\hfill \rule{0.5em}{0.5em}}
+
+% Title Page
+\title{Esercizi di Gravità e Superstringhe II}
+\author{Gabriele Bozzola \\ Matricola: 882709}
+\date{27 Luglio 2016}
+
+\begin{document}
+\maketitle
+
+\newcommand{\p}[1]{\partial_{#1}}
+\newcommand{\pu}[1]{\partial^{#1}}
+% Slashed derivative
+\newcommand{\slp}[0]{\slashed{\partial}}
+
+% \newcommand{\sp}[1]{\slased{\{Partial_{#1}}}
+
+
+
+\section*{Esercizio 1}
+
+\subsection*{Testo} Mostrare che l'azione del modello di Wess-Zumino libero:
+\begin{equation}
+  \label{eq:azioneWZ}
+  S = \int d^4x \left( -\frac{1}{2} \left(\p{\mu}A\right)^2  -\frac{1}{2} \left(\p{\mu}B\right)^2 - \frac{1}{2} \bar{\chi} \slp \chi \right)
+\end{equation}
+è invariante sotto le trasformazioni di supersimmetria:
+\begin{subequations}
+  \begin{numcases}{}
+    \delta A = \bar{\varepsilon}\chi \label{eq:susyWZA}             \\
+    \delta B = i \bar{\varepsilon} \gamma_5 \chi \label{eq:susyWZB} \\
+    \delta \chi = \slp \left( A + i \gamma_5 B \right) \varepsilon \label{eq:equadit3}
+  \end{numcases}{}
+  \label{eq:trasfsusy}
+\end{subequations}
+anche senza utilizzare le equazioni del moto.
+
+\subsection*{Soluzione} Siccome le trasformazioni di supersimmetria sono trasformazioni interne, cioè non coinvolgono lo spaziotempo allora vale che:
+\[ \delta S = \delta \mathcal{L} \]
+dove $ S $ è l'azione e $ \mathcal{L} $ la (densità) Lagrangiana: verificare che l'azione è invariante è equivalente a verificare che la Lagrangiana
+gode di questa proprietà.
+Date le variazioni \eqref{eq:trasfsusy}, allora i campi sottoposti a trasformazioni di supersimmetria diventano:
+\begin{subequations}
+  \begin{numcases}{}
+    A' = A + \bar{\varepsilon}\chi             \\
+    B' = B + i \bar{\varepsilon} \gamma_5 \chi \\
+    \chi' = \chi + \slp \left( A + i  \gamma_5 B \right) \varepsilon
+  \end{numcases}{}
+\end{subequations}
+Per comodità i campi trasformati verrano indicati senza apici. Devo verificare che:
+\begin{equation}
+  \label{eq:deltalag}
+  \delta \mathcal{L} = \mathcal{L'} - \mathcal{L} = 0
+\end{equation}
+Cioè:
+\begin{align*}
+0 =  & -\frac{1}{2} \left( \p{\mu}(A + \delta A) \pu{\mu}(A + \delta A) \right) \\
+     & -\frac{1}{2} \left( \p{\mu}(B + \delta B) \pu{\mu}(B + \delta B) \right) \\
+     & -\frac{1}{2} \left( (\bar{{\chi}} + \delta\bar{\chi}) \slp(\chi + \delta \chi) \right) \\
+     & - \mathcal{L}
+\end{align*}
+Sviluppando i prodotti e trascurando i termini di ordine $ \delta^2 $:
+\begin{align*}
+  & -\frac{1}{2} \left( \p{\mu}A\pu{\mu}A + \p{\mu}A\pu{\mu}\delta A + \p{\mu}\delta A\pu{\mu}A \right) \\
+  & -\frac{1}{2} \left( \p{\mu}B\pu{\mu}B + \p{\mu}B\pu{\mu}\delta B + \p{\mu}\delta B\pu{\mu}B \right) \\
+  & -\frac{1}{2} \left( \bar{\chi} \slp \bar{\chi} + \delta \bar{\chi} \slp \chi + \bar{\chi} \slp \delta\chi \right)\\
+  & - \mathcal{L}
+\end{align*}
+I primi termini di ogni riga restituiscono esattamente la Lagrangiana iniziale.
+Inoltre da qui si può già notare che on-shell la Lagrangiana è supersimmetrica, infatti le equazioni di campo sono:
+\begin{subequations}
+  \begin{numcases}{}
+    \Box A = 0 \\
+    \Box B = 0 \\
+    \slp \chi = 0
+  \end{numcases}
+\end{subequations}
+Utilizzando il fatto che le derivate commutano con la variazione in quanto la trasformazione è interna e integrando per parti
+si riesce a ricostruire in ogni termine della precedente espressione uno dei termini annullati dalle
+equazioni del moto, e quindi è verificato che $ \delta \mathcal{L} = \mathcal{L'} - \mathcal{L} = 0 $.
+Noto che posso sempre integrare per parti perché la Lagrangiana è integrata per dare l'azione e si assumono i terminidi bordo nulli.
+Accidentalmente il modello di Wess-Zumino è supersimmetrico anche senza imporre questa condizione. Per verificarlo bisogna fare i conti esplicitamente.
+Alzando e abbassando alcuni indici ci si porta immediatamente a dover dimostrare che è nullo:
+\[
+   2\p{\mu}\delta A\pu{\mu}A +
+   2\p{\mu}\delta B\pu{\mu}B +
+   \delta \bar{\chi} \slp \chi + \bar{\chi} \slp \delta\chi
+ \]
+Valuto i singoli termini tenendo presente che $ \varepsilon $ è un parametro, quindi è costante.
+\begin{equation}
+  \label{eq:variazA}
+   \p{\mu}\delta A\pu{\mu}A = \bar{\varepsilon} \p{\mu} \chi \pu{\mu}A
+\end{equation}
+In modo completamente analogo:
+\begin{equation}
+  \label{eq:variazB}
+  \p{\mu}\delta B \pu{\mu} B = i \bar{\varepsilon} \gamma^5 \p{\mu} \chi \pu{\mu} B
+\end{equation}
+Mi aspetto che gli ultimi due termini della variazione cancellino questi quattro termini. In effetti accede proprio questo.
+Lo spinore $ \chi $ soddisfa la condizione di Majorana, quindi $ \bar{\chi} = \chi^T C $, con $ C $ matrice di coniugazione di carica, perciò
+anche $ \delta\chi $ soddisfa quindi la condizione di Majorana, cioè:  $ \bar{\delta\chi} = \delta\chi^T C $. Quindi usando il fatto
+che le $ C $ e le $ \gamma $ commutano con $\p{\mu}, A $ e $ B $ in quanto agiscono su spazi diversi:
+\[
+  \delta\bar{\chi}\slp\chi = (\delta\chi)^T C \slp \chi = \varepsilon^T (\gamma^\mu)^T \p{\mu} (A + i (\gamma_5)^T B) C \slp \chi
+\]
+Ricordo alcune proprietà delle matrici $ \gamma $ e di $ C $:
+\begin{enumerate}
+\item $ C^T = C^{-1} = - C$
+\item $ C (\gamma_5)^T C^T = \gamma_5 $
+\item $ C^T (\gamma^\mu)^T C^T = \gamma^\mu $
+\end{enumerate}
+Inserisco prima e dopo di $ (\gamma^\mu)^T $ $ C C^T $ e dopo inserisco $ C^T C $:
+\[
+  \varepsilon^T (\gamma^\mu)^T \p{\mu} (A + i (\gamma_5)^T B) C \slp \chi  =
+  \varepsilon^T C C^T (\gamma^\mu)^T C^T C \p{\mu} (A + i (\gamma_5)^T B) C \slp \chi
+\]
+In questo modo:
+\[
+  \varepsilon^T C = \bar{\varepsilon} \qquad  C^T (\gamma^\mu)^T C^T = \gamma^\mu
+\]
+Perciò:
+\[
+  \varepsilon^T C C^T (\gamma^\mu)^T C^T C \p{\mu} (A + i (\gamma_5)^T B) C \slp \chi =
+  \bar{\varepsilon} \gamma^\mu  C \p{\mu} (A + i (\gamma_5)^T B) C \slp \chi
+\]
+Il termine con $ A $ vale: $ -\bar{\varepsilon} \gamma^\mu \p{\mu} A \slp \chi $ dove ho usato la prima proprietà.
+Per il termine con $ B $ devo utilizzare la seconda, quindi trasformo la seconda $ C $ in $ C^T $ introducendo un segno meno, e ottengo
+quindi il termine $ \bar{\varepsilon} \gamma^\mu \p{\mu} i \gamma_5 B \slp \chi $. Utilizzando il fatto che $ \acomm{\gamma_5}{\gamma^\mu} = 0 $
+questo termine prende un segno meno diventando:  $ - \bar{\varepsilon} \gamma_5 \gamma^\mu \p{\mu} i  B \slp \chi $. Esplicito le derivate dalla
+notazione di Feynman e riordino i termini ottenedo:
+\[
+  - \bar{\varepsilon} \gamma^\mu \gamma^\nu \p{\mu} A \p{\nu} \chi  - \bar{\varepsilon} \gamma^\mu \gamma^\nu \p{\mu} i \gamma_5 B \p{\nu} \chi
+\]
+Ma le derivate sono simmetriche, quindi posso prendere la parte simmetrica del prodotto $ \gamma^\mu \gamma^\nu $, cioè il loro anticommutatore (a meno di un fattore
+$ \frac{1}{2} $), che per l'algebra di Clifford vale esattamente $ \eta_{\mu\nu} $. Quindi questo termine vale:
+\[
+  - \bar{\varepsilon}  \p{\mu} A \pu{\mu} \chi  - \bar{\varepsilon}  \p{\mu} i \gamma_5 B \pu{\mu} \chi
+\]
+Questi due termini cancellano esattamente metà dei primi due termini della variazione. Ora mostro che l'altra metà è cancellata da $ \bar{\chi} \slp \delta\chi $.
+\[
+  \bar{\chi} \slp \delta\chi = \chi^T C \slp \slp (A + i \gamma_5 B) \varepsilon
+\]
+Per il ragionamento fatto prima vale che $ \slp \slp = \Box $. Considero i termini con $ A $ e con $ B $ separatamente: il termine con $ A $ ha un fattore
+\[
+  \chi^T C \varepsilon = (\chi^T)^{\beta}C_{\beta\gamma}\varepsilon^\gamma = - \varepsilon^\gamma C_{\beta\gamma}(\chi^T)^{\beta} =
+  -  \varepsilon^\gamma (C^T)_{\gamma\beta}\chi^{\beta} = \varepsilon^T C \chi = \bar{\varepsilon} \chi
+\]
+dove ho usato che $ \chi $ e $ \varepsilon $ sono spinori quindi anticommutano. Quindi il primo termine vale $ \bar{\varepsilon}\chi\Box A $, integrando per parti
+si ottiene esattamente il termine \eqref{eq:variazA} con il giusto segno per cancellarlo. Per il secondo termine sono necessarie manipolazioni aggiuntive, utilizzando
+le proprietà riportate prima:
+% \[
+%   i \chi^T C \slp \slp \gamma_5 B \varepsilon = i \chi^T \Box C \gamma_5 C^T C B \varepsilon  = i \chi^T  \Box (\gamma_5)^T C B \varepsilon
+% \]
+% Ora devo manipolare $ \chi^T (\gamma_5)^T C \varepsilon $:
+% \[
+%   \chi^T (\gamma_5)^T C \varepsilon =  (\chi^T)^{\beta}(\gamma_5^T)_{\beta\gamma} C_{\;\;\eta}^{\gamma} \varepsilon^\eta =
+%   (\chi^T)^{\beta}(\gamma_5)_{\gamma\beta} C_{\;\;\eta}^{\gamma} \varepsilon^\eta = -(\varepsilon^T)^\eta C_{\eta}^{\;\;\gamma} (\gamma_5)_{\gamma\beta} \chi^\beta
+%   = -\bar{\varepsilon}\gamma_5 \chi
+% \]
+% Quindi:
+% \[
+%   i \chi^T  \Box (\gamma_5)^T C B \varepsilon = - i \bar{\varepsilon} \gamma_5 \chi \Box B = i \bar{\varepsilon} \gamma_5 \pu{\mu} \chi \p{\mu} B
+%   = i \bar{\varepsilon} \gamma_5 \p{\mu} B \pu{\mu} \chi
+% \]
+\[
+  i \bar{\chi} \slp \slp \gamma_5 B \varepsilon = i \bar{\chi} \Box \gamma_5  B \varepsilon  = - i \bar{\varepsilon} \gamma_5 \p{\mu} B \pu{\mu} \chi
+\]
+Dove si è integrato per parti e si è struttato che $ \bar{\chi}\gamma_5\varepsilon = \bar{\varepsilon} \gamma_5 \chi $ in quanto:
+\[
+  \bar{\chi}\gamma_5 \varepsilon = \left( \bar{\chi}\gamma_5 \varepsilon \right)^T = \varepsilon^T (\gamma_5)^T \bar{\chi}^T =
+  \varepsilon^T C C^T (\gamma_5)^T C^T \chi = \bar{\varepsilon}\gamma_5 \chi
+\]
+Questo elimina il termine restante in \eqref{eq:variazB} e conclude la dimostrazione.
+\hspace{\stretch1}\ensuremath\qedsymbol
+
+\section*{Esercizio 2}
+
+\subsection*{Testo} Date le cariche di supersimmetria sul superspazio:
+\[Q_{\alpha} = \frac{\partial}{\partial \bar{\theta^\alpha}} - \left( \gamma^\mu \theta \right)_\alpha \p{\mu} \]
+Verificare direttamente l'algebra:
+\begin{equation}
+  \label{eq:algebraQ}
+  \acomm{Q_\alpha}{Q_\beta} = - 2 \left(\gamma^\mu C \right)_{\alpha\beta}\p{\mu}
+\end{equation}
+Verificare inoltre che:
+\begin{equation}
+  \label{eq:acommQD}
+  \acomm{Q_\alpha}{D_\beta} = 0
+\end{equation}
+con $ D_\alpha = \frac{\partial}{\partial \bar{\theta}^\alpha} + \left(\gamma^\mu \theta \right)_\alpha \p{\mu} $ derivata covariante.
+
+\subsection*{Soluzione} Per mostrare le uguaglianze \eqref{eq:algebraQ} e \eqref{eq:acommQD} dimostro prima alcuni lemmi
+in modo da non interrompere la dimostrazione. Alcuni di questi lemmi sono elementari.
+
+\begin{lemma}
+  \label{lem:lemma0}
+  Sia $ \theta $ una variabile di Grassman che soddisfa la condizione di Majorana, allora $ \frac{\partial}{\partial \bar{\theta}^\alpha} =
+  C^\beta_\alpha  \frac{\partial}{\partial \theta^\beta} $, dove $ C $ è la matrice di coniugazione di carica.
+\end{lemma}
+
+\begin{proof}
+  La condizione di Majorana è: $ \theta_\alpha = C_{\alpha\beta} \bar{\theta}^\beta $, da cui $ \frac{\partial \theta^\beta}{\partial \bar{\theta}^\gamma}
+  = C^\beta_\gamma $. Per cui facendo un cambio di variabili da $ \bar{\theta} $ a $ \theta $:
+  \[ \frac{\partial}{\partial \bar{\theta}^\alpha} = \frac{\partial}{\partial \theta^\gamma} \frac{\partial \theta^\gamma}{\partial \bar{\theta}^\alpha}
+    = C^\gamma_\alpha  \frac{\partial}{\partial \theta^\gamma} \]
+\end{proof}
+
+\begin{lemma}
+  \label{lem:lemma1}
+  Se $ \theta $ e $ \chi $ sono variabili di Grassmann che soddisfano la condizione di Majorana, allora anche $ \bar{\theta} $ e $ \bar{\chi} $ lo sono.
+  Cioè se $ \acomm{\theta}{\chi} = 0 $ allora anche  $ \acomm{\bar{\theta}}{\bar{\chi}} = 0 $.
+\end{lemma}
+
+\begin{proof}
+  La condizione di Majorana è: $ \theta_\alpha = C_{\alpha\beta} \bar{\theta}^\beta $, che invertita è $ \bar{\theta}^\beta = C^{\beta\alpha} \theta_\alpha $.
+  Analogamente per $ \chi $. Perciò:
+  \[ \acomm{\bar{\theta}}{\bar{\chi}} \propto \acomm{\theta}{\chi} = 0 \]
+  Dove ho indicato il proporzionale per evitare di scrivere esplicatamente le matrici $ C $.
+\end{proof}
+
+\begin{lemma}
+  \label{lem:lemma2}
+  Se $ \theta $ e $ \chi $ sono variabili di Grassmann, allora anche $ \p{\theta} $ e $ \p{\chi} $ lo sono.
+  Cioè se $ \acomm{\theta}{\chi} = 0 $ allora anche  $ \acomm{\p{\theta}}{\p{\chi}} = 0 $.
+\end{lemma}
+
+\begin{proof}
+  Devo mostrare che $ \p{\theta}\p{\chi} + \p{\chi}\p{\theta} $ è nullo, cioè la sua azione su una funzione
+  $ f(\theta, \chi) = a + b \theta + c \chi + d \chi \theta$ è zero. Ma:
+  \[
+    \p{\theta}\p{\chi} f = d \qquad \p{\chi}\p{\theta} f = -d \quad \rightarrow \quad \acomm{\p{\theta}}{\p{\chi}} = 0
+  \]
+  dove la differenza di segno è dovuta al fatto che $ \chi $ e $ \theta $ non sono nel giusto ordine per far agire $ \p{\chi}\p{\theta} $.
+\end{proof}
+
+\begin{lemma}
+  \label{lem:lemma3}
+  Se $ \theta $ è una variabile di Grassmann, allora vale che:
+  \[ \acomm{\theta^\alpha}{\frac{\partial}{\partial \theta^\beta}} = \delta^\alpha_\beta \]
+\end{lemma}
+
+\begin{proof}
+  Devo mostrare che $ \theta^\alpha \frac{\partial}{\partial \theta^\beta} +  \frac{\partial}{\partial \theta^\beta} \theta^\alpha $ che
+  agisce su una funzione $ f $ restituisce $ \delta^\alpha_\beta $. Per la linearità della derivata è sufficiente controllare che questo sia
+  vero sui monomi.
+
+  Se $ \alpha \not= \beta $ e $ f $ è un monomio contenente $ \theta^\alpha $ allora l'operatore agendo su $ f $ restituisce zero, infatti il secondo termine
+  agisce, a meno di riodinamenti, su $ \theta^\alpha \theta^\alpha $ che è nullo, mentre il primo elimina l'eventuale fattore
+  $ \theta^\beta $, lasciando $ \theta^\alpha $, che si annulla incontrando il primo $ \theta^\alpha $. Se $ f $ non contiene
+  $ \theta^\alpha $, la sua forma più generale è $ \theta^\beta V $, con $ V $ che non contiene $ \theta^\alpha $, ma quindi l'operatore agendo su $ f $ resituisce
+  $ \theta^\alpha V - \theta^\alpha V $ dove il segno meno è dovuto al fatto che per far agire la derivata ho dovuto scambiare $ \theta^\alpha $ con $ \theta^\beta $
+  ma questo è proprio zero.
+
+  Se $ \alpha = \beta $ e  $ f $ non contiene $ \theta^\alpha $ la derivata nel primo termine resituisce zero agendo su $ f $,
+  appunto perché non vi sono fattori $ \theta^\alpha $ mentre il secondo termine restituisce $ f $ stesso, e quindi l'operatore
+  ha agito come identità. Se $ f $ contiene $ \theta^\alpha $ allora è della forma $ f = \theta^\alpha V $, il secondo termine si annulla
+  in quanto vi sono due $ \theta^\alpha $, mentre il primo rimuove $ \theta^\alpha $, producendo quindi esattamente $ \theta^\alpha V $ che è
+  proprio $ f $. Anche in questo caso l'operatore ha agito come identità.
+
+  In effetti quindi questa è un'algebra di Clifford.
+
+\end{proof}
+
+Verifico la formula per l'anticommutatore di $ Q $.
+\begin{align*}
+  \acomm{Q_\alpha}{Q_\beta} &=
+                              \acomm{\frac{\partial}{\partial \bar{\theta}^\alpha} - \left( \gamma^\mu \theta \right)_\alpha \p{\mu}}
+                              {\frac{\partial}{\partial \bar{\theta}^\beta} - \left( \gamma^\nu \theta \right)_\beta \p{\nu}} = \\
+                            &= \acomm{\frac{\partial}{\partial \bar{\theta}^\alpha}}{\frac{\partial}{\partial \bar{\theta}^\beta}} -
+                              \acomm{\left( \gamma^\mu \theta \right)_\alpha \p{\mu}}{\frac{\partial}{\partial \bar{\theta}^\beta}}  \\
+                            &-  \acomm{\frac{\partial}{\partial \bar{\theta}^\alpha}}{\left( \gamma^\nu \theta \right)_\beta \p{\nu}} +
+                              \acomm{\left( \gamma^\mu \theta \right)_\alpha \p{\mu}}{\left( \gamma^\nu \theta \right)_\beta \p{\nu}} \\
+\end{align*}
+Tratto i singoli anticommutatori separatamente. Il primo commutatore vale zero per i lemmi \ref{lem:lemma1} e \ref{lem:lemma2}.
+Anche l'ultimo commutatore è immediatamente nullo perché, a meno di fattori ininfluenti come $ \gamma $ e $ \partial $ ci si riduce
+all'algebra di Grassman, e quindi l'anticommutatore è nullo. Esplicitamente:
+\[ \acomm{\left( \gamma^\mu \theta \right)_\alpha \p{\mu}}{\left( \gamma^\nu \theta \right)_\beta \p{\nu}}
+  = (\gamma^\mu)_{\alpha\eta}(\gamma^\nu)_{\beta\lambda}\p{\mu}\p{\nu} \acomm{\theta^\eta}{\theta^\lambda} = 0 \]
+I termini meno banali sono il secondo e il terzo, i quali sostanzialmente si riducono a termini controllati dal lemma \ref{lem:lemma3}.
+Valuto il secondo termine utilizzando il lemma \ref{lem:lemma0} e il lemma \ref{lem:lemma3} e il fatto che solo le $ \theta $ sono anticommutanti:
+\[
+  \acomm{(\gamma^\mu\theta)_\alpha\p{\mu}}{\frac{\partial}{\partial \bar{\theta}^\beta}} = C^\nu_\beta (\gamma^\mu)_{\alpha\eta} \p{\mu} \acomm{\theta^\eta}
+  {\frac{\partial}{\partial \theta^\nu}} = C^\nu_\beta (\gamma^\mu)_{\alpha\eta}\p{\mu} \delta^\eta_\nu = (\gamma^\mu)_{\alpha\eta} C^\eta_\beta \p{\mu}
+  = (\gamma^\mu C)_{\alpha\beta}\p{\mu}
+\]
+Il terzo termine è uguale al secondo a meno di scambiare $ \alpha $ con $ \beta $, infatti l'anticommutatore è simmetrico. Si ottiene perciò che:
+\[
+  \acomm{\frac{\partial}{\partial \bar{\theta}^\alpha}}{(\gamma^\nu\theta)_\beta\p{\nu}}
+  = (\gamma^\mu C)_{\beta\alpha}\p{\mu}
+\]
+Ma è noto che $ \gamma^\mu C $ è simmetrico, per cui:
+\[
+  \acomm{\frac{\partial}{\partial \bar{\theta}^\alpha}}{(\gamma^\nu\theta)_\beta\p{\nu}}
+  = (\gamma^\mu C)_{\alpha\beta}\p{\mu}
+\]
+La somma dei due termini centrali è perciò $  - 2 \left(\gamma^\mu C \right)_{\alpha\beta}\p{\mu} $.
+Nel caso del commutatore con la derivata covariante si riottiene un'espansione analoga, ma i due termini centrali hanno segni opposti a causa
+del fatto che la derivata covariante è definita con un segno differente rispetto alla supercarica e ciò fa si che tutti i termini siano nulli.
+\hspace{\stretch1}\ensuremath\qedsymbol
+
+\section*{Esercizio 3}
+
+\subsection*{Testo} Si consideri il modello di tipo O'Raifeartaigh definito dal superpotenziale:
+\begin{subequations}
+  \begin{numcases}{}
+    f(X,Y) = \sum_{i = 1}^2 X_i f_i(Y) \\
+    f_1(Y) = \frac{1}{2} h_1 Y^2 + \mu \\
+    f_2(Y) = \frac{1}{2} h_2 Y^2
+  \end{numcases}
+\end{subequations}
+con $ h_1, h_2, \mu $ parametri complessi. Mostrare che il potenziale scalare ammette una direzione complessa
+di vuoti che rompono spontamenamente la supersimmetria ma che lo spettro di masse del modello risulta comunque
+supersimmetrico.
+
+Mostrare che esiste un cambio cdi variabili:
+\begin{equation}
+  \label{eq:trasform}
+  \begin{pmatrix}
+      X_1 \\
+      X_2
+    \end{pmatrix}
+    = U
+    \begin{pmatrix}
+      Z_1 \\
+      Z_2
+    \end{pmatrix}
+\end{equation}
+con $ U \in U(2) $ che preserva i termini cinetici e che trasforma il superpotenziale nella forma:
+\begin{equation}
+  \label{eq:superpotenzialeZ}
+  f \rightarrow c_1 Z_1 (Y^2 + c_2) + c_3 Z_2
+\end{equation}
+dove le $ c_i $ si possono esprimere in termini di $ h_1, h_2 $ e $ \mu $. Spiegare la proprietà di degenerazione
+dello spettro massivo alla luce di questo fatto.
+
+\subsection*{Soluzione}
+
+Se $ h_1 = 0 $ il problema si riconduce a studiare il superpotenziale \eqref{eq:superpotenzialeZ}, se $ h_2 = 0 $ il modello non ha più un numero di campi
+$ X $ diverso da $ Y $ quindi non rompe più la supersimmetria, se $ \mu = 0 $ si vedrà che la supersimmetria non è rotta.
+Assumendo quindi che $ h_1, h_2, \mu \not =  0 $, le equazioni che definiscono i vuoti supersimmetrici sono:
+\begin{subequations}
+  \begin{numcases}{}
+    h_1 X_1 Y + h_2 X_2 Y = 0 \\
+    \frac{1}{2} h_1 Y^2 + \mu = 0 \label{eq:X1susy} \\
+    \frac{1}{2} h_2 Y^2 = 0 \label{eq:X2susy}
+  \end{numcases}
+\end{subequations}
+Evidentemente se i parametri non sono nulli le equazioni \eqref{eq:X1susy} e \eqref{eq:X2susy} non possono essere soddisftatte contemporaneamente,
+questo significa che esiste un vuoto che rompe la supersimmetria.
+
+Il potenziale scalare è:
+\[
+  V(X_1, X_2, Y) = \abs{ h_1 X_1 Y + h_2 X_2 Y}^2 + \abs{ \frac{1}{2} h_1 Y^2 + \mu}^2 + \abs{ \frac{1}{2} h_2 Y^2}^2
+\]
+Il minimo di questo potenziale è realizzato in:
+\[
+   h_1 X_1 + h_2 X_2 = 0 \qquad Y^2 = -2\frac{\mu h_1^\star}{\abs{h_1}^2 + \abs{h_2}^2}
+ \]
+In questo punto il potenziale vale:
+\begin{align*}
+  V(\mathrm{VAC}) = & \left[-\mu\left( 1 - \frac{\abs{h_1}^2}{\abs{h_1}^2 + \abs{h_2}^2}  \right) \right]^2 + \frac{\abs{\mu h_1 h_2}^2}{\left(\abs{h_1}^2 + \abs{h_2}^2\right)^2} = \\
+  =        & \frac{\abs{\mu}^2 \abs{h_2}^4}{\left(\abs{h_1}^2 + \abs{h_2}^2\right)^2} + \frac{\abs{\mu h_1 h_2}^2}{\left(\abs{h_1}^2 + \abs{h_2}^2\right)^2} = \\
+  =     & \frac{\abs{\mu}^2\left(\abs{h_1}^2\abs{h_2}^2 + \abs{h_2}^4\right)}{\left(\abs{h_1}^2 + \abs{h_2}^2\right)^2} =
+          \frac{\abs{\mu}^2\abs{h_2}^2}{\left(\abs{h_1}^2 + \abs{h_2}^2\right)^2}
+\end{align*}
+E' presente una direzione piatta del potenziale che è quella definita dall'equazione $ h_1 X_1 + h_2 X_2 = 0 $.  Questa coincide con quella che si trova con il ragionamento generale che minimizzare il potenziale di O'Raifeartaigh signfica minimizzare:
+\[
+  V(X_1, X_2, Y) = \sum_i\abs{f_i(X_1, X_2, Y)}^2 + \sum_i\abs{\sum_kX_i\frac{\partial f_i}{\partial Y}}^2
+\]
+Sulle configurazioni che minimizzano il primo termine, il secondo termine individua una condizione di ortogonalità tra il vettore dei campi $ X $ e il vettore $ \nabla f  $.
+In questo caso esplicito:
+\[
+  \begin{pmatrix}
+    X_1 & X_2
+  \end{pmatrix}
+  \begin{pmatrix}
+    h_1 Y \\
+    h_2 Y
+  \end{pmatrix}
+  = 0
+\]
+La cui soluzione è proprio $ h_1 X_1 + h_2 X_2 = 0 $.
+
+Per trovare le masse degli scalari e dei fermioni della teoria considero inizialmente la matrice $ M_f $ ottenuta derivando due volte il superpotenziale
+(dove gli indici varianno nell'insieme $ X_1, X_2, Y$ in questo ordine).
+\[
+  M_f =
+  \begin{pmatrix}
+    0    & 0    & h_1Y \\
+    0    & 0    & h_2Y \\
+    h_1Y & h_2Y & h_1 X_1 + h_2 X_2
+  \end{pmatrix}
+\]
+Valutata nel vuoto:
+\[
+  M_{f} = \sqrt{-2\frac{\mu h_1^\star}{\abs{h_1}^2 + \abs{h_2}^2}}
+  \begin{pmatrix}
+    0    & 0    & h_1\\
+    0    & 0    & h_2\\
+    h_1& h_2& 0
+  \end{pmatrix}
+\]
+Le masse al quadrato dei fermioni si leggono diagonalizzando $ M_{f}^\star M_{f} $: gli autovalori sono $ \set{0, 2 \abs{\mu h_1}, 2 \abs{\mu h_1} } $.
+Il fermione massless che si trova nello spettro non è altro che il goldstino.
+Per trovare le masse degli scalari e quindi mostrare che lo spettro è supersimmetrico considero la matrice:
+\[
+  N_{ij} = \sum_k \frac{\partial f}{\partial z_i\partial z_j\partial z_k}\biggr\rvert_{vuoto}\frac{\partial f^\star}{\partial z_k^\star}\biggr\rvert_{vuoto}
+  = \nabla M \biggr\rvert_{vuoto} \cdot \nabla f^\star\biggr\rvert_{vuoto}
+\]
+con
+\[
+  \nabla M =
+  \begin{pmatrix}
+    \begin{pmatrix}
+      0       & 0   & 0   \\
+      0       & 0   & 0   \\
+      0       & 0   & h_1 \\
+    \end{pmatrix}
+              &
+    \begin{pmatrix}
+      0       & 0   & 0   \\
+      0       & 0   & 0   \\
+      0       & 0   & h_2 \\
+    \end{pmatrix}
+              &
+    \begin{pmatrix}
+      0       & 0   & h_1 \\
+      0       & 0   & h_2 \\
+      h_1     & h_2 & 0   \\
+    \end{pmatrix}
+  \end{pmatrix}
+\]
+e:
+\[
+  \nabla f^\star =
+  \begin{pmatrix}
+    \frac{1}{2}h_1^\star (Y^\star)^2 + \mu^\star &
+    \frac{1}{2}h_2^\star (Y^\star)^2 &
+    h_1^\star X_1^\star Y^\star + h_2^\star X_2^\star Y^\star
+  \end{pmatrix}
+\]
+Valutato sul vuoto:
+\[
+  \nabla f^\star =
+  \begin{pmatrix}
+    \frac{\mu^\star \abs{h_2}^2}{\abs{h_1}^2 + \abs{h_2}^2} & -\frac{\mu^\star h_1 h_2^\star}{{\abs{h_1}^2 + \abs{h_2}^2}} & 0
+  \end{pmatrix}
+\]
+La matrice $ N $ quindi vale:
+\[
+  N =
+  \begin{pmatrix}
+    0         & 0   & 0   \\
+    0         & 0   & 0   \\
+    0         & 0   & 0
+  \end{pmatrix}
+\]
+Infatti l'unico termine che pottrebbe non essere nullo è quello in basso a destra, ma:
+\[
+  \frac{\mu^\star \abs{h_2}^2}{\abs{h_1}^2 + \abs{h_2}^2} h_1 -\frac{\mu^\star h_1 h_2^\star}{{\abs{h_1}^2 + \abs{h_2}^2}} h_2 = 0
+\]
+A questo punto le masse al quadrato degli scalari si ottengono diagonalizzando la matrice:
+\[
+  \left(
+  \begin{array}{c|c}
+    M^\star M & N^\star   \\ \hline
+    N         & M M^\star
+  \end{array}
+  \right)
+\]
+Siccome $ N = \mathbb{O} $ gli autovalori sono gli stessi e quindi lo spettro è degenere in massa.
+
+
+% Il minimo di questo potenziale dipende da come sono legati tra di loro i parametri. In un caso, che denomino (1), il potenziale è minimizzato da $ Y = 0 $
+% e $ X_1 $, $ X_2 $ generici. Nel secondo caso, che chiamo (2), il potenziale viene minimizzato da $ Y^2 = -\frac{2\mu}{h_1} $ e $ h_1 X_1 + h_2 X_2 = 0 $.
+% il valore del potenziale nei due casi è:
+% \[
+% V_1 = \mu^2 \qquad V_2 = \abs{\frac{h_2}{h_1}}^2\mu^2
+% \]
+% In entrambi i casi esiste una direzione piatta. In (1) questo è il piano complesso generato da $ X_1 $ e $ X_2 $, mentre in (2) la direzione definita dell'equazione
+% $ h_1 X_1 + h_2 X_2 = 0 $. Queste coincidono con quelle che si trovano con il ragionamento generale che minimizzare il potenziale di O'Raifeartaigh signfica minimizzare:
+% \[
+%   V(X_1, X_2, Y) = \sum_i\abs{f_i(X_1, X_2, Y)}^2 + \sum_i\abs{\sum_kX_i\frac{\partial f_i}{\partial Y}}^2
+% \]
+% Sulle configurazioni che minimizzano il primo termine, il secondo termine individua una condizione di ortogonalità tra il vettore dei campi $ X $ e il vettore $ \nabla f  $.
+% In questo caso esplicito:
+% \[
+%   \begin{pmatrix}
+%     X_1 & X_2
+%   \end{pmatrix}
+%   \begin{pmatrix}
+%     h_1 Y \\
+%     h_2 Y
+%   \end{pmatrix}
+%   = 0
+% \]
+% Che specializzato al caso (1) e al caso (2):
+% \[
+%   \begin{pmatrix}
+%     X_1 & X_2
+%   \end{pmatrix}
+%   \begin{pmatrix}
+%     0 \\
+%     0
+%   \end{pmatrix}
+%   = 0
+%   \qquad
+%   \begin{pmatrix}
+%     X_1 & X_2
+%   \end{pmatrix}
+%   \begin{pmatrix}
+%     -2 \mu \\
+%     -2 \mu \frac{h_2}{h_1}
+%   \end{pmatrix}
+%   = 0
+% \]
+% La soluzione della prima equazione è $ \forall X_1, X_2 $, mentre della seconda $ h_1 X_1 + h_2 X_2 = 0 $.
+
+% Per trovare le masse degli scalari e dei fermioni della teoria considero inizialmente la matrice $ M_f $ ottenuta derivando due volte il superpotenziale
+% (dove gli indici varianno nell'insieme $ X_1, X_2, Y$ in questo ordine).
+% \[
+%   M_f =
+%   \begin{pmatrix}
+%     0    & 0    & h_1Y \\
+%     0    & 0    & h_2Y \\
+%     h_1Y & h_2Y & h_1 X_1 + h_2 X_2
+%   \end{pmatrix}
+% \]
+% Valutato nei due vuoti (1) e (2):
+% \[
+%   M_{f1} =
+%   \begin{pmatrix}
+%     0    & 0    & 0    \\
+%     0    & 0    & 0    \\
+%     0    & 0    & h_1 X_1 + h_2 X_2
+%   \end{pmatrix}
+%   \qquad
+%   M_{f2} =
+%   \begin{pmatrix}
+%     0    & 0    & h_1\sqrt{\frac{-2\mu}{h_1}} \\
+%     0    & 0    & h_2\sqrt{\frac{-2\mu}{h_1}} \\
+%     h_1\sqrt{\frac{-2\mu}{h_1}} & h_2\sqrt{\frac{-2\mu}{h_1}} & 0
+%   \end{pmatrix}
+% \]
+% Le masse al quadrato dei fermioni si leggono diagonalizzando $ M_{fi}^\star M_{fi} $, nel primo caso gli autovalori sono
+% $ \set{0,0,\abs{h_1 X_1 + h_2 X_2}^2} $, mentre nel secondo sono le masse dei fermioni sono $ \set{0, 2\frac{\abs{\mu}}{\abs{h_1}} (\abs{h_1}^2 +
+%   \abs{h_2}^2),2\frac{\abs{\mu}}{\abs{h_1}} (\abs{h_1}^2 + \abs{h_2}^2) } $.
+% Il fermione massless che si trova in entrambi gli spettri non è altro che il goldstino.
+% Per trovare le masse degli scalari e quindi mostrare che lo spettro è supersimmetrico considero le matrici:
+% \[
+%   N_1 =
+%   \begin{pmatrix}
+%     0         & 0   & 0   \\
+%     0         & 0   & 0   \\
+%     0         & 0   & h_1 \mu^\star
+%   \end{pmatrix}
+%   \qquad
+%   N_2 =
+%   \begin{pmatrix}
+%     0         & 0   & 0   \\
+%     0         & 0   & 0   \\
+%     0         & 0   & \frac{-\mu^\star}{h_1^\star} \abs{h_2}^2
+%   \end{pmatrix}
+% \]
+% Ottenute da:
+% \[
+%   N_{ij} = \sum_k \frac{\partial f}{\partial z_i\partial z_j\partial z_k}\biggr\rvert_{vuoto}\frac{\partial f^\star}{\partial z_k^\star}\biggr\rvert_{vuoto}
+%   = \nabla M \biggr\rvert_{vuoto} \cdot \nabla f^\star\biggr\rvert_{vuoto}
+% \]
+% Con
+% \[
+%   \nabla M =
+%   \begin{pmatrix}
+%     \begin{pmatrix}
+%       0       & 0   & 0   \\
+%       0       & 0   & 0   \\
+%       0       & 0   & h_1 \\
+%     \end{pmatrix}
+%               &
+%     \begin{pmatrix}
+%       0       & 0   & 0   \\
+%       0       & 0   & 0   \\
+%       0       & 0   & h_2 \\
+%     \end{pmatrix}
+%               &
+%     \begin{pmatrix}
+%       0       & 0   & h_1 \\
+%       0       & 0   & h_2 \\
+%       h_1     & h_2 & 0   \\
+%     \end{pmatrix}
+%   \end{pmatrix}
+% \]
+% E:
+% \[
+%   \nabla f^\star =
+%   \begin{pmatrix}
+%     \frac{1}{2}h_1^\star (Y^\star)^2 + \mu^\star &
+%     \frac{1}{2}h_2^\star (Y^\star)^2 &
+%     h_1^\star X_1^\star Y^\star + h_2^\star X_2^\star Y^\star
+%   \end{pmatrix}
+% \]
+% Valutato sul vuoto:
+% \[
+%   \nabla f^\star_1 =
+%   \begin{pmatrix}
+%     \mu^\star & 0 & 0
+%   \end{pmatrix}
+%   \qquad
+%   \nabla f^\star_2 =
+%   \begin{pmatrix}
+%     0 & -\frac{h_2^\star}{h_1^\star} \mu^\star & 0
+%   \end{pmatrix}
+% \]
+% A questo punto le masse al quadrato degli scalari si ottengono diagonalizzando la matrice:
+% \[
+%   \left(
+%   \begin{array}{c|c}
+%     M^\star M & N^\star   \\ \hline
+%     N         & M M^\star
+%   \end{array}
+%   \right)
+% \]
+% I cui autovlari nel caso (1) sono:
+% \[
+%   \set{0,0,0,0,\abs{h_1 X_1 + h_2 X_2}^2 - \abs{h_1 \mu},\abs{h_1 X_1 + h_2 X_2}^2 + \abs{h_1 \mu}} \]
+% Mentre nel caso (2):
+% \[
+%   \set{0,0, 2\frac{\abs{\mu}}{\abs{h_1}} (\abs{h_1}^2 + \abs{h_2}^2),  2\frac{\abs{\mu}}{\abs{h_1}} (\abs{h_1}^2 + \abs{h_2}^2), \alpha, \beta}
+% \]
+% con:
+% \[
+%   \alpha = 2\frac{\abs{\mu}}{\abs{h_1}} \left( \abs{h_1}^2 + \frac{\abs{h_2}^2}{2} \right) \qquad
+%   \beta =  2\frac{\abs{\mu}}{\abs{h_1}} \left( \abs{h_1}^2 + \frac{3\abs{h_2}^2}{2} \right)
+% \]
+% Lo spettro risulta quindi non supersimmetrico se $ \mu \not = 0 $, e quindi deve essere presente un errore (inoltre le masse possono
+% diventare negative come nel primo spettro), tuttavia la regola di somma:
+% \[
+%   2 \sum_{fermioni} m^2 = \sum_{scalari} m^2
+% \]
+% continua ad essere verificata, quindi questo errore non sembra di natura algebrica e dopo numerosi tentativi l'errore non è stato individuato.
+
+I termini cinetici sono invarianti per tutte le trasformazioni $ U(2) $ infatti sono della forma $ \bar{X_1} X_1 +  \bar{X_2} X_2  $.
+Definendo:
+\[
+  \mathbf{X} =
+  \begin{pmatrix}
+    X_1                               \\
+    X_2
+  \end{pmatrix}
+  \qquad
+  \mathbf{Z} =
+  \begin{pmatrix}
+    Z_1                               \\
+    Z_2
+   \end{pmatrix}
+\]
+In questo modo:
+\[
+  \bar{X_1} X_1 +  \bar{X_2} X_2 = \bar{\mathbf{X}} \mathbf{X}
+\]
+Da cui, considerando che $  \bar{\mathbf{X}} $ consiste sostanzialmente in $ X^\dagger $:
+\[
+  \bar{\mathbf{X}} \mathbf{X} \rightarrow \mathbf{Z}^\dagger U^\dagger U \mathbf{Z} = \mathbf{Z}^\dagger \mathbf{Z}
+\]
+per l'unitarità di $ U $.
+Posso scrivere il superpotenziale in forma matriciale come:
+\[
+  f =
+  \begin{pmatrix}
+    \frac{1}{2}h_1 Y^2 + \mu        &
+    \frac{1}{2}h_2 Y^2
+  \end{pmatrix}
+  \begin{pmatrix}
+    X_1                                                                                                                                                                           \\
+    X_2
+  \end{pmatrix}
+\]
+Sotto la trasformaziuone \eqref{eq:trasform}:
+\[
+  f =
+  \begin{pmatrix}
+    \frac{1}{2}h_1 Y^2 + \mu        &
+    \frac{1}{2}h_2 Y^2
+  \end{pmatrix}
+  U
+  \begin{pmatrix}
+    Z_1                                                                                                                                                                           \\
+    Z_2
+  \end{pmatrix}
+\]
+% La più generica matrice di $ U(2) $ può essere messa nella forma:
+% \[
+%   U =
+%   \begin{pmatrix}
+%     a                             & b                                                                                                                                           \\
+%     -\mathrm{e}^{i \theta}b^\star & \mathrm{e}^{i \theta}a^\star
+%   \end{pmatrix}
+%   \qquad
+%   \text{con}
+%   \quad
+%   \abs{a}^2 + \abs{b}^2 = 1
+% \]
+Il superpotenziale risulta quindi essere con una matrice generica:
+\[
+  f =
+  \begin{pmatrix}
+    \frac{1}{2}h_1 Y^2 + \mu        &
+    \frac{1}{2}h_2 Y^2
+  \end{pmatrix}
+  \begin{pmatrix}
+    a                               & b                    \\
+    c                               & d
+  \end{pmatrix}
+  \begin{pmatrix}
+    Z_1                                                     \\
+    Z_2
+  \end{pmatrix}
+\]
+A posteriori imporrò che la matrice sia unitaria. Espandendo i prodotti:
+\begin{align*}
+  f  & =  \left(\frac{1}{2} h_1 Y^2 + \mu\right)(a Z_1 + b Z_2) + \left(\frac{1}{2} h_2  Y^2\right)(c Z_1 + d Z_2) \\
+     & = Z_1 \left[ a \left( \frac{1}{2} h_1 Y^2 + \mu \right) + c  \frac{1}{2} h_2 Y^2  \right] +
+       Z_2 \left[ b \left( \frac{1}{2} h_1 Y^2 + \mu \right) + d  \frac{1}{2} h_2 Y^2  \right]
+\end{align*}
+Voglio annulare i termini contenenti $ Y $ proporzionali a $ Z_2 $, cioè:
+\[
+  \frac{b}{2}h_1 Y^2 + \frac{d}{2}h_2 Y^2 = 0
+\]
+Quindi si può fissare il valore di $ d $ in funzione di $ b $.
+\[
+  d = -\frac{h_1}{h_2}b
+\]
+Quindi deve essere:
+\[
+  c_3 = b \mu
+\]
+Similmente manipolando il primo termine in modo che nella parentesi $ Y^2 $ abbia coefficiente unitario, assumendo $ a h_1 + c h_2 \not = 0 $:
+\[
+  \left( \frac{a}{2} h_1 + \frac{c}{2} h_2 \right) Z_1 \left[ \left( Y^2 + \frac{2a\mu}{a h_1 + c h_2} \right) \right]
+\]
+Da cui:
+\[
+  c_1 = \frac{a}{2} h_1 + \frac{c}{2} h_2 \qquad c_2 =  \frac{2a\mu}{a h_1 + c h_2}
+\]
+Non ci sono altri vincoli su $ a \text{ e } c $. %Se $ a h_1 + c h_2  = 0 $ allora $ c_1 = c_2 = 0 $.
+E' sempre  possibile costruire una matrice unitaria con questi vincoli, infatti deve risultare:
+\[
+  \begin{pmatrix}
+    a^\star & c^\star \\
+    b^\star & -\left(\frac{h_1}{h_2}b\right)^\star
+  \end{pmatrix}
+  \begin{pmatrix}
+    a       & b       \\
+    c       & -\frac{h_1}{h_2}b
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1       & 0       \\
+    0       & 1
+  \end{pmatrix}
+\]
+Cioè:
+\[
+  \begin{cases}
+    \abs{a}^2 + \abs{c}^2 = 1 \\
+    a^\star b - \frac{h_1}{h_2}c^\star b = 0 \\
+    \abs{b}^2 + \abs{\frac{h_1}{h_2}b}^2 = 1
+  \end{cases}
+\]
+Quindi siccome $ b \not = 0 $ per la terza, allora:
+\[
+  \begin{cases}
+    \abs{a}^2 + \abs{c}^2 = 1 \\
+    a^\star- \frac{h_1}{h_2}c^\star = 0 \\
+    \abs{b}^2 = \left(1 + \abs{\frac{h_1}{h_2}}^2 \right)^{-1}
+  \end{cases}
+\]
+Inserendo la seconda nella prima:
+\[
+  \abs{\frac{h_1}{h_2}c}^2 + \abs{c}^2 = 1 \rightarrow \abs{c}^2 = \left(1 + \abs{\frac{h_1}{h_2}}^2 \right)^{-1}
+\]
+In effetti sempre si può risolvere $ a^\star- \frac{h_1}{h_2}c^\star = 0 $ anche se è presente il vincolo $ a h_1 + c h_2 \not = 0 $, infatti
+\[
+  a = \left(\frac{h_1}{h_2}\right)^\star c \rightarrow \abs{h_1}^2 + \abs{h_2}^2 \not = 0
+\]
+Tale disuguaglianza è sempre verificata perché si sta lavorando con parametri non nulli. Quindi i gradi di libertà di $ U $ sono la fase di $ b $ e di $ c $.
+
+In questa forma verificare che lo spettro sia supersimmetrico diventa molto semplice, il potenziale scalare ha sempre un minimo non nullo:
+\[
+  V(Z_1, Z_2, Y) = \abs{\frac{1}{2}c_1 \left( Y^2 + c_2 \right)}^2 + \abs{c_1 Z_1 Y}^2 + \abs{c_3}^2
+\]
+Dato che $ c_3 $ non può essere annulato dalla trasformazione il potenziale ha sempre un minimo non inferiore a $ \abs{c_3}^2 $.
+Il minimo è quindi raggiunto in:
+\[
+  Y^2 = -c_2 \qquad Z_1 = 0 \qquad Z_2 \in \mathbb{C}
+\]
+Tuttavia calcolando la matrice $ N $ si nota che questa è nulla sul minimo infatti
+\[
+  \nabla \bar{f} =
+  \begin{pmatrix}
+    0 & c_3^\star & 0
+  \end{pmatrix}
+  \quad
+  \text{ ma }
+  \quad
+  \frac{\partial M}{\partial Z_2} =
+  \begin{pmatrix}
+    0 & 0 & 0 \\
+    0 & 0 & 0 \\
+    0 & 0 & 0
+  \end{pmatrix}
+  \quad
+  \text{ quindi }
+  \quad
+  N =
+  \begin{pmatrix}
+    0 & 0 & 0 \\
+    0 & 0 & 0 \\
+    0 & 0 & 0
+  \end{pmatrix}
+\]
+Siccome $ N = \mathbb{O} $ lo spettro rimane supersimmetrico.
+Sostanzialmente la teoria si separa in un modello di O'Raifeartaigh con $ n_X = n_Z $ e in un modello di Polonyi non accoppiati.
+Il secondo è responsabile della rottura della supersimmetria e introduce due scalari e un fermione massless, mentre il primo modello non rompe
+la supersimmetria quindi possiede spettro degenere.
+
+\end{document}

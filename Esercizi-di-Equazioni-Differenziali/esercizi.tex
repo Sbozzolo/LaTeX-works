@@ -1,0 +1,617 @@
+\documentclass[]{scrartcl}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts}
+\usepackage{cases}
+\usepackage{braket}
+\usepackage{tikz, pgfplots}
+\usepackage[makeroom]{cancel}
+
+
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\pgfdeclarepatternformonly{north east lines wide}%
+{\pgfqpoint{-1pt}{-1pt}}%
+{\pgfqpoint{10pt}{10pt}}%
+{\pgfqpoint{9pt}{9pt}}%
+{
+	\pgfsetlinewidth{0.4pt}
+	\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+	\pgfpathlineto{\pgfqpoint{9.1pt}{9.1pt}}
+	\pgfusepath{stroke}
+}
+
+\newcommand{\qedsymbol}{\hfill \rule{0.7em}{0.7em}}
+
+\usepackage[]{xcolor}  
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+\newcommand{\px}{\partial_x}
+\newcommand{\py}{\partial_y}
+\newcommand{\pt}{\partial_t}
+\newcommand{\pxy}{\partial_x\partial_y}
+\newcommand{\pdx}[1]{\partial^#1_x}
+\newcommand{\pdy}[1]{\partial^#1_y}
+\newcommand{\pdt}[1]{\partial^#1_t}
+\newcommand{\xvt}{(\mathbf{x},t)}
+\newcommand{\xt}{(x,t)}
+\newcommand{\lap}{\nabla^2}
+
+% Title Page
+\title{Esercizi di Equazioni Differenziali}
+\author{Gabriele Bozzola \\ Matricola: 882709}
+\date{8 Marzo 2016}
+
+\begin{document}
+\maketitle
+
+
+\section*{Esercizio 1}
+
+\subsection*{Testo} Equazione del calore
+
+\begin{enumerate}
+	\item Risolvere l'equazione del calore con sorgente:
+	\begin{equation}
+	\pt T\xvt = \kappa \lap T \xvt + S \xvt, \qquad t \geq 0,
+	\label{eq:calore}
+	\end{equation}
+	nel quadrato $ 0 \leq x \leq 1 ,\, 0 \leq y \leq 1 $ con le condizioni iniziali $ T(\mathbf{x},0) = T_0(\mathbf{x}) $ e le condizioni al contorno $ T\xvt = 0 $ sul bordo $ x=0,~x=1,~y=0,~y=1 $.
+	\item Stessa cosa, ma senza sorgente ($ S\xvt = 0 $) e con pareti del quadrato isolato, cioè le condizioni al contorno diventano di Neumann.
+	\[	\px T\xvt = 0 \quad \text{per} \quad x = 0,\,x=1, \qquad \py T\xvt = 0 \quad \text{per} \quad y = 0,\,y=1,	\]
+	(Nessun flusso termico attraverso le pareti).
+\end{enumerate}
+
+\subsection*{Svolgimento} 
+\subsubsection*{Punto 1}
+Questo problema può essere risolto con l'utilizzo del kernel di calore in modo che la soluzione di \eqref{eq:calore} sia:  
+\begin{multline}
+T(x,y;t) = \int_0^t \int_0^1 \int_0^1 G(t-t';x,y;z,w) S(z,w;t')\,dz\,dw\,dt' + \\ \int_0^1 \int_0^1 T_0(z,w) G(t;x,y;z,w)\,dz\,dw
+\label{eq:sol_general_calore}
+\end{multline}
+Con 
+\begin{equation}
+G(t-t';x,y;z;w) = \sum_{nm} \mathrm{e}^{-\kappa \lambda_{nm} (t-t')} \varphi_{nm}(x,y) \varphi_{nm}(z,w)
+\label{eq:green_calore}
+\end{equation}
+Dove le $ \{\varphi_{nm}\} $ sono le autofunzioni del Laplaciano nel quadrato, ovvero le soluzioni di: 
+  \begin{equation}
+  	\begin{cases}
+  	\lap \varphi_{nm}(x,y) + \lambda_{nm}\varphi_{nm}(x,y) = 0 & \text{per} \quad 0\leq x \leq 1,\; 0\leq y \leq 1  \\
+  	\varphi_{nm}(x,y) = 0 & \text{per} \quad x = 0 \vee x = 1 \vee y = 0 \vee y = 1 \label{eq:autofunzioni_laplaciano}
+  	\end{cases}{}
+  \end{equation}
+Il problema è quello di una particella libera in un quadrato, risolto da funzioni del tipo:
+\[	\varphi_{nm}(x,y) \propto \sin\left(k_x x\right)\sin\left(k_y y\right)	\]
+Tali $ \varphi_{nm}(x,y) $ risolvono \eqref{eq:autofunzioni_laplaciano} se $ k_x = n\pi $ e $ k_y = m\pi $ con $ n,m \in \{1,\,2,\,\dots\} $. La costante di proporzionalità è fissata a $ 2 $ dalla condizione di normalizzazione. Gli autovalori sono quindi $ \pi^2(n^2+m^2) $, perciò la funzione di Green è per \eqref{eq:green_calore}:
+\[	G(t-t';x,y;z;w) = 4 \sum_{nm} \mathrm{e}^{-\kappa \pi^2(n^2 + m^2) (t-t')} \sin(n\pi x) \sin(m \pi y) \sin(n\pi z) \sin(m \pi w)	\]
+Utilizzando questa funzione di Green la soluzione del problema è:
+\begin{equation}
+\begin{split}
+& T(x,y;t) = 4 \int_0^1 \int_0^1 \sum_{nm} \mathrm{e}^{-\kappa \pi^2(n^2 + m^2) t} \sin(n\pi x) \sin(m \pi y) \sin(n\pi z) \sin(m \pi w) T_0(z,w)\,dz\,dw +\\
+& 4 \int_0^t \int_0^1 \int_0^1 \sum_{nm} \mathrm{e}^{-\kappa \pi^2(n^2 + m^2) (t-t')} \sin(n\pi x) \sin(m \pi y) \sin(n\pi z) \sin(m \pi w) S(z,w;t')\,dt'\,dz\,dw 
+\label{eq:seconda_parte_calore}
+\end{split}
+\end{equation}
+%Sviluppando $ T_0(z,w) $ sulla base di Fourier nel quadrato:
+%\[	T_0(z,w) = \sum_{nm}^{+\infty} b_{nm} \sin(n \pi z) \sin(m \pi w) \]
+%Con:
+%\[ b_{nm} = 4 \int_0^1 \int_{0}^{1} T_0(x,y) \sin(n \pi x) \sin(m \pi y)\,dx\,dy	\]
+%In questo modo risulta che \eqref{eq:seconda_parte_calore} è uguale a:
+%\[ \sum_{nm}^{+\infty} \mathrm{e}^{-\kappa \pi^2(n^2 + m^2) (t-t')} b_{nm} \sin(n\pi x) \sin(m \pi y)	\]
+%Tale espressione è la soluzione del problema omogeneo, a cui bisogna aggiungere la soluzione particolare dell'equazione non omogenea:
+
+\subsubsection*{Punto 2}
+Si possono utilizzate le tecniche già sfruttate nel punto precedente in modo che la soluzione di \eqref{eq:calore} in assenza di sorgenti con condizioni al contorno di Neumann sia:
+\begin{equation}
+T(x,y;t) = \int_0^1 \int_0^1 T_0(z,w) G(t;x,y;z,w)\,dz\,dw
+\label{eq:sol_general_neumann}
+\end{equation}
+Con funzione di Green sempre data da \eqref{eq:green_calore}, ma con differenti autofunzioni rispetto a quelle trovate precedentemente. Bisogna quindi risolvere il problema:
+  \begin{equation}
+  \begin{cases}
+  \lap \varphi_{nm}(x,y) + \lambda_{nm}\varphi_{nm}(x,y) = 0 & \text{per} \quad 0\leq x \leq 1,\; 0\leq y \leq 1  \\
+  \px\varphi_{nm}(x,y) = 0 & \text{per} \quad x = 0 \vee x = 1 \\
+  \py\varphi_{nm}(x,y) = 0 & \text{per} \quad y = 0 \vee y = 1  \label{eq:autofunzioni_laplaciano_neumann}
+  \end{cases}{}
+  \end{equation}
+Un possibile ansatz di soluzione è:
+\[	\varphi_{nm}(x,y) \propto \cos\left(k_x x\right)\cos\left(k_y y\right)	\]
+Da cui:
+\[	\px\varphi_{nm}(x,y) \propto \sin\left(k_x x\right)\cos\left(k_y y\right) \qquad \py\varphi_{nm}(x,y) \propto \cos\left(k_x x\right)\sin\left(k_y y\right)	\]
+Tale ansatz risolve \eqref{eq:autofunzioni_laplaciano_neumann} se $ k_x = n\pi $ e $ k_y = m\pi $ con $ n,m \in \{1,\,2,\,\dots\} $. La costante di proporzionalità è fissata a $ 2 $ dalla condizione di normalizzazione. Gli autovalori sono quindi ancora $ \pi^2(n^2+m^2) $. La funzione di Green risulta perciò per \eqref{eq:green_calore}:
+\[	G(t-t';x,y;z;w) = 4 \sum_{nm} \mathrm{e}^{-\kappa \pi^2(n^2 + m^2) (t-t')} \cos(n\pi x) \cos(m \pi y) \cos(n\pi z) \cos(m \pi w)	\]
+Da cui la soluzione:
+\begin{equation}
+T(x,y;t) = 4 \int_0^1 \int_0^1 \sum_{nm} \mathrm{e}^{-\kappa \pi^2(n^2 + m^2) t} \cos(n\pi x) \cos(m \pi y) \cos(n\pi z) \cos(m \pi w) T_0(z,w)\,dz\,dw
+\label{eq:soluz_calore_neumann}
+\end{equation}
+\qedsymbol
+\section*{Esercizio 2}
+
+\subsection*{Testo} Problema ai valori iniziali e ai valori al contorno
+
+\begin{enumerate}
+	\item Risolvere il seguente problema ai valori iniziali:
+	\begin{equation}
+	u'' + u' -2u = \mathrm{e}^x \qquad x>0, \quad u(0) = 1, \quad u'(0) = 0,
+	\label{eq:iniz1}
+insta	\end{equation}
+	costruendo la funzione di Green one-sided $ R(x,t) $ e integrando successivamente.
+	\item Risolvere il seguente problema ai valori iniziali:
+	\begin{equation}
+	u'' - u = \mathrm{e}^x \qquad 0<x<1, \quad u(0) = 1, \quad u'(1) = 0,
+	\label{eq:iniz2}
+	\end{equation}
+	costruendo la funzione di Green  $ G(x,t) $.
+\end{enumerate}
+
+\subsection*{Soluzione}
+\subsubsection*{Punto 1}
+L'equazione \eqref{eq:iniz1} è un'equazione differenziale ordinaria lineare non omogenea a coefficienti costanti, la cui soluzione è la combinazione lineare di due soluzioni linearmente indipendenti dell'omogenea associata sommata con una soluzione particolare. Il polinomio caratteristico di \eqref{eq:iniz1} è $ \lambda^2 + \lambda - 2 $, che ha radici $ \lambda = -2 $ e $ \lambda = 1 $. L'omogenea è risolta quindi da soluzioni della forma:
+\[ A \mathrm{e}^{-2x}	+ B \mathrm{e}^{x} 	\]
+Cercando una soluzione particolare del tipo $ Cx\mathrm{e}^x $:
+\[2C\mathrm{e}^x + \cancel{Cx\mathrm{e}^x} + C\mathrm{e}^x + \cancel{Cx\mathrm{e}^x} - \cancel{2Cx\mathrm{e}^x} = \mathrm{e}^x \quad \Rightarrow \quad 3C\mathrm{e}^x =\mathrm{e}^x  \quad \Rightarrow \quad C=\frac{1}{3}  \]
+Per questo la soluzione generale di \eqref{eq:iniz1} è:
+\begin{equation}
+u(x) = A \mathrm{e}^{-2x}	+ B \mathrm{e}^{x} + \frac{1}{3}x\mathrm{e}^x
+\label{eq:soluz_generale_costanti_1}
+\end{equation}
+Le costanti $ A $ e $ B $ sono fissate dalle condizioni al contorno: $ A = \frac{4}{9} $ e $ B = \frac{5}{9} $, ottenendo la soluzione:
+\begin{equation}
+u(x) = \frac{4}{9} \mathrm{e}^{-2x}	+ \frac{5}{9} \mathrm{e}^{x} + \frac{1}{3}x\mathrm{e}^x
+\label{eq:soluz_generale_costanti_completa_1}
+\end{equation}
+L'esercizio richiede di risolvere l'equazione differenziale utilizzando la funzione di Green one-sided $ R(x,t) $. Siano $ a(x) = 1,\, b(x) = 1,\, c(x)=-2,\, F(x) = \mathrm{e}^x $, si definiscono:
+\[ p(x) = \exp\left( \int_0^x \frac{b(t)}{a(t)}	\right)	= \mathrm{e}^x \qquad q(x) = \frac{c(x)}{a(x)}p(x) = -2\mathrm{e}^x \qquad f(x) = \frac{F(x)}{a(x)}p(x) = \mathrm{e}^{2x} \]
+sicché l'equazione \eqref{eq:iniz1} si può scrivere equivalentemente in termini delle variabili appena definite:
+\begin{equation}
+\frac{d}{dx}\left( p \frac{du}{dx}	\right) + qu = f \quad \Rightarrow \quad \frac{d}{dx}\left( \mathrm{e}^x \frac{du}{dx}	\right) -2\mathrm{e}^xu = \mathrm{e}^{-2x}
+\label{eq:green_one_sided_equazione}
+\end{equation} 
+La soluzione di \eqref{eq:iniz1}, a meno delle condizioni al contorno, è data da:
+\begin{equation}
+u(x) = \int_0^x R(x,t) \mathrm{e}^t dt
+\label{eq:soluz_generale_1}
+\end{equation}
+L'equazione omogenea associata a \eqref{eq:green_one_sided_equazione} è, indicando con il punto la derivata rispetto $ x $:
+\[ \cancel{\mathrm{e}^x}\dot{v} + \cancel{\mathrm{e}^x}\ddot{v}-2\cancel{\mathrm{e}^x}v = 0 \quad \Rightarrow \quad \ddot{v} + \dot{v} - 2v = 0 \]
+Le sue soluzioni $ v_1 $ e $ v_2 $ permettono di costruire la funzione di Green one-sided. Utilizzando la tecnica del polinomio caratteristico si trova che le soluzioni e le sue derivate sono:
+\[
+\begin{array}{ll}
+ v_1 = \mathrm{e}^x & v_1' = \mathrm{e}^x \\
+ v_2 = \mathrm{e}^{-2x} & v_2' = -2\mathrm{e}^{-2x}
+\end{array}
+\]
+La funzione di Green one-sided è quindi:
+\[	R(x,t) = \frac{v_1(x)v_2(t) - v_2(x)v_1(t))}{p(x)\left(v_1'(x)v_2(x) - v_2'(x)v_1(x)\right)} = \frac{1}{3}\left(\mathrm{e}^x\mathrm{e}^{-2t} - \mathrm{e}^{-2x}\mathrm{e}^t\right)	\]
+La quale integrata come in \eqref{eq:soluz_generale_1} restituisce la soluzione dell'equazione \eqref{eq:iniz1} a meno dei termini per correggere le condizioni iniziali. Si ottiene perciò:
+\[
+\begin{split} 
+\tilde{u}(x) & = \frac{1}{3} \int_0^x \left( \mathrm{e}^x \mathrm{e}^{-2t} - \mathrm{e}^{-2x} \mathrm{e}^t \right)\mathrm{e}^{2t}\,dt = \frac{1}{3} \left( \mathrm{e}^{x} \int_0^xdt - \mathrm{e}^{-2x}\int_{0}^{x}\mathrm{e}^{3t}dt\right) = \\ & = \frac{1}{3} \left(x\mathrm{e}^x - \frac{\mathrm{e}^x}{3} + \frac{\mathrm{e}^{-2x}}{3}\right)
+\end{split}
+\]
+Aggiungendo a questa $ u(x) $ un opportuna soluzione dell'omogenea associata a \eqref{eq:iniz1}:
+\[ u(x) = \frac{1}{3} \left(x\mathrm{e}^x - \frac{\mathrm{e}^x}{3} + \frac{\mathrm{e}^{-2x}}{3}\right) + Av_1(x) + Bv_2(x) \]
+Imponendo le condizioni al contorno si trova $ A=\frac{2}{3} $ e $ B=\frac{1}{3} $ e si riottiene perciò \eqref{eq:soluz_generale_costanti_completa_1}:
+\begin{equation}
+u(x) = \frac{4}{9} \mathrm{e}^{-2x}	+ \frac{5}{9} \mathrm{e}^{x} + \frac{1}{3}x\mathrm{e}^x
+\end{equation}
+\subsubsection*{Punto 2}
+Come nel caso precedente l'equazione \eqref{eq:iniz2} può essere risolta senza utilizzare la funzione di Green. Il polinomio caratteristico dell'omogenea associata è $ \lambda^2 -1 $ che ha radici $ \lambda = 1 $ e $ \lambda = -1 $. Per questo motivo, se $ A $ e $ B $ sono costanti di integrazione che saranno fissate dalle condizioni al contorno, la soluzione generale dell'omogenea associata è:
+\[	A\mathrm{e}^x + B\mathrm{e}^{-x}	\]
+Cercando una soluzione particolare del tipo $ Cx\mathrm{e}^x $:
+\[2C\mathrm{e}^x + \cancel{Cx\mathrm{e}^x} - \cancel{Cx\mathrm{e}^x} = \mathrm{e}^x \quad \Rightarrow \quad 2C\mathrm{e}^x = \mathrm{e}^x \quad \Rightarrow \quad C=\frac{1}{2}  \]
+La soluzione generale di \eqref{eq:iniz2} è perciò 
+\begin{equation}
+u(x) = A\mathrm{e}^{x} + B \mathrm{e}^{-x} + \frac{1}{2}x\mathrm{e}^x
+\label{eq:soluz_generale_costanti_2}
+\end{equation}
+Le costanti sono fissate dalle condizioni iniziali a $ A = \frac{1-\mathrm{e}^2}{1+\mathrm{e}^2} $ e $ B = \frac{2\mathrm{e}^2}{1+\mathrm{e}^2} $, perciò la soluzione completa di \eqref{eq:iniz2} è 
+\begin{equation}
+u(x) = \frac{2\mathrm{e}^2}{1+\mathrm{e}^2}  \mathrm{e}^{-x} +  \frac{1-\mathrm{e}^2}{1+\mathrm{e}^2}\mathrm{e}^x + \frac{1}{2}x\mathrm{e}^x
+\label{eq:soluz_generale_costanti_completa_2}
+\end{equation}
+La medesima soluzione può essere ottenuta con il metodo della funzione di Green two-sided.
+L'equazione \eqref{eq:iniz2} ha già la forma $ \frac{d}{dx}\left( p \frac{du}{dx}	\right) + qu = -f $ con $ p=1,\,q=-1 $ e $ f(x)=-\mathrm{e}^x $, e la funzione di Green two-sided risolve l'omogenea associata:
+\begin{equation}
+G''(x,t)-G(x,t)=0
+\label{eq:green_two_sieded}
+\end{equation}
+Le cui soluzioni sono:
+\begin{equation}
+\begin{cases}
+G(x,t) = A(t)\mathrm{e}^x + B(t)\mathrm{e}^{-x} & \text{per} \quad x<t  \\
+G(x,t) = C(t)\mathrm{e}^x + D(t)\mathrm{e}^{-x}  & \text{per} \quad x>t  
+\label{eq:green_two_sided}
+\end{cases}{}
+\end{equation}
+Imponendo la continuità di $ G(x,t) $ e la discontinuità di $ \frac{dG}{dx}(x,t) $:
+\[
+\begin{cases}
+G(t+\varepsilon,t) = G(t-\varepsilon,t) \Rightarrow A(t)\mathrm{e}^t + B(t)\mathrm{e}^{-t} = C(t)\mathrm{e}^t + D(t)\mathrm{e}^{-t} \\
+\frac{dG}{dx}(t+\varepsilon,t) - \frac{dG}{dt}(t-\varepsilon,t) = -1 \Rightarrow A(t)\mathrm{e}^t - B(t)\mathrm{e}^{-t} = -1 + C(t)\mathrm{e}^t - D(t)\mathrm{e}^{-t}
+\end{cases}{}
+\]
+Imponendo le condizioni al contorno:
+\[
+\begin{cases}
+G(0,t) = 0 \Rightarrow A(t)  + B(t) = 0 \Rightarrow B(t) = -A(t) \\
+\frac{dG}{dx}(1,t) = 0 \Rightarrow C(t)\mathrm{e}  - \frac{D(t)}{e} = 0 \Rightarrow D(t) = \mathrm{e}^2C(t) \\
+\end{cases}{}
+\]
+Raccogliendo tutte le condizioni trovate:
+\[
+\begin{cases}
+A(t)\mathrm{e}^t + B(t)\mathrm{e}^{-t} = C(t)\mathrm{e}^t + D(t)\mathrm{e}^{-t}\\
+A(t)\mathrm{e}^t - B(t)\mathrm{e}^{-t} =  -1 + C(t)\mathrm{e}^t - D(t)\mathrm{e}^{-t}\\
+B(t) = -A(t) \\
+D(t) = \mathrm{e}^2C(t) \\
+\end{cases}{}
+\]
+Dopo noiosi conti algebrici si trova che:
+\[
+\begin{cases}
+A(t) = \frac{\mathrm{e}}{1+\mathrm{e}^2}\cosh(t-1)\\
+B(t) = -\frac{\mathrm{e}}{1+\mathrm{e}^2}\cosh(t-1)\\
+C(t) = \frac{1}{1+\mathrm{e}^2}\sinh t\\
+D(t) = \frac{\mathrm{e}^2}{1+\mathrm{e}^2}\sinh t \\
+\end{cases}{}
+\]
+In questo modo da \eqref{eq:green_two_sided} si ottiene un'espressione per la funzione di Green two-sided.
+\begin{equation}
+\begin{cases}
+G(x,t) = \frac{\mathrm{e}}{1+\mathrm{e}^2}\cosh(t-1)\left(\mathrm{e}^x - \mathrm{e}^{-x}\right) & \text{per} \quad x<t \\
+G(x,t) = \frac{1}{1+\mathrm{e}^2}\sinh t \left( \mathrm{e}^x + \mathrm{e}^2\mathrm{e}^{-x}\right)  & \text{per} \quad x>t 
+\label{eq:green_two_sided_trovata}
+\end{cases}{}
+\end{equation}
+La soluzione di \eqref{eq:iniz2} è perciò:
+\begin{equation} 
+\begin{split}
+u(x) & = -\int_0^1 G(x,t) \mathrm{e}^x dt + \frac{\partial G}{\partial t}(x,0) = -\frac{1}{1+\mathrm{e}^2}\int_0^x\sinh t(\mathrm{e}^x + \mathrm{e}^2\mathrm{e}^{-x})\mathrm{e}^t dt - \\ & \frac{\mathrm{e}}{1+\mathrm{e}^2}\int_x^1\cosh(t-1)(\mathrm{e}^x - \mathrm{e}^{-x})\mathrm{e}^t dt +  \frac{1}{1+\mathrm{e^2}} \left( \mathrm{e}^x + \mathrm{e}^2\mathrm{e}^{-x}\right) =  [\dots] =  \\ & = \frac{2\mathrm{e}^2}{1+\mathrm{e}^2}  \mathrm{e}^{-x} +  \frac{1-\mathrm{e}^2}{1+\mathrm{e}^2}\mathrm{e}^x + \frac{1}{2}x\mathrm{e}^x
+\end{split}	
+\end{equation}
+Tale soluzione è esattamente \eqref{eq:soluz_generale_costanti_completa_2}.
+\qedsymbol
+\section*{Esercizio 3}
+
+\subsection*{Testo} Classificazione di equazioni differenziali quasilineari
+
+\begin{enumerate}
+	\item Determinare le regioni del piano $ x-y $ in cui l'equazione differenziale
+	\begin{equation}
+	2x\pdx{2}u + 2xy\pxy u + y \pdy{2}u + x^4\px u + 2u = \cos x
+	\label{eq:2xuxx}
+	\end{equation}
+	è iperbolica, parabolica o ellittica. Illustrare il risultato con un disegno.
+	\item Determinare se l'equazione quasilineare di Burgers inviscida con forza esterna 
+	\begin{equation}
+	\pt u + u \px u = F\xt
+	\label{eq:burgers}
+	\end{equation}
+	è iperbolica, parabolica o ellittica.
+	\item Si consideri l'equazione differenziale:
+	\begin{equation}
+	\pdx{3}u+y^3\pdy{3}u+\mathrm{e}^{x+2z}\pdy{2}u + \frac{1}{z} \pdx{2} \partial_z u + \sinh(xy^2)\partial_z u= \ln z
+	\label{eq:bestia}
+	\end{equation}
+	\begin{itemize}
+		\item Determinare la parte principale.
+		\item Determinare la varietà caratteristica $ S(x,y,z) = 0 $.
+	\end{itemize}
+\end{enumerate}
+
+
+\subsection*{Svolgimento}
+\subsubsection*{Punto 1}
+La classificazione delle equazioni differenziali del secondo ordine è basata sul segno del discriminante della parte principale dell'equazione, in questo caso:
+	\begin{equation}
+	\delta(x,y) = (xy)^2 - 2x y = xy\left(xy-2\right)
+	\label{eq:discriminante}
+	\end{equation}
+L'equazione \eqref{eq:2xuxx} è parabolica dove $ \delta(x,y) = 0 $, cioè nell'insieme $ P $ definito da:
+	\begin{equation}
+		P = \set{ (x,y) \in \mathbb{R}^2 | x = 0~ \vee y = 0 \vee xy = 2}  
+		\label{eq:parabolica}
+	\end{equation}
+L'equazione \eqref{eq:2xuxx} è iperbolica dove $ \delta(x,y) > 0 $, cioè nell'insieme $ I $ definito da:
+	\begin{multline}
+	I = \set{ (x,y) \in \mathbb{R}^2 | x > 0 ~ \wedge xy > 2 }  \cup \set{ (x,y) \in \mathbb{R}^2 | x < 0 ~ \wedge xy < 2 } \cup \\
+	\set{ (x,y) \in \mathbb{R}^2 | x < 0 ~ \wedge y > 0 }  \cup \set{ (x,y) \in \mathbb{R}^2 | x > 0 ~ \wedge y < 0 }
+	\label{eq:iperbolica}
+	\end{multline}
+L'equazione è ellittica nel restante insieme $ E $, definito da $ E = \mathbb{R}^2 - P - I$.
+
+	\begin{figure}[htbp]
+		\centering
+		\begin{tikzpicture}
+			\begin{axis}[
+			xmin=-5, xmax=5,
+			ymin=-5, ymax=5,
+			axis lines=center,
+			axis on top=true,
+			xlabel=$ x $,
+			ylabel=$ y $,
+			ticks=none,
+			]
+			
+				\addplot[mark=none,draw=blue,ultra thick] {0.015};
+				\addplot[domain=-5:-0.015, name path=A1] {6};
+				\addplot[domain=-5:-0.015, name path=A2] {0};
+				\addplot[domain=0.015:5, name path=B1] {-6};
+				\addplot[domain=0.015:5, name path=B2] {0};
+				\addplot[mark=none,draw=blue,ultra thick, domain=0.1:5, samples=50, name path=C1] {2/x};
+				\addplot[mark=none,draw=blue,ultra thick, domain=0.1:5, samples=50, name path=C2] {25/x};
+				\addplot[mark=none,draw=blue,ultra thick, domain=-5:-0.1, samples=50, name path=D1] {2/x};
+				\addplot[mark=none,draw=blue,ultra thick, domain=-5:-0.1, samples=50, name path=D2] {25/x};
+			    \addplot[mark=none, draw=blue, ultra thick] coordinates {(0.015, -5) (0.015, 5)};
+				      
+		        \addplot[pattern=north east lines wide, pattern color=black!50] fill between[of=A1 and A2];
+		        \addplot[pattern=north east lines wide, pattern color=black!50] fill between[of=B1 and B2];
+		        \addplot[pattern=north east lines wide, pattern color=black!50] fill between[of=C1 and C2];
+		        \addplot[pattern=north east lines wide, pattern color=black!50] fill between[of=D1 and D2];
+		        		        	
+		        \addplot[cyan!40] fill between[of=A2 and D1];
+		        \addplot[cyan!40] fill between[of=B2 and C1];
+		        											        
+			\end{axis}
+		\end{tikzpicture}
+		\caption{Classificazione della funzione al variare di $ x $ e $ y $. L'insieme $ P $ è rappresentato in blu (linea continua), l'insieme $ I $ è rappresentato in nero (tratteggiato) e l'insieme $ E $ in azzurro (campitura uniforme)}
+	\end{figure}
+	
+\subsubsection*{Punto 2}
+Siccome i coefficienti delle derivate del secondo ordine dell'equazione di Burgers inviscida sono identicamente nulli, il suo discriminante è nullo, quindi è parabolica. 
+\subsubsection*{Punto 3}
+La parte principale dell'equazione \eqref{eq:bestia} è la somma dei termini contenenti associati le derivate di ordine $ 3 $, cioè è $ \pdx{3}u + y^3\pdy{3}u + \frac{1}{z}\pdx{2}\partial_zu $.
+
+\noindent
+Una superficie bidimensionale in $ \mathbb{R}^3 $ di equazione $ S(x,y,z) = 0 $ è caratteristica per l'equazione \eqref{eq:bestia} se vale che:
+\begin{equation}
+	(\px S)^3 + y^3(\py S)^3 + \frac{1}{z}(\px S)^2(\partial_z S\\) = 0
+	\label{eq:caratteristica}
+\end{equation}
+Questa equazione si può risolvere con un ansatz di separazione: 
+\begin{equation}
+	 S(x,y,z) = X(x) + Y(y) + Z(z) 
+	\label{eq:ansatz}
+\end{equation}
+Sostituendo \eqref{eq:ansatz} in \eqref{eq:caratteristica} si ottiene
+\begin{equation}
+\left(\frac{dX}{dx}\right)^3 + y^3 \left(\frac{dY}{dy}\right)^3 + \frac{1}{z}\left(\frac{dX}{dx}\right)^2\left(\frac{dZ}{dz}\right) = 0 
+\label{eq:caratteristiche_separazione}
+\end{equation} 
+Questa equazione deve valore per ogni $ x,\,y $ e $ z $, quindi il secondo termine deve essere una costante $ A^3 $, da cui:
+\[	y^3 \left(\frac{dY}{dy}\right)^3 = A^3 \Rightarrow \frac{dY}{dy} = \frac{A}{y} \Rightarrow Y(y) = a_Y \ln y	\]
+Anche la somma degli altri due membri di \eqref{eq:caratteristiche_separazione} deve essere una costante $ B $:
+\[ \left(\frac{dX}{dx}\right)^3 + \frac{1}{z}\left(\frac{dX}{dx}\right)^2\left(\frac{dZ}{dz}\right) = B \Rightarrow \left(\frac{dX}{dx}\right) + \frac{1}{z}\left(\frac{dZ}{dz}\right) = \frac{B}{\left(\frac{dX}{dx}\right)^2}	\]
+Il secondo termine deve essere una costante $ C $:
+\[ \frac{1}{z}\left(\frac{dZ}{dz}\right) = C \Rightarrow \left(\frac{dZ}{dz}\right) = Cz \Rightarrow Z(z) = a_Z z^2 + \mathrm{cost}	\]
+Infine anche il restante termine di \eqref{eq:caratteristiche_separazione} deve essere costante:
+\[ \left(\frac{dX}{dx}\right)^3 + C\,\left(\frac{dX}{dx}\right)^2= B  \]
+Questa è un'equazione di terzo grado in $ X' $ e quindi avrà in generale tre soluzioni. Sia $ a_X $ una di queste:
+\[ \left(\frac{dX}{dx}\right) = a_X \Rightarrow X(x) = a_X x + \mathrm{cost} \]
+Quindi l'equazione della curva caratteristica è:
+\[ S(x,y,z) = a_X x	+ a_Y \ln y + a_Z z^2 + \mathrm{cost}	\]
+\qedsymbol
+\section*{Esercizio 4}
+
+\subsection*{Testo} Metodo delle caratteristiche
+
+\begin{enumerate}
+	\item Risolvere il problema quasilineare:
+	\begin{equation}
+	u\px u + \py u = 2, \quad u(x,x) = x,
+	\label{eq:carat}
+	\end{equation}
+	Con il metodo delle caratteristiche (Lagrange-Charpit). 
+	\item Come cambia la soluzione se prendiamo $ u(x,x) = \frac{x}{2} $ anziché $ u(x,x) = x $ per la curva iniziale?
+\end{enumerate}
+\subsection*{Svolgimento} 
+\subsubsection*{Punto 1}
+E'\ comodo introdurre il parametro $ \alpha $ per trattare contemporaneamente entrambi i punti dell'esercizio. L'equazione da risolvere è:
+\[
+\begin{cases}
+u\px u + \py u - 2 = 0 \\
+u(x,x) = \alpha x \qquad \alpha = \frac{1}{2},1 \\
+\end{cases}
+\]
+Parametrizzando la curva iniziale con:
+\[
+\begin{cases}
+x(0,s) = x_0(s) = s \\
+y(0,s) = y_0(s) = s \\
+u(0,s) = u_0(s) = \alpha s \\
+\end{cases}
+\]
+Deve risultare che:
+\[ \left|
+\begin{array}{ccc}
+	1 & \alpha s \\
+	1 & 1 \\
+\end{array} \right| \not= 0
+\]
+Ma questo determinante vale $ 1-\alpha s $ che non è identicamente nullo.
+Le equazioni delle caratteristiche sono:
+\[
+\begin{cases}
+	\dot{x} = u  \\
+	\dot{y} = 1  \\
+	\dot{u} = 2   
+\end{cases}
+\]
+Applicando le condizioni a $ t=0 $ si ottiene:
+  \begin{subequations}
+  	\begin{numcases}{}
+y = t + s \label{eq:equadit1} \\
+u = 2t + \alpha s \\
+x = t^2 + \alpha s t + s \label{eq:equadit3}
+  \end{numcases}{}
+    \end{subequations}
+Sostituendo \eqref{eq:equadit1} in \eqref{eq:equadit3} si ottiene $ x = (1-\alpha)t^2 + (\alpha y -1) +y $.
+
+\noindent Se $ \alpha = 1 $:
+\[ t = \frac{x-y}{y-1} \qquad s = y - \frac{x-y}{y-1} \]
+Ciò conduce immediatamente alla soluzione di \eqref{eq:carat}:
+\[	u(x,y) = 2\frac{x-y}{y-1} + y - \frac{x-y}{y-1}	= \frac{y^2-2y+x}{y-1}\]
+Si nota immediatamente che $ u(x,x) = x $ e con qualche calcolo in più si può verificare che questa risolve l'equazione \eqref{eq:carat}.
+\subsubsection*{Punto 2}
+Quando $ \alpha = \frac{1}{2} $ risulta impossibile invertire univocamente \eqref{eq:equadit3}. Si ottiene:
+
+\[
+\begin{cases}
+t = \frac{2-y \pm \sqrt{(y-2)^2-8(y-x)}}{2} = \frac{2-y \pm \sqrt{y^2 -12y +8x +4}}{2} \\
+s = y - \frac{2-y \pm \sqrt{(y-2)^2-8(y-x)}}{2} = y - \frac{2-y \pm \sqrt{y^2 -12y +8x +4}}{2}
+\end{cases}
+\]
+Da cui si ricava la soluzione:
+\begin{equation}	
+u(x,y) = \frac{3}{2}t + \frac{1}{2}y = \frac{3}{2}- \frac{1}{4}y \pm 3\frac{\sqrt{y^2 -12y +8x +4}}{4} 
+\label{eq:soluz_finale_2}
+\end{equation}
+Si verifica velocemente che $ u(x,x) = \frac{x}{2} $, la quale è condizione necessaria perché \eqref{eq:soluz_finale_2} sia la soluzione corretta.
+\qedsymbol
+\section*{Esercizio 5}
+
+\subsection*{Testo} L'equazione di Burgers
+
+\begin{enumerate}
+	\item Risolvere l'equazione di Burgers inviscida con il metodo di Lagrange-Charpit prendendo come condizione iniziale $ u(x,0) = u_0(x) $
+	\begin{equation}
+	\pt u + u \px u = 0
+	\label{eq:burgers2}
+	\end{equation}
+	\item Si faccia vedere che la trasformazione di Hopf-Cole:
+	\begin{equation}
+	u\xt = -2 \nu \px \ln \psi\xt
+	\label{eq:hopf}
+	\end{equation}	
+	trasforma l'equazione di Burgers viscosa	
+	\begin{equation}
+ 	\pt u + u \px u = \nu \pdx{2}u 
+	\label{eq:burgers3}
+	\end{equation}	 
+	nell'equazione del calore:
+	\begin{equation}
+	\pt \psi\xt = \nu \pdx{2} \psi \xt
+	\label{eq:cal}
+	\end{equation}
+	Trasformare la condizione iniziale $ u(x,0) $ in una condizione iniziale per $ \psi $ e risolvere la \eqref{eq:cal} usando il nucleo di calore.	
+\end{enumerate}
+
+\subsection*{Svolgimento} 
+\subsubsection*{Punto 1}
+Per comodità nel seguente svolgimento si chiama la variabile $ t $ come $ y $ e a partire da \eqref{eq:burgers2} si definiscono $ a(x,y,u) = u,\, b(x,y,u) = 1,\,c(x,y,u)= 0 $.
+Parametrizzando la curva su cui sono definiti i dati iniziali con il parametro $ s \in \mathbb{R} $:
+\[ x_0(s) = s \qquad y_0(s) = 0 \qquad u_0(s) = u_0(s)	\]
+Si verifica che questa non è una curva caratteristica:
+\[ \left|
+\begin{array}{ccc}
+1 & u_0(s) \\
+0 & 1 \\
+\end{array} \right| = 1 \not= 0 \]
+Le equazioni delle caratteristiche sono (dove il punto indica la derivata rispetto a $ t $):
+\[
+\begin{cases}
+\dot{x} = u  \\
+\dot{y} = 1  \\
+\dot{u} = 0 
+\end{cases}
+\]
+Dalla seconda si ottiene:
+\[	\dot{y} = 1 \Rightarrow y(t,s) = t + \mathrm{cost} \text{ ma } y(0,s) = 0 \text{ quindi } y(t,s) = t	\]
+Dalla terza:
+\[	\dot{u} = 0 \Rightarrow u(t,s) = \mathrm{cost} \text{ ma } u(0,s) = u_0(s)	\text{ quindi } u(t,s) = u_0(s)	\]
+Infine dalla prima:
+\[	\dot{x} = u \Rightarrow x(t,s) = u_0(s)t + \mathrm{cost} \text{ ma } x(0,s) = s \text{ quindi } x(t,s) = u_0(s)t + s	\]
+Questa ultima definisce implicitamente la relazione tra $ x $ e $ s $. La soluzione di \eqref{eq:burgers2} può essere quindi scritta implicitamente come:
+\[	u(s,0) = u(y) = u(s + u_0(s)y, y)		\]
+Rinominando la variabile $ y $ in $ t $:
+\[	u(s,0) = u(t) = u(s + u_0(s)t, t)		\]
+\subsubsection*{Punto 2}
+Manipolando l'equazione \eqref{eq:burgers3}: $ \pt u + u \px u = \nu \pdx{2}u  \Rightarrow \pt u = \nu \pdx{2}u -u\px u = \px (\nu \px u - \frac{u^2}{2}) $ e applicando la sostituzione:
+\[ \pt (-2\nu \px \ln\psi)	= \px \left(\nu \px (-2\nu \px \ln\psi)- \frac{(-2\nu\px\ln\psi)^2}{2}\right)	\]
+Assumendo sufficiente regolarità si possono scambiare le derivate temporali e spaziali al primo membro e integrare ottenendo:
+\[ -2\nu \pt \ln\psi	= \nu \px (-2\nu \px \ln\psi) - \frac{(-2\nu\px\ln\psi)^2}{2} +c(t)	\]
+Svolgendo le derivate e considerando che $ \px\ln\psi = \frac{\px\psi}{\psi} $ si giunge a:
+\[\frac{\pt\psi}{\psi} = \nu \frac{\pdx{2}\psi}{\psi} + \tilde{c}(t)	\]
+Da cui si arriva all'equazione del calore assumendo di poter porre $ \tilde{c}(t)\psi = 0 $.
+La condizione iniziale $ u(x,0) $ trasforma così:
+\[ u(x,0) = -2\nu \px\ln\psi(x,0) \Rightarrow \px\ln\psi = \frac{u(x,0)}{-2\nu} \Rightarrow\ln\psi(x,0) = \int\frac{u(x,0)}{-2\nu}	\]
+Quindi:
+\[ \psi(x,0) = \exp\left(\int\frac{u(x,0)}{-2\nu}\right)	\]
+A questo punto si può risolvere \eqref{eq:cal} utilizzando il nucleo di calore con questa condizione iniziale:
+\[	\psi(x,t) = \frac{1}{\sqrt{4\pi\nu t}}\int\exp\left(-\frac{(x-y)^2}{4\nu t} - \int\frac{u(z,0)}{2\nu}dz \right)dy	\]
+\qedsymbol
+
+\section*{Esercizio 6}
+
+\subsection*{Testo} Effettuare le trasformazioni di B\"acklund sull'equazione di Sine-Gordon
+\begin{equation}
+\px \pt u = \sin u
+\label{eq:sine_gordon}
+\end{equation}
+con le trasformazioni:
+  \begin{subequations}
+  	\begin{numcases}{}
+\px  u + \px v = 2 a \sin{\frac{u-v}{2}}  \label{eq:back1} \\
+\pt  u - \pt v = \frac{2}{a} \sin{\frac{u+v}{2}} \label{eq:back2}
+		\end{numcases}
+	\end{subequations}
+
+\subsection*{Svolgimento}
+Derivando \eqref{eq:back1} per $ t $ e \eqref{eq:back2} per $ x $ si ottiene:
+  \begin{subequations}
+		\begin{numcases}{}
+			\pt\px u + \pt\px v = 2a \pt \sin{\frac{u-v}{2}} = a \cos{\frac{u-v}{2}} (\pt u - \pt v)\\
+			\px\pt u - \px\pt v = \frac{2}{a} \px \sin{\frac{u-v}{2}} = \frac{1}{a} \cos{\frac{u+v}{2}} (\px u + \px v) 
+		\end{numcases}
+  \end{subequations}
+Utilizzando le trasformazioni di B\"acklund sui membri destri di queste equazioni si ottiene:
+\[
+\begin{cases}
+\pt\px u + \pt\px v = 2 \cos{\frac{u-v}{2}} \sin{\frac{u+v}{2}} \\
+\px\pt u - \px\pt v = 2 \cos{\frac{u+v}{2}} \sin{\frac{u-v}{2}} \\
+\end{cases}
+\]
+Sottraendo la prima equazione dalla seconda si giunge a:
+\[	\pt\px v = \cos{\frac{u-v}{2}} \sin{\frac{u+v}{2}}  - \cos{\frac{u+v}{2}} \sin{\frac{u-v}{2}}	\]
+Ricordando l'elementare relazione goniometrica $ \sin{\left(\alpha - \beta\right)} = \sin{\alpha}\cos{\beta} - \cos{\alpha}\sin{\beta} $ si ritorna alla forma \eqref{eq:sine_gordon}:
+\[	\px \pt v = \sin (\frac{u + v}{2} - \frac{u + v}{2}) = \sin v	\]
+Una soluzione elementare di questa equazione è $ v\xt = 0 $, con la quale le trasformazioni di B\"acklund diventano:
+\[
+  	\begin{cases}
+  	\px  u = 2 a \sin{\frac{u}{2}} \\
+  	\pt  u = \frac{2}{a} \sin{\frac{u}{2}}
+  	\end{cases}
+\]
+Cioè definendo $ w(x,y) = \frac{u(x,y)}{2} $:
+  \begin{subequations}
+  	\begin{numcases}{}
+  	\px  w =  a \sin{w}  \label{eq:back1w} \\
+  	\pt  w = \frac{1}{a} \sin{w} \label{eq:back2w}
+  	\end{numcases}
+  \end{subequations}
+Questo è un sistema di equazioni differenziali alle derivate parziali non lineari con una sola funzione incognita. Moltiplicando \eqref{eq:back1w} per $ dx $ e \eqref{eq:back2w} per $ dt $ si giunge a:
+  \begin{subequations}
+  	\begin{numcases}{}
+  	\px  w\,dx =  a \sin{w}\,dx \label{eq:back1wdiff} \\
+  	\pt  w\,dt = \frac{1}{a} \sin{w}\,dt\label{eq:back2wdiff}
+  	\end{numcases}
+  \end{subequations}
+Sommando \eqref{eq:back1wdiff} con \eqref{eq:back2wdiff} e osservando che $ dw = \px w dx + \pt w dt $ si ottiene:
+\[	dw = a\sin w\,dx + \frac{1}{a} \sin w\,dt \quad	\Rightarrow  \quad \frac{dw}{\sin w} = a\,dx + \frac{dt}{a}\]
+Questa è una forma differenziale integrabile:
+\[
+\begin{split}
+\int \frac{dw}{\sin w} & = \int \frac{2i}{\mathrm{e}^{iw}-\mathrm{e}^{-iw}}dw = \int \frac{2i\,\mathrm{e}^{iw}}{\mathrm{e}^{2iw}-1}dw \stackrel{z=\mathrm{e}^{iw}}{=} \int \frac{2}{z^2-1}dz \\ & = \ln\left(z-1\right) - \ln\left(z-1\right) + \mathrm{cost} = \ln\left( \frac{z-1}{z+1} \right) + \mathrm{cost} = \\ & = \ln\left( \frac{\mathrm{e}^{iw}-1}{\mathrm{e}^{iw}+1} \right) + \mathrm{cost} = \ln\left(\tan\frac{w}{2}\right)	+ \mathrm{cost}
+\end{split}
+\]
+Quindi, se $ \delta $ è la costante di integrazione:
+\[	\ln\left(\tan\frac{w}{2}\right) = ax + \frac{t}{a} + \delta 	\]
+Da cui, ricordando che $ w(x,t) = \frac{u(x,t)}{2} $:
+\[	u(x,t) = 4 \arctan\left(\mathrm{e}^{ax + \frac{t}{a} + \delta}\right)		\]
+Questa è una soluzione non banale dell'equazione \eqref{eq:sine_gordon}. 
+\qedsymbol
+\end{document}          
+

@@ -1,0 +1,1464 @@
+\documentclass[]{scrartcl}
+\usepackage{lmodern}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage[makeroom]{cancel}
+\usepackage{cases}
+\usepackage{braket}
+\usepackage{siunitx}
+\usepackage{tikz, pgfplots}
+
+\newtheorem{lemma}{Lemma}
+
+\usetikzlibrary{decorations.pathmorphing}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{arrows.meta}
+
+\tikzset{snake it/.style={decorate, decoration={snake, amplitude = 1.25}}}
+
+\usepackage{physics}
+
+\renewcommand{\qedsymbol}{\hfill \rule{0.5em}{0.5em}}
+\newcommand{\me}{\mathrm{e}}
+\newcommand{\pd}{\partial}
+\newcommand{\pfrac}[1]{\frac{\partial}{\partial #1}}
+\newcommand{\cost}{\mathrm{cost}}
+\newcommand{\sg}{\sqrt{-g}}
+\newcommand{\hg}{\hat{g}}
+\renewcommand{\d}[1]{\ensuremath{\operatorname{d}\!{#1}}}
+\renewcommand{\dd}[1]{\ensuremath{\operatorname{d}^2\!{#1}}}
+\newcommand{\dddd}[1]{\ensuremath{\operatorname{d}^4\!{#1}}}
+\newcommand{\hF}{{}^\star F}
+\newcommand{\htF}{{}^\star \tilde{F}}
+
+\title{Esercizi di Gravità e Superstringhe I}
+\author{Gabriele Bozzola \\ Matricola: 882709}
+\date{Settembre 2016}
+
+\begin{document}
+\maketitle
+
+\section*{Esercizio 1}
+
+\subsection*{Testo}
+
+Si consideri un modello di inflazione con un singolo inflatone $ \phi $ accoppiato
+minimalmente al campo gravitazionale, e con un potenziale quadratico $ V(\phi) = \mu^2 \phi^2 $.
+Misuriamo i tempi con il tempo proprio $ \tau $ degli osservatori isotropi e chiamiamo $ \phi_i $
+il valore dell'inflatone al tempo iniziale $ \tau_i $ dell'inflazione, e $ \phi_f $ il suo valore
+finale al termine $ \tau_f $ dell'epoca inflazionaria.
+Indichiamo la durata dell'inflazione con $ \Delta \tau = \tau_f - \tau_i $.
+\begin{enumerate}
+\item Trovare i parametri di \emph{slow-roll} $ \epsilon $ e $ \eta $ per questo potenziale.
+  Quale è la condizione che deve soddisfare l'inflatone $ \phi $ affinché valga l'approssimazione
+  di \emph{slow-roll}?
+\item Per quale valore $ \phi_f $ l'evoluzione esce dal regime di \emph{slow-roll} e inizia la fase
+  di \emph{reheating}?
+\item Esprimere il numero di e-foldings $ N = \ln(a_f\over a_i) $ come funzione di $ \phi_f $ e di
+  $ \phi_i $. Come dipende il valore iniziale $ \phi_i $ dell'inflatone da $ N $? Quanto vale,
+  in unità di $ M_P $, per $ N \approx 60 $?
+\item Risolvere il sistema di equazioni per l'evoluzione del fattore di scala $ a(\tau) $ e
+  dell'inflatone $ \phi(\tau) $ in regime di \emph{slow-roll}, e trovare la dipendenza esplicita
+  del fattore di scala $ a(\tau) $ dal tempo cosmico $ \tau $.
+\item Come dipende la durata $ \Delta \tau $ dell'inflazione da $ N $ e $ \mu $? Calcolare $ \Delta\tau $
+  in secondi, se l'inflatone ha massa del bosone di Higgs.
+\item \'E corretto assimilare l'inflazione con una fase di espansione esponenziale di tipo de-Sitter?
+  Su che scale di tempi si verifica una deviazione dell'evoluzione quasi de-Sitter?
+\end{enumerate}
+
+\subsection*{Soluzione}
+
+In $ 3 + 1 $ dimensioni l'azione di Einstein-Hilbert accoppiata con un campo scalare reale $ \phi $ soggetto
+ad un potenziale $ V(\phi) $ è:
+\[
+  S =  \int \dddd x  \sg \left( \frac{M_P^2}{2} R  - \frac{1}{2}\left( \nabla\phi \right)^2 + V(\phi) \right)
+\]
+con $ g $ determinante della metrica, $ R $ curvatura scalare e  $ M_P $ massa di Planck ridotta, definita da $ M_P = \frac{1}{8 \pi G_N} $.
+Le equazioni del moto di questa azione sono:
+\begin{numcases}{}
+  \ddot{\phi} + 3 H \dot{\phi} + V'(\phi) = 0  \label{eq:eq_moto_campo_scalare} \\
+  H^2 = \frac{1}{3 M_P^2} \left( \frac{1}{2} \dot{\phi}^2 + V(\phi) \right)  \label{eq:eq_friedmann}
+\end{numcases}
+con $ H $ parametro di Hubble definito da $ H = \dot{a} \slash a $.
+L'equazione \eqref{eq:eq_moto_campo_scalare} proviene dalla variazione dell'azione
+rispetto $ \phi $ mentre l'equazione \eqref{eq:eq_friedmann} rispetto $ g^{\mu\nu} $.
+Specializzando queste equazioni al potenziale dell'esercizio, il quale, tra l'altro, si nota essere sempre non negativo:
+\begin{numcases}{}
+  \ddot{\phi} + 3 H \phi + 2 \mu^2 \phi = 0  \label{eq:eq_moto_campo_scalare_esercizio} \\
+  H^2 = \frac{1}{3 M_P^2} \left( \frac{1}{2} \dot{\phi}^2 + \mu^2 \phi^2 \right)  \label{eq:eq_friedmann_esercizio}
+\end{numcases}
+Affinché il campo inflatonico produca gli effetti di una costante cosmologica, quindi causi l'espansione accelerata,
+riducendo quindi il raggio di Hubble e risolvendo il problema della piattezza, devo poter trattare il campo come un
+fluido perfetto di equazione di stato $ P = - \rho $.
+Il tensore energia-impulso dell'inflatone si dimostra essere:
+\[
+  T_{\mu\nu} = \frac{-2}{\sg}\frac{\delta \mathcal{L}_\phi}{\delta g^{\mu\nu}} \quad \rightarrow \quad
+  T_{\tau\tau} = \frac{1}{2}\dot{\phi}^2 + V(\phi) =: \rho \qquad T_{\chi\chi} = a^2 \left( \frac{1}{2}\dot{\phi}^2 - V(\phi) \right) =: a^2 P
+\]
+Questo non è il tensore energia-impulso di un fluido perfetto perché non vi è un'equazione di stato algebrica che lega pressione e densità, tuttavia se $ \dot{\phi}^2 \ll V(\phi) $ allora $ \rho \approx V(\phi) $ e $ P \approx - V(\phi) $,
+in questo modo si ha il medesimo comportamento di una costante cosmologica, cioè un fluido perfetto con equazione
+di stato $ P = - \rho $ e quindi la seconda equazione di Friedman diventa:
+\[
+  \frac{\ddot{a}}{a} = -\frac{1}{6 M_P^2} \left( \rho + 3P \right) = - \frac{1}{3 M_P^2} \left( \dot{\phi}^2 - V(\phi) \right)
+  \approx \frac{V(\phi)}{3 M_P^2}
+\]
+Questa determina un'espansione accelerata.
+Affinché l'espansione duri a sufficienza il moto deve essere sovrasmorzato, cioè deve valere $ \ddot{\phi} \ll 3 H \phi $,
+senza questa richiesta il campo oscillerebbe intorno al minimo del potenziale e quindi dominerebbe l'energia cinetica,
+invalidando la prima assunzione. Le richieste per entrare nel regime di \emph{slow-roll} sono quindi:
+\begin{numcases}{}
+  \frac{1}{2} \dot{\phi{}} \ll \mu^2 \phi^2 \\
+  \ddot{\phi} \ll 3 H \phi
+\end{numcases}
+Queste possono essere riscritte in termini dei parametri di \emph{slow-roll} $ \epsilon $ e $ \eta $:
+\begin{align}
+  \epsilon = \frac{M_P^2}{2}\left( \frac{V'}{V} \right)^2 \approx \frac{M_P^2}{\phi^2} \label{eq:espilon} \\
+  \eta = M_P^2 \frac{V''}{V} \approx \frac{M_P^2}{\phi^2} \label{eq:eta}
+\end{align}
+Nel quale ho soppresso fattori moltiplicativi dell'ordine dell'unità.
+Le condizioni di \emph{slow-roll} diventano quindi:
+\begin{numcases}{}
+  \varepsilon \ll 1 \quad \rightarrow \quad \abs{\phi} \gg M_P \\
+  \eta \ll 1 \quad \rightarrow \quad \abs{\phi} \gg M_P
+\end{numcases}
+Condizione necessaria per il regime di \emph{slow-roll} è perciò $ \abs{\phi} \gg M_P $
+\footnote{Questa non è una condizione sufficiente per entrare in un regime inflazionario:
+  perché si abbia inflazione basta che valga $ \frac{P}{\rho} = w < -\frac{1}{3} \Leftrightarrow \frac{\dot{\phi}^2 + V(\phi)}{\dot{\phi}^2 - V(\phi)} < -\frac{1}{3} $,
+la quale è automaticamente soddisfatta imponendo le condizioni di \emph{slow-roll}.}.
+Qualora questa condizione smette di essere verificata si esce dal regime di \emph{slow-roll} e si inizia il \emph{reheating}, che avviene quindi
+per $ \abs{\phi(\tau_f)} \approx M_P $. \\ \\
+Se $ N = \ln \left( \frac{a(\tau_f)}{a(\tau_i)} \right) $ è il numero di e-folds, allora:
+\[
+  N = \ln \left( \frac{a(\tau_f)}{a(\tau_i)} \right) = \int_{a(\tau_i)}^{a(\tau_f)} \frac{da}{a} =
+  \int_{\tau_i}^{\tau_f}\frac{\dot{a}}{a} \d{\tau} = \int_{\tau_i}^{\tau_f} H \d{\tau} = \int_{\tau_i}^{\tau_f} \frac{H^2}{H} \d{\tau}
+\]
+Utilizzando le equazioni di campo in approssimazione di \emph{slow-roll} riportate tra poche righe (equazioni \eqref{eq:eq_moto_campo_scalare_sr}
+e \eqref{eq:eq_friedmann_sr}):
+\[
+  \int_{\tau_i}^{\tau_f} \frac{H^2}{H} \d{\tau} = - \int_{\tau_i}^{\tau_f} \frac{\mu^2 \phi^2}{3 M_P^2} \frac{3 \dot{\phi}}{2 \mu^2 \phi} \d{\tau}
+  = - \frac{1}{2 M_P^2} \int_{\tau_i}^{\tau_f} \phi \dot{\phi} \d{\tau}
+\]
+Cambiando variabile di integrazione da $ \tau $ a $ \phi $ e assumendo che $ \phi(\tau_f) \approx M_P $:
+\[
+  - \frac{1}{2 M_P^2} \int_{\tau_i}^{\tau_f} \phi \dot{\phi} \, \d{\tau} \approx - \frac{1}{2 M_P^2} \int_{\phi(\tau_i)}^{M_P} \phi \, \d \phi
+  = \frac{\phi^2(\tau_i) - M_P^2 }{4 M_P^2} \overset{\phi^2 \gg M_P^2}{\approx} \frac{\phi^2(\tau_i)}{4 M_P^2}
+\]
+Affinché sia $ N \approx 60 $ deve essere $ \phi(\tau_i) = \sqrt{4 N} M_P \approx \sqrt{240} M_P \approx \num{15.5} M_P $. \\ \\
+Le equazioni di campo in regime di \emph{slow-roll} sono:
+\begin{numcases}{}
+  3 H \dot{\phi} = - V'(\phi)  \quad \rightarrow \quad 3 H \dot{\phi} = - 2 \mu^2 \phi \label{eq:eq_moto_campo_scalare_sr} \\
+  H^2 = \frac{V(\phi)}{3 M_P^2}  \quad \rightarrow \quad H^2 = \frac{\mu^2 \phi^2}{3 M_P^2}  \label{eq:eq_friedmann_sr}
+\end{numcases}
+Dato che $ H = \dot{a} \slash a = \frac{d}{\d{\tau}} \ln a$ questo è un sistema di equazioni differenziali nelle funzioni $ a(\tau) $ e $ \phi(\tau) $.
+Elevo \eqref{eq:eq_moto_campo_scalare_sr} al quadrato e divido per \eqref{eq:eq_friedmann_sr}:
+\[
+  9 H^2 \dot{\phi}^2 = 4 \mu^4 \phi^2 \quad \xrightarrow{\text{Divisa per \eqref{eq:eq_friedmann_sr}}} \quad
+  3 \dot{\phi}^2 = 4 \mu^2 M_P^2
+\]
+Assumendo il campo positivo e la sua derivata negativa:
+\[
+  \dot{\phi} = - \frac{2}{\sqrt{3}}M_P \mu \quad \rightarrow \quad \phi(\tau) = \phi(\tau_i) - \frac{2}{\sqrt{3}}M_P \mu \left( \tau - \tau_i \right)
+\]
+Sostituendo in \eqref{eq:eq_moto_campo_scalare_sr} si ottiene:
+\[
+  H = \frac{\sqrt{3}}{3}\frac{\mu}{M_P}\phi(\tau_i) - \frac{2}{3}\mu^2 (\tau - \tau_i) \quad \rightarrow \quad  \frac{d}{\d{\tau}} \ln a (\tau) =
+  \frac{\sqrt{3}}{3}\frac{\mu}{M_P}\phi(\tau_i) - \frac{2}{3}\mu^2 (\tau - \tau_i )
+\]
+Rinominando le costanti di integrazione in modo da mettere in evidenza il valore iniziale del fattore di scala:
+\[
+  a(\tau) = a(\tau_i) \, \me^{\, \phi(\tau_i) (\tau - \tau_i)- \frac{\sqrt{3}}{3} M_P \mu (\tau - \tau_i)^2 }
+\]
+Si può esplicitare la dipendenza della durata dell'inflazione dal numero di e-foldings, da $ \mu $ e dal valore iniziale dell'inflatone:
+\[
+  N = \ln \left( \frac{a(\tau_f)}{a(\tau_i)} \right) =  \phi(\tau_i) (\tau_f - \tau_i)- \frac{\sqrt{3}}{3} M_P \mu (\tau_f - \tau_i)^2
+\]
+Ponendo il valore iniziale del campo $ \phi(\tau_i) = 2 \sqrt{N} M_P $ e approssimando $ \frac{\sqrt{3}}{3} \approx 1 $
+si ottiene l'equazione di secondo grado:
+\begin{equation}
+  \label{eq:tempo_inflazione}
+  M_P \mu \left( \Delta \tau \right)^2 - 2 \sqrt{N} M_P \Delta \tau + N = 0 \quad
+  \rightarrow \quad
+  \left( \Delta \tau \right)^2 - \frac{2 \sqrt{N}}{\mu} \Delta \tau + \frac{N}{M_P \mu} = 0
+\end{equation}
+Alcune osservazioni dimensionali: nel sistema di unità di misura di Planck l'unica dimensione rilevante è la massa e $ \hbar = 1 $, $ c = 1 $
+e $ G = 1 $. I tempi hanno dimensione in massa $ -1 $, in quanto $ \hbar = [E][T] $, ma $ [E] = [M] $ dato che $ E = mc^2 $, e siccome $ \hbar $
+non ha dimensioni $ [T] = [M]^{-1} $. L'equazione \eqref{eq:tempo_inflazione} risulta quindi avere le dimensioni corrette: $ M_P $ e $ \mu $ hanno
+dimensioni in massa $ 1 $, mentre $ \Delta \tau $ ha dimensioni $ -1 $ quindi tutti i termini sono adimensionali omogenei.
+Risolvendo l'equazione \eqref{eq:tempo_inflazione}:
+\[
+  \Delta \tau = \frac{\sqrt{N}}{\mu} \pm \sqrt{\frac{N}{\mu^2} - \frac{N}{M_P\mu}}
+\]
+Siccome $ M_P \gg \mu $ è possibile trascurare il secondo termine sotto la radice rispetto al primo, in questo modo ottengo due risultati
+$ \Delta \tau = 0 $ e $ \Delta \tau = \frac{\sqrt{N}}{\mu} $.
+Se esprimo $ \mu $ in $ \si{\GeV} $ ottengo $ \Delta \tau $ con dimensioni $ [E]^{-1} $, ma nelle unità di Planck posso moltiplicare il numeratore
+per $ \hbar = 1 $, che nelle consuete unità di misura ha dimensioni di $ [E][T] $, ripristinando così le giuste dimensioni di tempo:
+\[
+  \Delta \tau = \frac{\sqrt{60}\,\hbar}{\SI{125}{\GeV}}\approx \SI{E-26}{\second}
+\]
+Se non avessi trascurato il secondo termine, la soluzione con il segno negativo sarebbe stata inferiore al tempo di Planck, e quindi inaccettabile.
+% Considerando che la soluzione di de-Sitter può essere parametrizzata con coordinate inflazionarie in modo da prendere una forma alla FLRW in cui è messo
+% in evidenza in fattore di scala:
+% \[
+  % ds^2 = -dt^2 + \me^{2 t \slash l}d\vec{x}^2
+  % \]
+\\ \\
+L'inflazione è assimilabile ad un'espansione del tipo de-Sitter, solo per piccoli tempi, quando vale $ \left( \Delta \tau \right)^2
+\ll \Delta \tau $, quando la crescita è esponenziale. % per tempi maggiori l'evoluzione è mal descritta da un'espansione di de-Sitter.
+
+\section*{Esercizio 2}
+
+\subsection*{Testo}
+Si consideri la varietà quadridimensionale $ \mathcal{M} $ dotata della metrica:
+
+\begin{equation}
+  \label{eq:metrica_problema_2}
+  ds^2 = \frac{8 m w^2}{2 m + v w} \d v ^2 + 8 m \d v  \d w + \left( 2m + v w \right)^2 \left( \d \theta^2 + \sin^2 \theta \d \varphi^2 \right)
+\end{equation}
+dove $ m > 0 $ è una costante. Si mostra che questa metrica è una soluzione delle equazioni di Einstein nel vuoto,
+ha un singolarità di curvatura in $ vw = - 2 m $, ed è regolare per $ vw > -2m $.
+\begin{enumerate}
+\item Mostrare che l'applicazione $ \phi_\lambda $ da $ \mathbb{R} \cross \mathcal{M} $ in $ \mathcal{M} $ tale che,
+  fissato $ \lambda \in \mathbb{R} $, sia data da:
+  \begin{align*}
+    \label{eq:phi_lambda}
+    \phi_\lambda : & \quad \mathcal{M} \rightarrow \mathcal{M} \\
+                   & \quad \left( v,w,\theta,\varphi \right) \mapsto \left( \me^\frac{\lambda}{4m} v, \me^{-\frac{\lambda}{4m}} w, \theta, \varphi  \right)
+  \end{align*}
+  è un gruppo a un parametro di isometrie per la metrica \eqref{eq:metrica_problema_2}, e che il campo vettoriale
+  che lo genera è dato da
+  \begin{equation}
+    \label{eq:campo_vettoriale}
+    \xi = \frac{1}{4 m} \left( v \pfrac{v} - w \pfrac{w} \right)
+  \end{equation}
+  Dedurre che $ \xi $ è un campo vettoriale di Killing per la metrica \eqref{eq:metrica_problema_2}.
+\item Si consideri la famiglia di ipersuperfici $ \set{ w = \cost } $. Trovare il generico campo
+  vettoriale $ n^\mu $ normale a queste ipersuperfici. Mostrare che $ \mathcal{N} = \set{ w = 0} $ è un'ipersuperficie nulla.
+\item Mostrare che $ \mathcal{N} $ è un'orizzonte di Killing per il campo vettoriale di Killing $ \xi $, e calcolare la
+  gravità superficiale.
+\item Sia $ \mathcal{A}(v,w) $ l'area delle sfere con $ (v,w) $ costante. Definire una coordinata di Schwarzschild
+  $ r = \sqrt{\frac{\mathcal{A}(v,w)}{4\pi}} $ per la metrica \eqref{eq:metrica_problema_2} e passare alle coordinate
+  $ (v,r,\theta,\varphi) $. Trovare una riparametrizzazione $ v = v(u) $ della coordinata $ v $ tale che gli elementi metrica
+  \eqref{eq:metrica_problema_2} in coordinate $ (u, r, \theta, \varphi) $ siano indipendenti da $ u $. Riconoscete la metrica
+  in queste coordinate? Potevate aspettarvelo prima di effettuare il cambiamento di coordinate?
+\item Esprimere il campo vettoriale $ \xi $ nelle coordinate $ (u,r,\theta,\varphi) $ e confermare così che si tratta di un
+  campo vettoriale di Killing.
+\item Tracciare l'analogo del diagramma di Krustal per la metrica \eqref{eq:metrica_problema_2} in coordinate $ (u,w,\theta,\varphi) $
+  evidenziando le curve con $ r $ costante, la singolarità di curvatura, l'orizzonte di Killing di $ \xi $, e le orbite del campo
+  vettoriale di Killing $ \xi $. Di che natura (spazio, tempo, o luce) sono le rette con $ v $ costante e quelle con $ w $ costante?
+  Quale è il vantaggio del diagramma di Kruskal rispetto al diagramma in coordinate $ (v,w) $?
+\end{enumerate}
+
+\subsection*{Soluzione}
+Per mostrare che $ \phi_\lambda $ è un gruppo a un parametro di isometrie verifico inizialmente che queste trasformazioni formano un
+gruppo, cioè soddisfano:
+\begin{enumerate}
+\item $ \phi_\lambda \circ \phi_\Lambda = \phi_{\lambda + \Lambda} \quad \forall \lambda,\Lambda \in \mathbb{R}$
+\item $ \phi_0  = \mathbb{I} $.
+\end{enumerate}
+Ma:
+\begin{enumerate}
+\item Applicando le due trasformazioni:
+\[
+  (v,w,\theta,\varphi) \overset{\phi_\lambda}{\mapsto} \left( \me^\frac{\lambda}{4m} v, \me^{-\frac{\lambda}{4m}} w, \theta, \varphi  \right)
+  \overset{\phi_\Lambda}{\mapsto} \left( \me^\frac{\lambda + \Lambda}{4m} v, \me^{-\frac{(\lambda + \Lambda)}{4m}} w, \theta, \varphi  \right)
+\]
+il quale ovviamente corrisponde all'azione di $ \phi_{\lambda + \Lambda} $ sul punto di partenza.
+\item Triviale.
+\end{enumerate}
+Verifico ora che per ogni $ \lambda $ reale la trasformazione $ \phi_\lambda $ è un'isometria verificando che $ \phi_\lambda $ manda $ \d s^2 $ in
+$ \d s^2 $, per far ciò noto che:
+\begin{align*}
+  \d v  & \mapsto \me^\frac{\lambda}{4m}\, \d v  \\
+  \d w & \mapsto \me^{-\frac{\lambda}{4m}}\, \d w \\
+  \d \theta & \mapsto \d \theta \\
+  \d \varphi & \mapsto \d \varphi
+\end{align*}
+Da cui:
+\begin{align*}
+  \d v \,\d w & \mapsto \d v \,\d w \\
+  vw & \mapsto vw \\
+  w\,\d v  & \mapsto w\,\d v
+\end{align*}
+Per cui risulta che $ \d s^2 \mapsto \d s^2 \, \, \forall \lambda \in \mathbb{R} $, quindi le trasformazioni sono isometrie.
+Considero ora l'azione di $ \me^{\lambda \xi} $: % sul generico punto $ (v,w,\theta,\varphi) $
+\[
+  \me^{\lambda \xi} = \sum_{k = 0}^{+\infty} \frac{\lambda^k}{k!}\xi^k = \sum_{k = 0}^{+\infty} \frac{\lambda^k}{k!} \left(\frac{1}{4 m} \right)^k
+  \left( v \pfrac{v} - w \pfrac{w} \right)^k
+\]
+Sul generico punto $ (v,w,\theta,\varphi) $ l'operatore differenziale $ \left( v \pfrac{v} - w \pfrac{w} \right)^k $ agisce come l'identità
+$ \forall k \in \mathbb{N} $, quindi:
+\[
+  \me^{\lambda \xi} : \left( v,w,\theta,\varphi \right) \mapsto \left( \me^\frac{\lambda}{4m} v, \me^{-\frac{\lambda}{4m}} w, \theta, \varphi  \right)
+\]
+% nel caso $ \lambda $ sia infinitesimo, e risulta
+% quindi possibile approssimare $ \me^{\lambda \xi} \approx 1 + \lambda \xi $:
+% \[
+   % \me^{\lambda \xi} \approx 1 +  \frac{\lambda}{4 m} \left( v \pfrac{v} - w \pfrac{w} \right) :  (v,w,\theta,\varphi) \mapsto
+   % (v + \frac{\lambda}{4 m} v, w - \frac{\lambda}{4 m} w, \theta, \varphi )
+   % \approx \left( \me^\frac{\lambda}{4m} v, \me^{-\frac{\lambda}{4m}} w, \theta, \varphi  \right)
+% \]
+Questa è esattamente la trasformazione $ \phi_\lambda $. Siccome $ \xi $ genera un gruppo a un parametro di isometrie allora è un vettore di Killing. \\ \\
+Il tensore metrico per \eqref{eq:metrica_problema_2} è:
+\[
+  g_{\mu\nu} =
+  \begin{pmatrix}
+    \frac{8 m w^2}{2m + vw} & 4m                                & 0                           & 0 \\
+    4m                      & 0                                 & 0                           & 0 \\
+    0                       & 0                                 & \left( 2m + vw \right)^2    & 0 \\
+    0                       & 0                                 & 0                           & \left( 2m + vw \right)^2 \sin^2 \theta
+  \end{pmatrix}
+\]
+Il suo inverso è il tensore:
+\[
+  g^{\mu\nu} =
+  \begin{pmatrix}
+    0                       & \frac{1}{4m}                      & 0                           & 0 \\
+    \frac{1}{4m}            & - \frac{w^2}{4m^2 + 2mvw} & 0                           & 0 \\
+    0                       & 0                                 & \left( 2m + vw \right)^{-2} & 0 \\
+    0                       & 0                                 & 0                           & \left( 2m + vw \right)^{-2} \sin^{-2} \theta
+  \end{pmatrix}
+\]
+Il generico vettore normale alle ipersuperfici di equazione $ K(v,w,\theta,\varphi) = 0 $ ha la forma:
+\begin{equation}
+  \label{eq:vettore_normale}
+  n^\mu(v,w,\theta,\varphi) = h(v,w,\theta,\varphi) g^{\mu\nu}\nabla_\nu K
+\end{equation}
+Nel caso considerato $ K(v,w,\theta,\varphi) = w $ quindi l'unico contributo proviene da $ \nu = w $, cioè:
+\[
+  n^\mu(v,w,\theta,\varphi) = h(v,w,\theta,\varphi) g^{\mu w} %\pfrac{w}
+\]
+Da cui:
+\[
+  n(v,w,\theta,\varphi) = h(v,w,\theta,\varphi) \left( \frac{1}{4 m} \pfrac{v} - \frac{1}{2m}\frac{w^2}{2m + vw} \pfrac{w}  \right)
+\]
+Ridefinendo opportunamente la funzione di normalizzazione $ h $:
+\[
+  n(v,w,\theta,\varphi) = h(v,w,\theta,\varphi) \left( \pfrac{v} - \frac{2w^2}{2m + vw} \pfrac{w}  \right)
+\]
+Il modulo di questo vettore è:
+\begin{align*}
+  n^{\mu}n_{\mu} &=  n^{\mu}n^{\nu}g_{\mu\nu} = n^v n^v g_{vv} + 2 n^v n^w g_{vw} + n^w n^w g_{ww} = \\
+                 &= h^2 \frac{8mw^2}{2m + vw} - h^2 \frac{16mw^2}{2m + vw} = -h^2 \frac{8mw^2}{2m + vw}
+\end{align*}
+Tale modulo si annulla per $ w = 0 $, per questo $ \mathcal{N} $ è un'ipersuperficie nulla.
+Inoltre siccome $ h^2 \geq 0 $, $ m > 0 $, $ 2m + vw > 0 $ e $ w^2 \geq 0 $ si nota che il vettore normale
+ha sempre modulo negativo (ad eccezione di $ w = 0 $), quindi le superfici a $ w = \cost $ sono tutte di tipo spazio.
+Il vettore di killing $ \xi $ sull'ipersuperficie definita da $ w = 0 $ assume la forma:
+\[
+  \xi = \frac{1}{4m} v \pfrac{v}
+\]
+Mentre il vettore normale $ n $:
+\[
+  n = h \pfrac{v}
+\]
+Questi sono paralleli, quindi $ \xi $ è un vettore normale a una ipersuperficie nulla, che quindi è un'orizzonte
+di Killing. Cerco $ h $ in modo che $ n $ sia il vettore tangente ad una geodetica parametrizzata affinemente.
+Si dimostra che tale $ h $ deve soddisfare:
+\[
+  n^\mu n^\alpha \pd_\alpha \ln h + \frac{1}{2}\pd^\mu n^2 = 0
+\]
+Infatti usando la definizione di vettore normale $ n^\mu = h g^{\mu\nu} \nabla_\nu K $:
+\begin{align*}
+  n^\alpha \nabla_\alpha n^\mu & = g^{\mu\nu} \pd_\nu n^\alpha \pd_\alpha K + g^{\mu\nu} h n^\rho \nabla_\rho \pd_\nu K = \\
+                               & = n^\mu n^\alpha \pd_\alpha \ln h + g^{\mu\nu} h n^\rho \nabla_\nu \nabla_\rho K = \\
+                               & = n^\mu n^\alpha \pd_\alpha \ln h - \cancel{n^2 \pd^\mu \ln h} + \frac{1}{2}\pd^\mu n^2
+\end{align*}
+La geodetica è parametrizzata affinemente se:
+\[
+  n^\alpha \nabla_\alpha n^\mu = 0 \Leftrightarrow
+  n^\mu n^\alpha \pd_\alpha \ln h + \frac{1}{2}\pd^\mu n^2 = 0
+\]
+In questo caso scegliendo $ h = \cost $ il primo termine è sempre nullo mentre il secondo termine è ovunque proporzionale a $ w $,
+e quindi valutato sull'ipersuperficie si annulla. Scelgo $ h = \frac{1}{4m} $.
+% La costante di proporzionalità tra $ n $ e $ \xi $ è la gravità superficiale $ \kappa = \frac{1}{4m} $.
+La gravità superficiale è definita a partire dalla funzione di proporzionalità $ \zeta $ tra il vettore di Killing e il
+quello normale $ n $ all'orizzonte tale che sia tangente ad un generatore, cioè ad una geodetica nulla parametrizzata affinemente,
+cioè la funzione $ \zeta $ tale che $ \xi = \zeta n $. Generalmente si utilizza la convenzione di scegliere la normalizzazione
+di $ \xi $ in modo che all'infinito $ \xi^\mu\xi_\nu - 1 $, ma in questo caso il modulo del vettore di Killing $ \xi $ vale:
+\begin{align*}
+  \xi^2 & = \xi^\mu\xi^\nu g_{\mu\nu} = (\xi^v)^2g_{vv} + 2\xi^v\xi^wg_{vw} = \frac{v^2}{16 m^2}\frac{8mw^2}{2m + vw} - \frac{8m vw}{16m^2} = \\
+        & = \frac{vw}{2m} \left( \frac{vw}{2m + vw} - 1 \right) = vw \left( \frac{vw - 2m - vw}{2m + vw}  \right) = - \frac{vw}{2m + vw} = \\
+        & = - \frac{r - 2m}{r} \overset{r \to + \infty}{\rightarrow} -1
+\end{align*}
+Quindi il modulo si annulla su $ r = 2m $, che equivale a $ w = 0 $ o $ v = 0 $ e il vettore di Killing è
+correttamente normalizzato per poter calcolare la gravità superficiale.
+Per questo la gravità superficiale $ \kappa $ di questo orizzonte vale:
+\[
+  \kappa = \xi^\nu \pd_\nu \ln \zeta \rvert_\mathcal{N} = \frac{v}{4m}\partial_v \ln v = \frac{1}{4m}
+\] \\
+Per quanto riguarda le ipersuperfici definite $ v = \cost $, se il vettore normale è $ s $,
+utilizzando ancora l'espressione \eqref{eq:vettore_normale} l'unico contributo proviene da $ \nu = v $, per cui:
+\[
+  s^\mu(v,w,\theta,\varphi) = f(v,w,\theta,\varphi) g^{\mu v} %\pfrac{w}
+  \quad  \rightarrow \quad
+  s(v,w,\theta,\varphi) = f(v,w,\theta,\varphi) \frac{1}{4m} \pfrac{w}
+\]
+Rinominando $ f $:
+\[
+  s(v,w,\theta,\varphi) = f(v,w,\theta,\varphi) \pfrac{w}
+\]
+Il modulo di questo vettore è:
+\[
+  s^{\mu}s_{\mu} = s^{\mu}s^{\nu}g_{\mu\nu} = s^w s^w g_{ww} = 0
+\]
+Per questo motivo tutte le ipersuperfici definite da $ v = \cost $ sono nulle. Il vettore di Killing $ \xi $ in $ v = 0 $
+vale $ \xi = -\frac{1}{4m} w \pfrac{w} $, ed è quindi proporzionale a $ s $.
+
+Come per il caso precedente, cerco $ f $ in modo che $ s $ sia il vettore tangente ad una geodetica nulla parametrizzata affinemente, tale
+funzione è quella che soddisfa:
+\[
+  s^\mu s^\alpha \pd_\alpha \ln f + \frac{1}{2}\pd^\mu s^2 = 0
+\]
+Ma $ s^2 = 0 $ ovunque quindi questa equazione è soddisfatta da ogni $ f $ costante. Fisso $ f $ in modo che $ s = \frac{1}{4m}\pd_w $, in questo modo
+la funzione di proporzionalità tra $ s $ e $ \xi $ è esattamente $ \zeta = w $.
+La gravità superficiale vale perciò:
+\[
+  \kappa = \xi^\nu \pd_\nu \ln \zeta \rvert_\mathcal{N'} = -\frac{w}{4m}\pd_w \ln w = -\frac{1}{4m}
+\] \\ \\
+L'orizzonte di Killing per il campo $ \xi $ è quindi l'orizzonte biforcato ottenuto con $ \mathcal{N} \cup \mathcal{N}' $, e
+la loro intersezione è una 2-sfera in $ v = w = 0 $, dove $ \xi = 0 $ ed è un punto fisso per le trasformazioni $ \phi $.
+Si nota che è verificata le legge zero della dinamica dei buchi neri in quanto $ \kappa^2 = 1 \slash 16 m^2 $ è costante su tutto l'orizzonte. \\ \\
+Sulle sfere a $ v,w $ costanti:
+\[
+  \mathcal{A} = \int \sqrt{g_{\theta\theta} g_{\varphi\varphi}} \d \theta \d \varphi = \int (2m + vw)^2 \sin \theta \d \theta  \d \varphi
+  = 4 \pi (2m + vw)^2
+\]
+Definendo la coordinata radiale $ r = \sqrt{\frac{\mathcal{A}(v,w)}{4\pi}} = (2m + vw) $.
+\[
+  r = 2m + vw \quad \rightarrow \quad w = \frac{r-2m}{v} \quad \rightarrow \quad \d w = \frac{\d r }{v} - \frac{r - 2m}{v^2}\d v
+\]
+Con cui:
+\[
+  \d v \, \d w = \frac{\d v \d r }{v} - \frac{r - 2m}{v^2}\d v ^2
+\]
+Così facendo la metrica assume la forma:
+\begin{align*}
+  \d s^2 & = \frac{8m}{r} \left( \frac{r-2m}{v} \right)^2 \d v ^2 + 8m \left( \frac{\d v \d r }{v} - \frac{r-2m}{v^2}\d v ^2 \right) + r^2 \d \Omega^2 = \\
+       & = \frac{8m(r-2m)}{v^2}\left[ \frac{r-2m}{r} - 1 \right]\d v ^2 + \frac{8m}{v}\d v \d r  +  r^2 \d \Omega^2 = \\
+       & = -\frac{16m^2(r-2m)}{r v^2}\d v ^2 + \frac{8m}{v}\d v \d r  +  r^2 \d \Omega^2 = \\
+       & = - 16m^2 \left( 1 - \frac{2m}{r} \right) \frac{\d v ^2}{v^2} + 8m \frac{\d v }{v}\d r  +  r^2 \d \Omega^2
+\end{align*}
+Possibili cambi di variabili per eliminare la dipendenza di $ v $ sono:
+\[
+  4m\frac{\d v }{v} = \pm du \quad \rightarrow \quad v(u) \propto \me^{\pm \frac{u}{4m}}
+\]
+In questo modo l'elemento di linea diventa:
+\begin{equation}
+  \label{eq:eddfink}
+  \d s^2 = - \left( 1 - \frac{2m}{r} \right) du^2 \pm 2\d u\d r  +  r^2 \d \Omega^2
+\end{equation}
+Questa è la metrica di Schwarzschild nelle coordinate di Eddington-Finkelstein anticipate o ritardate a seconda della scelta del segno.
+In effetti numerosi erano gli indizi che portavano a sospettare che la metrica \eqref{eq:metrica_problema_2} fosse parente della soluzione di Schwarzschild,
+tra questi vi sono: la simmetria sferica, il ruolo speciale del punto $ r = 2m $ e i valori della gravità superficiale sugli orizzonti. In particolare tuttavia si
+osserva che per $ r > 2m $ il vettore di Killing ha modulo negativo, e la metrica è invariante rispetto alle trasformazioni $ \phi $, che posso essere interpretatate
+come traslazioni temporali, in quanto generate da un vettore di tipo tempo,  quindi per il teorema di Birkhoff ci si aspetta una soluzione di Schwarzschild.
+Ponendo $ \d u = \d t \pm \frac{\d r }{1 - \frac{2m}{r}} $ si ritorna alla consueta forma:
+\[
+  \d s^2 = - \left( 1 - \frac{2m}{r} \right) \d t^2 + \frac{\d r ^2}{1 - \frac{2m}{r}} + r^2 \d \Omega^2
+\]
+\\
+Complessivamente il cambio di coordinate è:
+\[
+  \begin{cases}
+    r = 2m + vw \\
+    u = \pm 4m \ln v
+  \end{cases}
+\]
+Sotto questo cambio di coordinate le i vettori $ \pd_v $ e $ \pd_w $ trasformano in questo modo:
+\begin{align*}
+  \pfrac{v} & = \frac{\pd r}{\pd v}\pfrac{v} +  \frac{\pd u}{\pd v}\pfrac{u} = w \pfrac{r} \pm \frac{4m}{v} \pfrac{u} \\
+  \pfrac{w} & = \frac{\pd r}{\pd v}\pfrac{w} +  \frac{\pd u}{\pd w}\pfrac{u} = v\pfrac{r}
+\end{align*}
+Per cui il vettore di Killing $ \xi $:
+\[
+  \xi = \frac{1}{4 m} \left( v \pfrac{v} - w \pfrac{w} \right) = \frac{1}{4m} \left( vw \pfrac{r} \pm 4m \pfrac{u} - vw \pfrac{r} \right) = \pm \pfrac{u}
+\]
+Siccome la metrica \eqref{eq:eddfink} non dipende esplicitamente da $ u $, questo è effettivamente un vettore di Killing.
+\\
+Una rappresentazione grafica di questa metrica è riportata nella figura \ref{fig:krusakl}, dove ogni punto è una 2-sfera di raggio $ (2m + vw) $.
+Le singolarità di curvatura sono indicate con linee ondulate e sono definite
+dall'equazione $ vw = 2m $, mentre le iperboli a $ r = \cost $, definite dall'equazione $ vw = r - 2m $, sono riportate colorate, in rosso
+se $ r > 2m $, in blu in caso contrario. La sfera di biforcazione è formata dai punti fissi sotto l'azione del campo di Killing, quindi
+dalla 2-sfera $ \mathcal{B} $ di raggio $ 2m $ in $ v = w = 0 $. L'orizzonte di Killing è formato dagli assi aventi per equazioni $ w = 0 $
+e $ v = 0 $, come dimostrato nelle pagine precedenti.
+Si nota che l'azione dell'isometria generata dal vettore di Killing mantiene inalterato il prodotto $ vw $, quindi il campo di Killing agisce mandando
+le iperboli a $ r = \cost $ in sé stesse, dato che $ r = vw - 2m $. Per tracciare le orbite di $ \xi $ conviene partire osservando l'azione del campo di Killing
+sulle curve con $ w = 0 $ o con $ v = 0 $ in quanto su queste si riduce ad una dilatazione,
+ad esempio su $ w = 0 $ o su $ v = 0 $ l'isometria agisce come:
+\[
+  (v,0) \mapsto (K_\lambda v, 0) \qquad  (0,w) \mapsto (0, \frac{w}{K_\lambda})
+\]
+con $ K_\lambda $ costante. Assumendo $ K_\lambda > 1 \; (\Leftrightarrow \lambda > 0) $ si ottiene l'azione del campo sugli assi: per continuità si ottiene
+l'azione sulle curva con $ r = \cost $.
+Come già evidenziato le superfici a $ v = \cost $ sono tutte nulle, mentre quelle a $ w = \cost \not = 0 $ sono di tipo spazio.
+Questo porta ad una differenza sostanziale rispetto al diagramma di Kruskal, in quanto la figura \ref{fig:krusakl} non ha la struttura causale del Minkowski,
+mentre il diagramma di Kruskal è conformemente piatto.
+
+\pgfkeys{/pgfplots/axis labels at tip/.style={
+    xlabel style={at={(current axis.right of origin)}, xshift=1.5ex, anchor=center},
+    ylabel style={at={(current axis.above origin)}, yshift=1.5ex, anchor=center}}
+}
+\pgfkeys{/pgfplots/scale/.style={
+  x post scale=#1,
+  y post scale=#1,
+  z post scale=#1}
+}
+
+\begin{figure}[htbp]
+  \centering
+  % \begin{subfigure}[b]{1\linewidth}
+    % \centering
+    \begin{tikzpicture}
+      \begin{axis}
+        [
+        % xmax=5,
+        % ymax=5,
+        samples =50,
+        xlabel = $ w $,
+        ylabel = $ v $,
+        ticks = none,
+        axis lines = center,
+        axis labels at tip,
+        scale=1.55,
+        clip=false,
+        ]
+        \addplot[domain = 0.4:4.8, name path=right, thick, snake it] (x, -2/x);
+        \path[name path=down] (axis cs:0.4,-5) -- (axis cs:5,-5);
+        \addplot[domain = -4.8:-0.4, name path=left, thick, snake it] (x, -2/x);
+        \path[name path=up] (axis cs:-4.8,5) -- (axis cs:-0.4,5);
+
+        % \addplot[domain = 0.3:4.8, blue!100, ] (x, -1.5/x);
+        \addplot[domain = 0.2:4.8, blue!80, ] (x, -1/x);
+        \addplot[domain = 0.1:4.8, blue!40, ] (x, -0.5/x);
+        \addplot[domain = 0.05:4.8, blue!20, ] (x, -0.25/x);
+        \addplot[domain = 0.025:4.8, blue!10, ] (x, -0.125/x);
+
+        % \addplot[domain = -0.3:-4.8, blue!100, ] (x, -1.5/x);
+        \addplot[domain = -0.2:-4.8, blue!80, ] (x, -1/x);
+        \addplot[domain = -0.1:-4.8, blue!40, ] (x, -0.5/x);
+        \addplot[domain = -0.05:-4.8, blue!20, ] (x, -0.25/x);
+        \addplot[domain = -0.025:-4.8, blue!10, ] (x, -0.125/x);
+
+        \addplot[domain = 0.3:4.8, red!100, ] (x, 1.5/x);
+        \addplot[domain = 0.2:4.8, red!80, ] (x, 1/x);
+        \addplot[domain = 0.1:4.8, red!40, ] (x, 0.5/x);
+        \addplot[domain = 0.05:4.8, red!20, ] (x, 0.25/x);
+        \addplot[domain = 0.025:4.8, red!10, ] (x, 0.125/x);
+
+        \addplot[domain = -0.3:-4.8, red!100, ] (x, 1.5/x);
+        \addplot[domain = -0.2:-4.8, red!80, ] (x, 1/x);
+        \addplot[domain = -0.1:-4.8, red!40, ] (x, 0.5/x);
+        \addplot[domain = -0.05:-4.8, red!20, ] (x, 0.25/x);
+        \addplot[domain = -0.025:-4.8, red!10, ] (x, 0.125/x);
+
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 0.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 1,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 1.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 2,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 2.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 3,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 3.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 4,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: 4.5,0);
+
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -0.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -1,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -1.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -2,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -2.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -3,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -3.5,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -4,0);
+        \draw[-<] (axis cs: 0,0) -- (axis cs: -4.5,0);
+
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,0.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,1);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,1.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,2);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,2.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,3);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,3.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,4);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,4.5);
+
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-0.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-1);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-1.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-2);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-2.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-3);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-3.5);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-4);
+        \draw[->] (axis cs: 0,0) -- (axis cs: 0,-4.5);
+
+        \draw[-<] (axis cs:  0.3 ,  3.22 ) -- (axis cs:  0.32 ,  3.12 );
+        \draw[-<] (axis cs:  0.5 ,  2.07 ) -- (axis cs:  0.53 ,  1.95 );
+        \draw[-<] (axis cs:  0.72 ,  1.37 ) -- (axis cs:  0.8 ,  1.25 );
+        \draw[-<] (axis cs:  1.16 ,  0.86 ) -- (axis cs:  1.28 ,  0.78 );
+        \draw[-<] (axis cs:  1.64 ,  0.61 ) -- (axis cs:  1.76 ,  0.57 );
+        \draw[-<] (axis cs:  2.12 ,  0.47 ) -- (axis cs:  2.24 ,  0.45 );
+        \draw[-<] (axis cs:  2.6 ,  0.38 ) -- (axis cs:  2.72 ,  0.37 );
+        \draw[-<] (axis cs:  3.08 ,  0.32 ) -- (axis cs:  3.2 ,  0.31 );
+        \draw[-<] (axis cs:  3.56 ,  0.28 ) -- (axis cs:  3.68 ,  0.27 );
+        \draw[-<] (axis cs:  4.04 ,  0.25 ) -- (axis cs:  4.16 ,  0.24 );
+        \draw[-<] (axis cs:  4.52 ,  0.22 ) -- (axis cs:  4.64 ,  0.22 );
+
+        \draw[-<] (axis cs:  0.3 ,  -3.22 ) -- (axis cs:  0.32 ,  -3.12 );
+        \draw[-<] (axis cs:  0.5 ,  -2.07 ) -- (axis cs:  0.53 ,  -1.95 );
+        \draw[-<] (axis cs:  0.72 ,  -1.37 ) -- (axis cs:  0.8 ,  -1.25 );
+        \draw[-<] (axis cs:  1.16 ,  -0.86 ) -- (axis cs:  1.28 ,  -0.78 );
+        \draw[-<] (axis cs:  1.64 ,  -0.61 ) -- (axis cs:  1.76 ,  -0.57 );
+        \draw[-<] (axis cs:  2.12 ,  -0.47 ) -- (axis cs:  2.24 ,  -0.45 );
+        \draw[-<] (axis cs:  2.6 ,  -0.38 ) -- (axis cs:  2.72 ,  -0.37 );
+        \draw[-<] (axis cs:  3.08 ,  -0.32 ) -- (axis cs:  3.2 ,  -0.31 );
+        \draw[-<] (axis cs:  3.56 ,  -0.28 ) -- (axis cs:  3.68 ,  -0.27 );
+        \draw[-<] (axis cs:  4.04 ,  -0.25 ) -- (axis cs:  4.16 ,  -0.24 );
+        \draw[-<] (axis cs:  4.52 ,  -0.22 ) -- (axis cs:  4.64 ,  -0.22 );
+
+        \draw[-<] (axis cs:  -0.3 ,  -3.22 ) -- (axis cs:  -0.32 ,  -3.12 );
+        \draw[-<] (axis cs:  -0.5 ,  -2.07 ) -- (axis cs:  -0.53 ,  -1.95 );
+        \draw[-<] (axis cs:  -0.72 ,  -1.37 ) -- (axis cs:  -0.8 ,  -1.25 );
+        \draw[-<] (axis cs:  -1.16 ,  -0.86 ) -- (axis cs:  -1.28 ,  -0.78 );
+        \draw[-<] (axis cs:  -1.64 ,  -0.61 ) -- (axis cs:  -1.76 ,  -0.57 );
+        \draw[-<] (axis cs:  -2.12 ,  -0.47 ) -- (axis cs:  -2.24 ,  -0.45 );
+        \draw[-<] (axis cs:  -2.6 ,  -0.38 ) -- (axis cs:  -2.72 ,  -0.37 );
+        \draw[-<] (axis cs:  -3.08 ,  -0.32 ) -- (axis cs:  -3.2 ,  -0.31 );
+        \draw[-<] (axis cs:  -3.56 ,  -0.28 ) -- (axis cs:  -3.68 ,  -0.27 );
+        \draw[-<] (axis cs:  -4.04 ,  -0.25 ) -- (axis cs:  -4.16 ,  -0.24 );
+        \draw[-<] (axis cs:  -4.52 ,  -0.22 ) -- (axis cs:  -4.64 ,  -0.22 );
+
+        \draw[-<] (axis cs:  -0.3 ,  3.22 ) -- (axis cs:  -0.32 ,  3.12 );
+        \draw[-<] (axis cs:  -0.5 ,  2.07 ) -- (axis cs:  -0.53 ,  1.95 );
+        \draw[-<] (axis cs:  -0.72 ,  1.37 ) -- (axis cs:  -0.8 ,  1.25 );
+        \draw[-<] (axis cs:  -1.16 ,  0.86 ) -- (axis cs:  -1.28 ,  0.78 );
+        \draw[-<] (axis cs:  -1.64 ,  0.61 ) -- (axis cs:  -1.76 ,  0.57 );
+        \draw[-<] (axis cs:  -2.12 ,  0.47 ) -- (axis cs:  -2.24 ,  0.45 );
+        \draw[-<] (axis cs:  -2.6 ,  0.38 ) -- (axis cs:  -2.72 ,  0.37 );
+        \draw[-<] (axis cs:  -3.08 ,  0.32 ) -- (axis cs:  -3.2 ,  0.31 );
+        \draw[-<] (axis cs:  -3.56 ,  0.28 ) -- (axis cs:  -3.68 ,  0.27 );
+        \draw[-<] (axis cs:  -4.04 ,  0.25 ) -- (axis cs:  -4.16 ,  0.24 );
+        \draw[-<] (axis cs:  -4.52 ,  0.22 ) -- (axis cs:  -4.64 ,  0.22 );
+
+        \addplot[thick] (x, 0);
+        \addplot[thick] (0, x);
+
+        % \addplot[shading = axis, left color = black!30, right color = black!01,
+        % shading angle = 45] fill between[of = right and down, soft clip={domain=0.4:4.8}];
+        % \addplot[shading = axis, left color = black!01, right color = black!30,
+        % shading angle = 45] fill between[of = left and up]; %soft clip={domain=-4.8:-0.4}];
+        % \addplot[shading = axis, left color = black!70, right color = black!05,
+        % shading angle = 45]
+        % fill between[of = right and down, soft clip={domain=0.4:4.8}];
+
+        \node[right] at (axis cs:4.8,-0.4) { $ r = 0 $ };
+        \node[left] at (axis cs:-4.8,0.4) { $ r = 0 $ };
+        \node[left] at (axis cs:-5,0.) { $ r = 2m $ };
+        \node[below] at (axis cs:0,-5) { $ r = 2m $ };
+        \node at (axis cs:3,-3) { $ r < 0 $ };
+        \node at (axis cs:-3,3) { $ r < 0 $ };
+        \node[above right]  at (axis cs:0,0) { $ \mathcal{B} $ };
+        \fill (axis cs:0,0) circle [radius=2pt];
+
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Diagramma di Kruskal per la metrica \eqref{eq:metrica_problema_2}. Le iperboli rosse sono curve a raggio costante con $ r > 2m $,
+      quelle blu con $ r < 2m $. $ \mathcal{B} $ è il punto di biforcazione dell'orizzonte di Killing del campo $ \xi $. Le isometrie $ \phi_\lambda $
+      consistono in rotazioni iperboliche lungo le curve a $ r = \cost $. In questa rappresentazione i coni luce \emph{non} sono gli stessi del Minkowski.}
+    \label{fig:krusakl}
+    % \vspace*{-50pt}
+  % \end{subfigure}
+  % \begin{subfigure}[b]{1\linewidth}
+  %   \centering
+  %   \begin{tikzpicture} [rotate = -45]
+  %     \begin{axis}
+  %       [
+  %       xmin=-3,
+  %       ymin=-3,
+  %       xmax=3,
+  %       ymax=3,
+  %       samples =50,
+  %       % xlabel = $ w $,
+  %       % ylabel = $ v $,
+  %       ticks = none,
+  %       unit vector ratio*=1 1 1,
+  %       axis lines* = center,
+  %       axis labels at tip,
+  %       scale=1.5,
+  %       % clip=false,
+  %       ]
+  %       \addplot[domain = 0.1:4, name path=right, thick, snake it] (x, -1/x);
+  %       % \path[name path=down] (axis cs:0.4,-4.8) -- (axis cs:4.8,-4.8);
+  %       \addplot[domain = -4:-0.1, name path=left, thick, snake it] (x, -1/x);
+  %       % \path[name path=up] (axis cs:-4.8,4.8) -- (axis cs:-0.4,4.8);
+
+  %       % \addplot[domain = 0.3:4.8, blue!100, ] (x, -1.5/x);
+  %       % \addplot[domain = 0.1:4.8, blue!80, ] (x, -1/x);
+  %       % \addplot[domain = 0.1:4.8, blue!40, ] (x, -0.5/x);
+  %       % \addplot[domain = 0.05:4.8, blue!20, ] (x, -0.25/x);
+  %       % \addplot[domain = 0.025:4.8, blue!10, ] (x, -0.125/x);
+
+  %       % \addplot[domain = -0.3:-4.8, blue!100, ] (x, -1.5/x);
+  %       % \addplot[domain = -0.1:-4.8, blue!80, ] (x, -1/x);
+  %       % \addplot[domain = -0.1:-4.8, blue!40, ] (x, -0.5/x);
+  %       % \addplot[domain = -0.05:-4.8, blue!20, ] (x, -0.25/x);
+  %       % \addplot[domain = -0.025:-4.8, blue!10, ] (x, -0.125/x);
+
+  %       % \addplot[domain = 0.3:4.8, red!100, ] (x, 1.5/x);
+  %       \addplot[domain = 0.2:4, red!80, thick] (x, 1/x);
+  %       % \addplot[domain = 0.1:4.8, red!40, ] (x, 0.5/x);
+  %       % \addplot[domain = 0.05:4.8, red!20, ] (x, 0.25/x);
+  %       % \addplot[domain = 0.025:4.8, red!10, ] (x, 0.125/x);
+
+  %       % \addplot[domain = -0.3:-4.8, red!100, ] (x, 1.5/x);
+  %       \addplot[domain = -0.2:-4, red!80, thick] (x, 1/x);
+  %       % \addplot[domain = -0.1:-4.8, red!40, ] (x, 0.5/x);
+  %       % \addplot[domain = -0.05:-4.8, red!20, ] (x, 0.25/x);
+  %       % \addplot[domain = -0.025:-4.8, red!10, ] (x, 0.125/x);
+
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 0.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 1,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 1.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 2,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 2.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 3,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 3.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 4,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: 4.5,0);
+
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -0.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -1,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -1.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -2,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -2.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -3,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -3.5,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -4,0);
+  %       % \draw[->] (axis cs: 0,0) -- (axis cs: -4.5,0);
+
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,0.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,1);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,1.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,2);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,2.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,3);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,3.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,4);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,4.5);
+
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-0.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-1);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-1.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-2);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-2.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-3);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-3.5);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-4);
+  %       % \draw[-<] (axis cs: 0,0) -- (axis cs: 0,-4.5);
+
+  %       % \draw[->] (axis cs:  0.3 ,  3.22 ) -- (axis cs:  0.32 ,  3.12 );
+  %       % \draw[->] (axis cs:  0.5 ,  2.07 ) -- (axis cs:  0.53 ,  1.95 );
+  %       % \draw[->] (axis cs:  0.72 ,  1.37 ) -- (axis cs:  0.8 ,  1.25 );
+  %       % \draw[->] (axis cs:  1.16 ,  0.86 ) -- (axis cs:  1.28 ,  0.78 );
+  %       % \draw[->] (axis cs:  1.64 ,  0.61 ) -- (axis cs:  1.76 ,  0.57 );
+  %       % \draw[->] (axis cs:  2.12 ,  0.47 ) -- (axis cs:  2.24 ,  0.45 );
+  %       % \draw[->] (axis cs:  2.6 ,  0.38 ) -- (axis cs:  2.72 ,  0.37 );
+  %       % \draw[->] (axis cs:  3.08 ,  0.32 ) -- (axis cs:  3.2 ,  0.31 );
+  %       % \draw[->] (axis cs:  3.56 ,  0.28 ) -- (axis cs:  3.68 ,  0.27 );
+  %       % \draw[->] (axis cs:  4.04 ,  0.25 ) -- (axis cs:  4.16 ,  0.24 );
+  %       % \draw[->] (axis cs:  4.52 ,  0.22 ) -- (axis cs:  4.64 ,  0.22 );
+
+  %       % \draw[->] (axis cs:  0.3 ,  -3.22 ) -- (axis cs:  0.32 ,  -3.12 );
+  %       % \draw[->] (axis cs:  0.5 ,  -2.07 ) -- (axis cs:  0.53 ,  -1.95 );
+  %       % \draw[->] (axis cs:  0.72 ,  -1.37 ) -- (axis cs:  0.8 ,  -1.25 );
+  %       % \draw[->] (axis cs:  1.16 ,  -0.86 ) -- (axis cs:  1.28 ,  -0.78 );
+  %       % \draw[->] (axis cs:  1.64 ,  -0.61 ) -- (axis cs:  1.76 ,  -0.57 );
+  %       % \draw[->] (axis cs:  2.12 ,  -0.47 ) -- (axis cs:  2.24 ,  -0.45 );
+  %       % \draw[->] (axis cs:  2.6 ,  -0.38 ) -- (axis cs:  2.72 ,  -0.37 );
+  %       % \draw[->] (axis cs:  3.08 ,  -0.32 ) -- (axis cs:  3.2 ,  -0.31 );
+  %       % \draw[->] (axis cs:  3.56 ,  -0.28 ) -- (axis cs:  3.68 ,  -0.27 );
+  %       % \draw[->] (axis cs:  4.04 ,  -0.25 ) -- (axis cs:  4.16 ,  -0.24 );
+  %       % \draw[->] (axis cs:  4.52 ,  -0.22 ) -- (axis cs:  4.64 ,  -0.22 );
+
+  %       % \draw[->] (axis cs:  -0.3 ,  -3.22 ) -- (axis cs:  -0.32 ,  -3.12 );
+  %       % \draw[->] (axis cs:  -0.5 ,  -2.07 ) -- (axis cs:  -0.53 ,  -1.95 );
+  %       % \draw[->] (axis cs:  -0.72 ,  -1.37 ) -- (axis cs:  -0.8 ,  -1.25 );
+  %       % \draw[->] (axis cs:  -1.16 ,  -0.86 ) -- (axis cs:  -1.28 ,  -0.78 );
+  %       % \draw[->] (axis cs:  -1.64 ,  -0.61 ) -- (axis cs:  -1.76 ,  -0.57 );
+  %       % \draw[->] (axis cs:  -2.12 ,  -0.47 ) -- (axis cs:  -2.24 ,  -0.45 );
+  %       % \draw[->] (axis cs:  -2.6 ,  -0.38 ) -- (axis cs:  -2.72 ,  -0.37 );
+  %       % \draw[->] (axis cs:  -3.08 ,  -0.32 ) -- (axis cs:  -3.2 ,  -0.31 );
+  %       % \draw[->] (axis cs:  -3.56 ,  -0.28 ) -- (axis cs:  -3.68 ,  -0.27 );
+  %       % \draw[->] (axis cs:  -4.04 ,  -0.25 ) -- (axis cs:  -4.16 ,  -0.24 );
+  %       % \draw[->] (axis cs:  -4.52 ,  -0.22 ) -- (axis cs:  -4.64 ,  -0.22 );
+
+  %       % \draw[->] (axis cs:  -0.3 ,  3.22 ) -- (axis cs:  -0.32 ,  3.12 );
+  %       % \draw[->] (axis cs:  -0.5 ,  2.07 ) -- (axis cs:  -0.53 ,  1.95 );
+  %       % \draw[->] (axis cs:  -0.72 ,  1.37 ) -- (axis cs:  -0.8 ,  1.25 );
+  %       % \draw[->] (axis cs:  -1.16 ,  0.86 ) -- (axis cs:  -1.28 ,  0.78 );
+  %       % \draw[->] (axis cs:  -1.64 ,  0.61 ) -- (axis cs:  -1.76 ,  0.57 );
+  %       % \draw[->] (axis cs:  -2.12 ,  0.47 ) -- (axis cs:  -2.24 ,  0.45 );
+  %       % \draw[->] (axis cs:  -2.6 ,  0.38 ) -- (axis cs:  -2.72 ,  0.37 );
+  %       % \draw[->] (axis cs:  -3.08 ,  0.32 ) -- (axis cs:  -3.2 ,  0.31 );
+  %       % \draw[->] (axis cs:  -3.56 ,  0.28 ) -- (axis cs:  -3.68 ,  0.27 );
+  %       % \draw[->] (axis cs:  -4.04 ,  0.25 ) -- (axis cs:  -4.16 ,  0.24 );
+  %       % \draw[->] (axis cs:  -4.52 ,  0.22 ) -- (axis cs:  -4.64 ,  0.22 );
+
+  %       % \addplot[thick] (x, 0);
+  %       % \addplot[thick] (0, x);
+
+  %       % \addplot[shading = axis, left color = black!30, right color = black!01,
+  %       % shading angle = 45] fill between[of = right and down, soft clip={domain=0.4:4.8}];
+  %       % \addplot[shading = axis, left color = black!01, right color = black!30,
+  %       % shading angle = 45] fill between[of = left and up]; %soft clip={domain=-4.8:-0.4}];
+  %       % \addplot[shading = axis, left color = black!70, right color = black!05,
+  %       % shading angle = 45]
+  %       % fill between[of = right and down, soft clip={domain=0.4:4.8}];
+
+  %       \node[above, rotate = 45] at (axis cs:-0.2,0.2) { II };
+  %       \node[below, rotate = 45] at (axis cs:0.2,-0.2) { IV };
+  %       \node[left, rotate = 45] at (axis cs:-0.2,-0.2) { III };
+  %       \node[right, rotate = 45] at (axis cs:0.2,0.2) { I };
+
+  %       \node[rotate = 150] at (axis cs:1.2,0.6) { $ r = \cost $ };
+  %       \node[above] at (axis cs:-2.4,0.) { $ r = 2m $ };
+  %       \node[rotate = 90, above] at (axis cs:0,-2.4) { $ r = 2m $ };
+  %       \node[rotate = 45] at (axis cs:1.5,-1.5) { $ r < 0 $ };
+  %       \node[rotate = 45] at (axis cs:-1.5,1.5) { $ r < 0 $ };
+
+  %       % \fill (axis cs:0,0) circle [radius=2pt];
+
+  %     \end{axis}
+  %   \end{tikzpicture}
+  %   \vspace*{-50pt}
+  %   \caption{Diagramma ruotato di $ \SI{45}{\degree} $ secondo le usuali consuetudini di rappresentazione. Le regioni
+  %     numerate solo le medesime regioni del Kruskal.}
+  %   \label{fig:krusakl2}
+  % \end{subfigure}
+\end{figure}
+
+\section*{Esercizio 3}
+
+\subsection*{Testo}
+Si consideri uno spaziotempo $ d + 1 $-dimensionale con la metrica
+\begin{equation}
+  \label{eq:metrica_problema_3}
+  \d{\hat{s}^2_{d+1}} = \me^{2\alpha \Phi} \d {s^2_d} + \me^{2 \beta \Phi} \left( \d z + A \right)^2
+\end{equation}
+dove $ z \sim z + 2\pi L $ e
+\[
+  \alpha^2 = \frac{1}{2 \left( d - 1 \right) \left( d - 2 \right) }, \qquad \beta = - \left( d - 2 \right) \alpha
+\]
+Il dilatone $ \Phi $, il campo di Maxwell $ A = A_\mu dx^\mu $ e la metrica $d$-dimensionale $ \d{s^2_d} $ non dipendono dalla coordinata
+$ z $. $ \mu, \nu, \dots $ sono indici curvi in $ d $ dimensioni, mentre $ M, N, \dots $ si riferiscono a $ d + 1 $ dimensioni.
+
+Si dimostri che l'equazione di Klein-Gordon
+\begin{equation}
+  \label{eq:klein_gordon}
+  \pd_M \left( \hg^{MN}\sqrt{-\hg} \pd_N \hat{\phi} \right) = 0
+\end{equation}
+dà luogo all'equazione
+\begin{equation}
+  \label{eq:equazione_es_3}
+  \left( \nabla_\mu - \frac{in}{L} A_\mu \right) \left( \nabla^\mu - \frac{in}{L} A^\mu  \right) \phi_n = \me^{2 \left(d-1\right) \alpha \Phi}\frac{n^2}{L^2}\phi_n,
+\end{equation}
+dove $ \phi_n $ denota il componente di Fourier nello sviluppo:
+\[
+\hat{\phi}(x^\mu, z) = \sum_n \phi_n(x^\mu) \me^{\frac{inz}{L}}
+\]
+Quali sono la massa e la carica del campo $ \phi_n $?
+
+\subsection*{Soluzione}
+In quello che segue si utilizza la convenzione sui cappucci e sugli indici per spazi $ d $ e $ d+1 $-dimensionali: i cappucci e le lettere latine maiuscole
+si riferiscono a grandezze nello spazio $ d+1 $-dimensionale, mentre le lettere greche e l'assenza di cappucci a quelle nello spazio $ d $-dimensionale.
+Per prima cosa dimostro che l'equazione \eqref{eq:klein_gordon} è effettivamente l'equazione di Klein-Gordon in background curvilineo:
+$ \hat{\nabla}_M \hat{\nabla}^M \hat{\phi} = 0 $.
+Per far ciò utilizzo un paio di lemmi:
+\begin{lemma}
+  \label{lem:traccia_simboli}
+  Vale che:
+  \begin{equation}
+    \label{eq:traccia_cristhoffel}
+    \Gamma^\mu_{\;\mu\nu} = \pd_\nu \sg
+  \end{equation}
+\end{lemma}
+
+\begin{proof}
+  Dalla relazione che lega i simboli di Cristhoffel alla metrica:
+  % \begin{align*}
+  \[
+    \Gamma^\mu_{\;\mu\nu}  = \frac{1}{2}g^{\mu\alpha} (\pd_\nu g_{\alpha\mu} + \pd_\mu g_{\nu\alpha} - \pd_\alpha g_{\mu\nu} ) \\
+                          = \frac{1}{2} \left( g^{\mu\alpha} \pd_\nu g_{\alpha\mu} + \cancel{\pd^\alpha g_{\nu\alpha}} - \cancel{\pd^\mu g_{\mu\nu}} \right) \\
+                          =  \frac{1}{2}g^{\mu\alpha}\pd_\nu g_{\mu\alpha}
+                        \]
+  % \end{align*}
+  Nel quale ho utilizzato nel secondo passaggio che la metrica è simmetrica.
+  Ma vale anche che:
+  \[
+    \pd_\nu \ln \sqrt{-g} = \frac{1}{\sqrt{-g}}\pd_\nu\sqrt{-g} = \frac{1}{2}g^{\mu\alpha}\pd_\nu g_{\mu\alpha}
+  \]
+  Da cui per confronto risulta la \eqref{eq:traccia_cristhoffel}.
+\end{proof}
+\noindent
+Utilizzando il lemma \ref{lem:traccia_simboli} dimostro un secondo utile risultato:
+\begin{lemma}
+  \label{lem:divergenza_vettore}
+  Sia $ A $ un vettore, allora:
+  \[
+    \nabla_\mu A^\mu = \frac{1}{\sg} \pd_\mu(\sg A^\mu)
+  \]
+\end{lemma}
+\begin{proof}
+  Dalla definizione di derivata covariante:
+  \begin{align*}
+    \nabla_\mu A^\mu  = \pd_\mu A^\mu + \Gamma^\mu_{\;\mu\nu}A^\nu
+                      \overset{\eqref{eq:traccia_cristhoffel}}{=} \pd_\mu A^\mu +  \frac{1}{\sqrt{-g}}\pd_\mu\sqrt{-g}A^\mu
+                      = \frac{1}{\sqrt{-g}}\pd_\mu \left( \sqrt{-g} A^\mu \right)
+  \end{align*}
+  Dove nell'ultimo passaggio ho riconosciuto la derivata di un prodotto.
+\end{proof}
+\noindent
+Utilizzando questo lemma sull'equazione di Klein-Gordon in un background curvo:
+\[
+  \hat{\nabla}_M \hat{\nabla}^M \hat{\phi} =  \hat{\nabla}_M \pd^M \hat{\phi} =
+  \frac{1}{\sqrt{-\hg}} \left( \sqrt{-\hg}\pd^N \hat{\phi}  \right) =
+  \frac{1}{\sqrt{-\hg}} \left( \hg^{MN}\sqrt{-\hg}\pd_N \hat{\phi}  \right)
+\]
+E quindi ho riscritto nella forma dell'esercizio l'equazione di Klein-Gordon.
+Manipolo quindi l'espressione:
+\begin{multline*}
+  \pd_M(\hg^{MN}\sqrt{-\hg}\pd_N\hat{\phi}) =
+  \pd_\mu(\hg^{\mu\nu}\sqrt{-\hg}\pd_\nu\hat{\phi}) +
+  \pd_\mu(\hg^{\mu z}\sqrt{-\hg}\pd_z\hat{\phi}) +
+  \pd_z(\hg^{z \mu}\sqrt{-\hg}\pd_\mu\hat{\phi}) + \\
+  \pd_z(\hg^{z z}\sqrt{-\hg}\pd_z\hat{\phi})
+\end{multline*}
+Sviluppando con l'ansatz di Kaluza-Klein:
+\[
+  \hg^{\mu\nu} = \me^{-2 \alpha \Phi} g^{\mu\nu} \quad
+  \hg^{\mu z} = -\me^{-2 \alpha \Phi} A^\mu \quad
+  \hg^{z z} = A_\mu A^\mu \me^{-2 \alpha \Phi} + \me^{-2\beta \Phi}
+\]
+Da cui:
+\[
+  \sqrt{-\hg} = \me^{\beta + d\alpha}\sg
+\]
+Ma $ \beta = - (d -2)\alpha $, quindi $ \sqrt{-\hg} = \me^{2\alpha\Phi}\sg $.
+Si ottiene perciò:
+\begin{gather*}
+ = {}   \pd_\mu (\me^{-2\alpha\Phi} g^{\mu\nu} \me^{2\alpha\Phi} \sg \pd_z \hat{\phi} ) + \pd_\mu (-\me^{-2\alpha\Phi}A^\mu \me^{2\alpha\Phi} \sg \pd_z \hat{\phi} )  +  \pd_z (-\me^{-2\alpha\Phi} A^\mu \me^{2\alpha\Phi} \sg \pd_\mu \hat{\phi} )       \\
+       + \pd_z \left((A_\mu A^\mu\me^{-2\alpha\Phi} + \me^{2(d-2)\alpha\phi})\me^{2\alpha\Phi} \sg \pd_z \hat{\phi} \right)  = \pd_\mu (g^{\mu\nu}\sg\pd_\nu \hat{\phi}) - \pd_\mu (A^\mu \sg \pd_z \hat{\phi})  \\
+    - \pd_z (A^\mu \sg\pd_\mu \hat{\phi}) + \pd_z (A_\mu A^\mu \sg\pd_z \hat{\phi})     + \pd_z (\me^{2(d-1)\alpha\Phi}\sg\pd_z\hat{\phi})  =
+\end{gather*}
+Utilizzando il fatto che le grandezze con indici greci non dipendono da $ z $:
+\[
+  = \pd_\mu (g^{\mu\nu}\sg\pd_\nu \hat{\phi}) - \pd_\mu(A^\mu \sg \pd_z \hat{\phi})
+  - A^\mu\sg \pd_z \pd_\mu \hat{\phi} + A^2 \sg \pd_z^2 \hat{\phi} +                                                                                                                                           \me^{2(d-1)\alpha\Phi} \sg \pd_z^2 \hat{\phi}
+\]
+Questa espressione è uguale a zero per ipotesi, dividendo quindi tutto per $ \sg $:
+\[
+  = \frac{1}{\sg}\pd_\mu (g^{\mu\nu}\sg\pd_\nu \hat{\phi}) -  \frac{1}{\sg} \pd_\mu(A^\mu \sg \pd_z \hat{\phi})
+  - A^\mu \pd_z \pd_\mu \hat{\phi} + A^2 \pd_z^2 \hat{\phi} + \me^{2(d-1)\alpha\Phi} \pd_z^2 \hat{\phi}
+\]
+Facendo agire la derivata sul secondo termine:
+\[
+  = \frac{1}{\sg}\pd_\mu (g^{\mu\nu}\sg\pd_\nu \hat{\phi}) -  \frac{1}{\sg} \pd_\mu(A^\mu \sg) \pd_z \hat{\phi}
+  - 2A^\mu \pd_z \pd_\mu \hat{\phi} + A^2 \pd_z^2 \hat{\phi} + \me^{2(d-1)\alpha\Phi} \pd_z^2 \hat{\phi}
+\]
+Utilizzando il lemma \ref{lem:divergenza_vettore} e scambiando l'ordine delle derivate nel terzo termine:
+% La dimostrazione riportata all'inizio dell'esercizio per l'uguaglianza $ \hat{\nabla}_M \hat{\nabla}^M \phi = \frac{1}{\sg}\pd_N (g^{MN}\sg\pd_N \hat{\phi}) $
+% può essere utilizzata allo stesso modo per dimostrare che
+% \[
+%   \frac{1}{\sg}\pd_\mu (g^{\mu\nu}\sg\pd_\nu \hat{\phi}) = \nabla_\mu \nabla^\mu \hat{\phi} \quad \text{ e } \quad
+%   \frac{1}{\sg} \pd_\mu(A^\mu \sg)  = \nabla_\mu A^\mu
+% \]
+% Per cui:
+\[
+  \nabla^\mu\nabla_\mu \hat{\phi} - \nabla_\mu A^\mu \pd_z \hat{\phi} - 2 A^\mu \pd_\mu \pd_z \hat{\phi} + \left(A^2 + \me^{2(d-1)\alpha\Phi}\right)\pd_z^2 \hat{\phi} = 0
+\]
+Inserendo lo sviluppo di Fourier:
+\begin{multline*}
+  \nabla^\mu\nabla_\mu \sum_n \phi_n \me^{\frac{inz}{L}} - 2 A^\mu \pd_\mu \pd_z \sum_n \phi_n \me^{\frac{inz}{L}} -
+  \nabla_\mu A^\mu \pd_z \sum_n \phi_n \me^{\frac{inz}{L}} + \\  (A^2 + \me^{2(d-1)\alpha}) \pd_z^2 \sum_n \phi_n \me^{\frac{inz}{L}} = 0
+\end{multline*}
+Sviluppando tendendo in considerazione che $ \nabla_\mu $ agisce solo sulle coordinate greche:
+\begin{multline*}
+  \sum_n \left( \nabla^\mu\nabla_\mu \phi_n  \right) \me^{\frac{inz}{L}} - 2 A^\mu \sum_n \pd_\mu \phi_n \frac{in}{L}  \me^{\frac{inz}{L}}
+  - \nabla_\mu A^\mu \frac{in}{L}\sum_n \phi_n  \me^{\frac{inz}{L}} - \\ \frac{n^2}{L^2}(A^2 + \me^{2(d-1)\alpha\Phi})\sum_n \phi_n  \me^{\frac{inz}{L}} = 0
+\end{multline*}
+Siccome $ \set{ f_n(z) = \me^{\frac{inz}{L}}}_{n \in \mathbb{N}} $ è una base di Fourier, per $ n $ distinti queste funzioni sono linearmente indipendenti quindi la
+seguente relazione deve essere vera per ogni $ n \in \mathbb{N} $:
+\[
+  \nabla^\mu\nabla_\mu \phi_n - 2 A^\mu \pd_\mu \phi_n \frac{in}{L}  - \nabla_\mu A^\mu \frac{in}{L} \phi_n - \frac{n^2}{L^2}(A^2 + \me^{2(d-1)\alpha\Phi}) \phi_n = 0
+\]
+Considerando che $ \nabla_\mu \phi = \pd_\mu \phi $ l'equazione si riscrive equivalentemente come:
+\[
+  \left( \nabla_\mu - \frac{in}{L} A_\mu \right) \left( \nabla^\mu - \frac{in}{L} A^\mu  \right) \phi_n = \me^{2 \left(d-1\right) \alpha \Phi}\frac{n^2}{L^2}\phi_n,
+\]
+Che è esattamente l'equazione \eqref{eq:equazione_es_3}. Questa è un'equazione di Klein-Gordon per un campo carico massivo.
+\\ \\
+In uno spaziotempo piatto si introduce l'interazione elettromagnetica rendendo locale la simmetria di gauge U(1), questo significa introdurre
+una derivata covariante della forma $ D_\mu = \pd_\mu + iq A_\mu $. L'accoppiamento minimale con il campo elettromagnetico si ottiene allo stesso
+modo anche in un bakground curvo, nel quale si definisce la derivata totalmente covariante (cioè covariante rispetto a diffeomorfismi e a trasformazioni
+di gauge U(1) locali) $ D_\mu = \nabla_\mu + iq A_\mu $. Per confronto con $ D_\mu = \nabla_\mu - \frac{in}{L} A_\mu $ si trova che la carica del modo $ n- $esimo è
+$ q = -\frac{n}{L} $.
+Inoltre definendo $ \Box = D_\mu D^\mu $ l'equazione \eqref{eq:equazione_es_3} diventa:
+\[
+  \left( \Box - \me^{2 \left(d-1\right) \alpha \Phi}\frac{n^2}{L^2} \right) \phi_n = 0
+\]
+Confrontando con  l'equazione di Klein-Gordon per un campo massivo:
+\[
+  \left( \Box - m^2 \right) \phi = 0
+\]
+si ottiene che la massa dell'$ n $-esimo modo è $ m =  \me^{ \left(d-1\right) \alpha \Phi}\frac{n}{L} $.
+
+\section*{Esercizio 4}
+
+\subsection*{Testo}
+A lezione abbiamo visto che usando l'ansatz di Kaluza-Klein \eqref{eq:metrica_problema_3} e l'indipendenza della metrica dalla coordinata z,
+l'azione di Einstein-Hilbert in 5 dimensioni si riduce a:
+\begin{equation}
+  \label{eq:azione_EH}
+  S = \frac{1}{16 \pi} \int \dddd x \left( R - \frac{1}{2} (\pd \Phi)^2 - \frac{1}{4} \me^{-\sqrt{3}\Phi} F^2 \right)
+\end{equation}
+Nonostante la complicatezza delle equazioni del moto che seguono dalla \eqref{eq:azione_EH} esiste una semplice tecnica per generare
+delle soluzioni. Partiamo con lo spazio prodotto tra la metrica di Schwarzschild in 4 dimensioni e una linea con la metrica $ \d z^2 $,
+\begin{equation}
+  \label{eq:metrica_per_linea}
+  \d {\hat{s}}^2_5 = - \left( 1 - 2mr^{-1} \right) \d t^2 + \left( 1 - 2mr^{-1} \right)^{-1} \d r^2 + r^2 \d \Omega^2 + \d z^2
+\end{equation}
+che è ovviamente una soluzione delle equazioni del moto in 5 dimensioni (perché?). Facciamo poi un boost lungo $ z $ con parametro $ \gamma $
+(scrivere la trasformazione delle coordinate $ t, z $!), compattifichiamo $ z $ su un cerchio e paragoniamo con la \eqref{eq:metrica_problema_3}.
+Si dimostri che in questo modo si ottiene per la metrica in 4 dimensioni
+\begin{equation}
+  \label{eq:metrica_in_4_dimensioni}
+  \d{s^2_4} = \Delta^{-\frac{1}{2}}\left( 1 - 2mr^{-1} \right)\d t^2 + \Delta^{\frac{1}{2}} \left[ \left( 1 - 2mr^{-1} \right)^{-1}\d r^2 + r^2 \d \Omega^2 \right]
+\end{equation}
+con $ \Delta = 1 + 2mr^{-1}\sinh^2 \gamma $. Si faccia vedere inoltre che il dilatone e il campo di gauge sono dati da
+\begin{equation}
+  \label{eq:dilatone_gauge}
+  \me^{\frac{2\Phi}{\sqrt{3}}} = \Delta \qquad A = \frac{m \sinh 2 \gamma}{r \Delta} dt
+\end{equation}
+Calcolare la carica elettrica del buco nero definita da:
+\begin{equation}
+  \label{eq:carica_buco_nero}
+  Q = \frac{1}{4\pi} \int \me^{-\sqrt{3}\Phi} \hF
+\end{equation}
+dove $ {}^\star $ è il duale di Hodge di $ F $, e si integra su una 2-sfera per $ r \rightarrow + \infty $.
+Dimostrare che
+\begin{equation}
+  \label{eq:carica_massa}
+  Q = m \sinh 2 \gamma
+\end{equation}
+La massa $ M $ del buco nero può essere ottenuta dal termine leading dello sviluppo asintotico di $ g_{tt} $. Far vedere che questo dà:
+\begin{equation}
+  \label{eq:massa_buco_nero}
+  M = \frac{m}{2} \left( 2 + \sinh^2 \gamma \right)
+\end{equation}
+Facoltativo: Calcolare la temperatura $ T $ del buco nero richiedendo l'assenza di singolarità coniche nella sezione euclidea, e dimostrare
+che vale la prima legge
+\begin{equation}
+  \label{eq:prima_legge}
+  \d M = T \d S + \phi \d Q
+\end{equation}
+con $ S = \mathcal{A}_{\mathrm{orizz.}} \slash 4 $ l'entropia di Bekenstein-Hawking ($ A_{\mathrm{orizz.}} $: area dell'orizzonte) e $ \phi = A_t \lvert_{\mathrm{orizz.}} $
+il potenziale elettrico. \\
+Altro compito facoltativo: Motivare la \eqref{eq:carica_buco_nero}.
+
+\subsection*{Soluzione}
+In quello che segue si utilizza la convenzione sui cappucci e sugli indici per spazi $ d $ e $ d+1 $-dimensionali: i cappucci e le lettere latine maiuscole
+si riferiscono a grandezze nello spazio $ d+1 $-dimensionale, mentre le lettere greche e l'assenza di cappucci a quelle nello spazio $ d $-dimensionale.
+La metrica \eqref{eq:metrica_per_linea} risolve le equazioni di Einstein nel vuoto perché il tensore di Ricci è a blocchi, infatti:
+\[
+  \hg_{M N}(x,z) =
+  \begin{pmatrix}
+    g_{\mu\nu}(x) & 0 \\
+    0             & 1 \\
+  \end{pmatrix}
+\]
+Siccome il tensore metrico è diagonale a blocchi è immediato calcolare l'inverso:
+\[
+  \hg^{M N} =
+  \begin{pmatrix}
+    g^{\mu\nu}(x) & 0 \\
+    0             & 1 \\
+  \end{pmatrix}
+\]
+Calcolando i simboli di Cristhoffel:
+\[
+  \hat{\Gamma}^{M}_{\;NO} = \frac{1}{2} \hg^{MP}\left( \partial_O \hg_{NZ} +  \partial_N \hg_{PO} -  \partial_P \hg_{ON}  \right)
+\]
+Qualora uno tra $ M, N $ e $ O $ sia $ z $ allora il simbolo è nullo in quanto nessun componente del tensore metrico
+dipende da $ z $ e tutti i componenti di $ \hat{g} $ che contengono l'indice $ z $ sono costanti, quindi quando derivati si annullano.
+A questo punto calcolando il tensore di curvatura:
+\[
+  \hat{R}^{M}_{\;NOP} = \partial_O \hat{\Gamma}^{M}_{\;PN} + \partial_P \hat{\Gamma}^{M}_{\;ON} + \hat{\Gamma}^{R}_{\;PN} \hat{\Gamma}^{M}_{\;OR}
+  + \hat{\Gamma}^{R}_{\;OP} \hat{\Gamma}^{M}_{\;PR}
+\]
+Siccome i simboli di Cristhoffel sono nulli quando un indice è $ z $ anche le compoeneti del tensore di Riemann sono nulle quando uno
+dei suoi indici è $ z $. Dato che il tensore di Ricci è $ R_{MN} = R^P_{\;MPN} $ quando uno dei suoi indici è $ z $ allora quella componente
+è nulla, ciò significa che il Ricci è a blocchi con il blocco corrispondente a $ z $ nullo:
+\[
+  \hat{R}_{M N} =
+  \begin{pmatrix}
+    R_{\mu\nu} & 0 \\
+    0             & 0 \\
+  \end{pmatrix}
+\]
+Siccome $ R_{\mu\nu} = 0 $ perché la metrica in quattro dimensioni è quella di Schwarzschild vale che $ \hat{R}_{MN} = 0 $,
+cioè sono soddisfatte le equazioni di Einstein in cinque dimensioni nel vuoto. \\ \\
+Eseguo un boost di rapidità $ \gamma $:
+\[
+  \begin{pmatrix}
+    t' \\
+    z' \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \cosh \gamma & -\sinh \gamma \\
+    -\sinh \gamma & \cosh \gamma \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    t \\
+    z \\
+  \end{pmatrix}
+\]
+L'inverso di questa trasformazione è, utilizzando le proprietà gruppali delle trasformazioni di Lorentz:
+\[
+  \begin{pmatrix}
+    t \\
+    z \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \cosh \gamma & \sinh \gamma \\
+    \sinh \gamma & \cosh \gamma \\
+  \end{pmatrix}
+  \begin{pmatrix}
+    t' \\
+    z' \\
+  \end{pmatrix}
+\]
+Da cui:
+\[
+  \begin{cases}
+    \d t = \cosh \gamma \; \d t' + \sinh \gamma \; \d z' \\
+    \d z = \sinh \gamma \; \d t' + \cosh \gamma \; \d z'
+  \end{cases}
+\]
+E quindi:
+\[
+  \begin{cases}
+    \d t^2 = \cosh^2 \gamma \; \d t'^2 + \sinh^2 \gamma \; \d z'^2 + 2 \sinh \gamma \cosh \gamma \; \d t' \d z' \\
+    \d z^2 = \sinh^2 \gamma \; \d t'^2 + \cosh^2 \gamma \; \d z'^2 + 2 \sinh \gamma \cosh \gamma \; \d t' \d z'
+  \end{cases}
+\]
+Questa trasformazione è un diffeomorfismo, quindi la metrica che si ottiene è ancora soluzione delle equazioni di Einstein in cinque
+dimensioni.
+Riscrivendo \eqref{eq:metrica_per_linea} con questo cambio di coordinate e sopprimendo per comodità i primati:
+\begin{align*}
+  \d{\hat{s}^2_5} & = - \left( 1 - \frac{2m}{r} \right) \d t^2 + \left( 1 - \frac{2m}{r} \right)^{-1} \d r^2 + r^2 \d \Omega^2 + \d z^2 = [\dots] = \\
+                  & = - \left( 1 - \frac{2m}{r} \cosh^2 \gamma \right) \d t^2 + \frac{\d r^2}{1 - \frac{2m}{r}} + r^2 \d \Omega^2 +
+                 \frac{2m}{r}\sinh 2\gamma \; \d t \d z + \left(1 + \frac{2m}{r}\sinh^2 \gamma \right) \d z^2
+\end{align*}
+Nel quale chiaramente si è posto con abuso di notazione $ \sinh 2 \gamma = \sinh (2\gamma) $ e si è utilizzata la relazione trigonometrica
+iperbolica $ \sinh 2\gamma = 2 \sinh \gamma \cosh \gamma $. Si nota che per $ \gamma = 0 $,
+cioè per un boost a velocità nulla (ovvero una trasformazione di identità) la metrica torna ad essere \eqref{eq:metrica_per_linea}. \\ \\
+La metrica in cinque dimensioni è già indipendente da $ z $, quindi la riduzione consiste nel porre, in accordo con l'ansatz di Kaluza-Kelin:
+\[
+  \begin{cases}
+    \hg_{\mu\nu} = \me^{2\alpha\Phi}g_{\mu\nu} + \me^{2\beta\Phi}A_\mu A_\nu \\
+    \hg_{\mu z} = \me^{2\beta\Phi} A_\mu \\
+    \hg_{zz} = \me^{2\beta\Phi}
+  \end{cases}
+\]
+Cioè porre $ \d{\hat{s}^2_5} = \me^{2\alpha\Phi} \d{s^2_4} + \me^{2\beta\Phi}\left( \d z + A \right)^2 $. Sviluppando la teoria generale della riduzione
+dimensionale di Kaluza-Kelin si scopre che una scelta furba per i parametri $ \alpha $ e $ \beta $ è:
+\[
+  \alpha = \frac{1}{\sqrt{2(d-1)(d-2)}} = \frac{1}{2\sqrt{3}} \qquad \beta = -(d-2)\alpha = - \frac{1}{\sqrt{3}}
+\]
+Tale scelta consente di ottenere l'azione di Einstein-Hilbert e del campo scalare con le normalizzazioni consuete. \\ \\ x
+A questo punto si identifica il prefattore di $ \d z^2 $ con $ \me^{-\frac{2}{\sqrt{3}}\Phi} $:
+\[
+  \me^{-\frac{2}{\sqrt{3}}\Phi} = 1 + \frac{2m}{r}\sinh^2 \gamma
+\]
+Si definisce tale grandezza $ \Delta $, come richiede il testo dell'esercizio:
+\[
+  \Delta := 1 + \frac{2m}{r}\sinh^2 \gamma = \me^{-\frac{2}{\sqrt{3}}\Phi}
+\]
+Si nota che $ \Delta \to 1 $ se $ \gamma \to 0 $.
+Con questa identificazione è possibile trovare anche il campo di gauge ricostruendo il termine $ \Delta (A_\mu \d x^\mu + \d z)^2 $. Siccome l'unico
+doppio prodotto che compare nella metrica è $ \d t \d z $, significa che $ A $ ha solo la componente temporale. Aggiungendo e sottraendo dalla
+metrica il termine $ \Delta \left( \frac{m \sinh 2\gamma}{r\Delta}\right)^2 \d t^2 $ si ricostruisce il quadrato desiderato:
+\[
+  \Delta \left[ \left( \frac{m\sinh2\gamma}{r\Delta} \right)^2 \d t^2 + \frac{2m \sinh 2\gamma}{r\Delta} \d t \d z + dz^2  \right]
+\]
+Identificando $ A = \frac{m \sinh 2 \gamma}{r \Delta} \d t $ si ottiene esattamente $ \me^{-\frac{2}{\sqrt{3}}\Phi} \left( A + \d z \right)^2 $. \\
+Nella metrica rimangono i termini:
+\[
+  - \left( 1 - \frac{2m}{r} \cosh^2 \gamma \right) \d t^2 + \frac{\d r^2}{1 - \frac{2m}{r}} + r^2 \d \Omega^2 - \frac{4m^2 \sinh^2 \gamma \cosh^2 \gamma}{r^2 \Delta} \d t^2
+\]
+Si nota che $ \me^{2\alpha \Phi} = \me^{\frac{1}{\sqrt{3}}\Phi} = \Delta^{-\frac{1}{2}} $, per questo raccogliendo $ \Delta^{-\frac{1}{2}} $ si produce il corretto
+prefattore davanti a $ \d s^2_4 $:
+\[
+  \Delta^{-\frac{1}{2}} \left[
+    - \Delta^{\frac{1}{2}}\left( 1 - \frac{2m}{r} \cosh^2 \gamma \right) \d t^2 + \Delta^{\frac{1}{2}} \left( \frac{\d r^2}{1 - \frac{2m}{r}} + r^2 \d \Omega^2 \right)
+    - \frac{4m^2 \sinh^2 \gamma \cosh^2 \gamma}{r^2 \Delta^{\frac{1}{2}}} \d t^2
+  \right]
+\]
+Manipolo i termini con i $ \d t^2 $ moltiplicando a numeratore e a denominatore del primo termine $ \Delta^{\frac{1}{2}} $:
+\begin{align*}
+  &  - \frac{\Delta}{\Delta^{\frac{1}{2}}}\left( 1 - \frac{2m}{r} \cosh^2 \gamma \right) - \frac{4m^2 \sinh^2 \gamma \cosh^2 \gamma}{r^2 \Delta^{\frac{1}{2}}} = \\
+  ={} & -\Delta^{-\frac{1}{2}} \left[ \left( 1 + \frac{2m}{r}\sinh^2 \gamma \right) \left( 1 - \frac{2m}{r}\cosh^2 \gamma \right)
+        + \frac{4m^2 \sinh^2 \gamma \cosh^2 \gamma}{r^2} \right] \\
+  = {} & -\Delta^{-\frac{1}{2}} \left( 1 - \frac{2m}{r} \right)
+\end{align*}
+Per cui complessivamente:
+\[
+  \d s^2_4 = -\frac{1}{\Delta^{\frac{1}{2}}}\left( 1 - \frac{2m}{r} \right)\d t^2 + \Delta^{\frac{1}{2}} \left( \frac{\d r^2}{1 - \frac{2m}{r}} + r^2 \d \Omega^2 \right)
+\]
+Introducendo la lapse-function $ N^2 = \Delta^{-\frac{1}{2}}\left( 1 - \frac{2m}{r} \right) $ la metrica assume la forma:
+\begin{equation}
+  \label{eq:metrica_con_lapse}
+  \d s^2_4 = -N^2\d t^2 +  \frac{\d r^2}{N^2} + \Delta^{\frac{1}{2}} r^2 \d \Omega^2
+\end{equation}
+\\
+Cerco ora la carica del buco nero con la formula del testo dell'esercizio \eqref{eq:carica_buco_nero}:
+\[
+  Q = \frac{1}{4\pi}\int \me^{-\sqrt{3}\Phi}\hF
+\]
+Definendo $ \tilde{F} = \me^{-\sqrt{3}\Phi} F = \Delta^{\frac{3}{2}} F $, dopo aver dimostrato che $ \htF = \me^{-\sqrt{3}\Phi} \hF $ la carica del buco nero è:
+\[
+  Q = \frac{1}{4\pi} \int \htF
+\]
+Il campo di gauge è:
+\[
+  A = \frac{\frac{m}{r} \sinh 2\gamma}{1 + \frac{2m}{r} \sinh^2 \gamma} \d{t}
+\]
+Mentre il tensore di Faraday:
+\[
+  F = \d A = -\frac{m \sinh 2\gamma}{(r + 2m \sinh^2 \gamma)^2} \d r \wedge \d{t}
+\]
+Mostro ora che $ \htF = \me^{-\sqrt{3}\Phi} \hF $.
+
+\begin{lemma}
+  Vale che  $ \htF_{\mu\nu} = \me^{-\sqrt{3}\Phi} \hF_{\mu\nu} = \Delta^{\frac{3}{2}}\frac{\sg}{2} \varepsilon_{\mu\nu\rho\sigma} F^{\rho\sigma}$.
+\end{lemma}
+
+\begin{proof}
+  Sia $ \omega = \frac{1}{p!} \omega_{\mu_1\mu_2\dots\mu_p} \d x^{\mu_1} \wedge \d x^{\mu_2} \wedge \dots \d x^{\mu_p} \in \Lambda_p $ una $ p $-forma,
+  allora il suo duale di Hodge in $ \Lambda_{q-p} $ è definito da:
+  \[
+    {}^\star \omega =  \frac{\sqrt{\sigma}}{p!(q-p)!} \omega_{\mu_1\mu_2\dots\mu_p} \; \varepsilon^{\mu_1\mu_2\dots\mu_p}_{\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\nu_{p+1}\dots\nu_{q}}
+    \d x^{\nu_1} \wedge \d x^{\nu_2} \wedge \dots \d x^{\nu_q}
+  \]
+  Dove $ \sigma $ è il determinante della metrica indotta.
+  Nel caso considerato $ p = 2 $ e $ q = 4 $ e $ \omega = F $:
+  \[
+    \hF = \frac{\sqrt{\sigma}}{4} F^{\mu\nu}\varepsilon_{\mu\nu\rho\sigma} \d x^\rho \wedge \d x^\sigma \quad \text{e} \quad
+    \htF = \frac{\sqrt{\sigma}}{4} \tilde{F}^{\mu\nu}\varepsilon_{\mu\nu\rho\sigma} \d x^\rho \wedge \d x^\sigma
+  \]
+  Ma $ \tilde{F}^{\mu\nu} = \Delta^{\frac{3}{2}} F^{\mu\nu} $, quindi:
+  \[
+    \htF = \frac{\sqrt{\sigma}}{4} \Delta^{\frac{3}{2}}F^{\mu\nu}\varepsilon_{\mu\nu\rho\sigma} \d x^\rho \wedge \d x^\sigma = \Delta^{\frac{3}{2}} \hF
+    = \Delta^{\frac{3}{2}} \frac{\sqrt{\sigma}}{4} F^{\mu\nu}\varepsilon_{\mu\nu\rho\sigma} \d x^\rho \wedge \d x^\sigma
+  \]
+  Sostanzialmente ho mostrato che l'operazione di dualità si comporta bene rispetto alla moltiplicazione di una 0-forma.
+\end{proof}
+\noindent
+Calcolo $ \htF $ su una 2-sfera a $ t $ e $ r $ costanti. La metrica indotta è:
+\[
+  \d \sigma^2 = \Delta^{\frac{1}{2}}r^2(r) \d \Omega^2
+\]
+Inoltre noto che $ F^{rt} = - F_{rt} $ infatti:
+\[
+  F^{rt} = g^{r\alpha}g^{t\beta}F_{\alpha\beta} = g^{rr}g^{tt}F_{rt} = -N^{-2}N^2 F_{rt} = - F_{rt}
+\]
+Utilizzando la formula appena ricavata:
+\begin{align*}
+  \htF & = \Delta^{\frac{3}{2}}(r) \frac{\sqrt{\sigma}}{4} F^{\mu\nu}\;\varepsilon_{\mu\nu\rho\sigma} \d x^\rho \wedge \d x^\sigma
+        = -\Delta^{\frac{3}{2}}(r) \sqrt{\sigma} F^{rt}  \d \theta \d \phi = \\
+       & \overset{(\star)\footnotemark[1]}{=}
+         \Delta^{\frac{3}{2}}(r) \sqrt{\sigma} F_{rt} \d \theta \d \phi
+        = \Delta^{2}(r) {r^2} \sin\theta  \frac{m \sinh 2\gamma}{r^2 \Delta^2(r)} \d \theta \d \phi
+        \overset{r\to +\infty}{\to} {m \sin\theta \sinh 2\gamma} \d \theta \d \phi
+\end{align*}%
+\footnotetext[1]{Il simbolo $\star$ è stato inserito per riferirsi successivamente a questo passaggio.}%
+In cui nel primo passaggio il fattore $ 4 $ viene eliminato dall'antisimmetria di $ F^{\mu\nu} $ e di $ \d x^\rho \wedge \d x^\sigma $.
+Per cui:
+\[
+  Q = \frac{1}{4\pi} \int_0^{2\pi} \int_0^\pi m \sin\theta \sinh 2\gamma \d \theta \d \phi = m \sinh 2\gamma
+\]
+Una giustificazione di perché la carica ha questa forma si ottiene osservando le equazioni del moto di questa azione:
+\[
+  \begin{cases}
+    G_{\mu\nu} = \frac{1}{2} \left( \nabla_\mu \Phi \nabla_\nu \Phi - \frac{1}{2} \nabla_\alpha \Phi \nabla^\alpha \Phi
+      g_{\mu\nu}\right) + \frac{1}{2}\me^{-\sqrt{3}\Phi} \left( F_{\mu\rho} F_\nu^{\;\rho} - \frac{1}{4}F^2g_{\mu\nu} \right) \\
+    \nabla_\mu \left( \me^{-\sqrt{3}\Phi} F^{\mu\nu} \right) = 0 \\
+    \Box \Phi = - \frac{\sqrt{3}}{4}\me^{-\sqrt{3}\Phi} F^2
+  \end{cases}
+\]
+Questo è un sistema di Einstein-Maxwell-scalare. Considerando una teoria puramente elettromagnetica, cioè descritta dall'azione
+\[
+  S = \int \dddd \sg \frac{1}{4}F_{\mu\nu}F^{\mu\nu}
+\]
+Questa azione conduce alle equazioni del moto $ \nabla_\mu F^{\mu\nu} = 0 $. Per aggiungere le correnti si accoppia l'azione con un termine
+del tipo $ 4 \pi A_\mu J^\mu $ e ciò porta alle equazioni del moto: $ \nabla_\mu F^{\mu\nu} = 4 \pi J^\nu $; on shell esiste quindi una relazione
+tra le correnti e il tensore elettromagnetico. La carica contenuta in volume $ V $ di bordo $ \pd V $ con elemento di volume orientato $ \d S_\mu $ è:
+\[
+  Q = \int_V J^\mu \d S_\mu
+\]
+Utilizzando l'equazione del moto:
+\[
+  Q = \frac{1}{4\pi}\int_V \nabla_\nu F^{\nu\mu} \d S_\mu
+\]
+Con il teorema della divergenza, indicando con $ \d S_{\mu\nu} $ l'elemento di superficie orientata, ovvero l'antisimmetrizzazione tra i versori
+normali a $ \pd V $:
+\[
+  Q = \frac{1}{8\pi} \oint_{\pd V} F^{\nu\mu} \d S_{\mu\nu} =  - \frac{1}{8\pi} \oint_{\pd V} F_{\mu\nu} \d S^{\mu\nu}
+\]
+Assumendo che anche in una teoria Maxwell-scalare valgano le stesse conclusioni con $ F \mapsto \tilde{F} $, vale che:
+\[
+  Q = - \frac{1}{8\pi} \oint_{\pd V} \tilde{F}_{\mu\nu} \d S^{\mu\nu}
+\]
+Se mostro che $ \tilde{F}_{\mu\nu} \d S^{\mu\nu} = - 2 \htF $ ottengo che la carica si calcola con la relazione \eqref{eq:carica_buco_nero}.
+Ma:
+\[
+  \d S^{\mu\nu} = \left( v^\mu u^\nu - u^\mu v^\nu \right) \sqrt{\sigma} \d \theta \d \phi \quad \text{con} \quad u = N^{-1}\pd_t \; v = N \pd_r
+\]
+L'unica componente di interesse è:
+\[
+  \d S^{rt} = \sqrt{\sigma} \d \theta \d \phi = - \d S^{tr}
+\]
+Ma:
+\begin{align*}
+  \tilde{F}_{\mu\nu} \d S^{\mu\nu} = \tilde{F}_{rt} \d S^{rt} + \tilde{F}_{tr} \d S^{tr} = 2 \tilde{F}_{rt} \d S^{rt} = 2 \Delta^{\frac{3}{2}} F_{rt} \sqrt{\sigma} \d \theta \d \phi
+\end{align*}
+Questo è esattamente $ 2(\star) $, dove $ (\star) $ indica l'espressione contrassegnata nel calcolo di $ \htF $. Si è dimostrato quello che si voleva
+dimostrare a meno di un segno di differenza. In effetti questo ragionamento permette di identificare la carica a meno di una costante moltiplicativa,
+in quanto le equazioni del moto della teoria Maxwell-scalare sono invarianti per trasformazioni $ F \mapsto \lambda F $, e questo porta all'ambiguità,
+la quale, in fondo, deriva dal fatto che se $ Q $ è una carica conservata sulle soluzioni dell'equazione del moto anche $ \lambda Q $ lo è.
+Questo potrebbe spiegare i mismatch tra i segni. Una seconda possibilità non trascurabile per spiegare questo mismatch sono errori di calcolo. \\ \\
+Per calcolare la massa al posto di calcolare un integrale di Komar posso imporre che la metrica in gravità debole si riconduca al giusto limite Newtoniano.
+Per far ciò osservo il moto di una particella di test nella regione asintotica. L'equazione delle geodetiche è:
+\[
+  \frac{\dd{x^\mu}}{\d{\tau^2}} + \Gamma^\mu_{\; \rho\sigma} \frac{\d{x^\rho}}{\d{\tau}} \frac{\d{x^\sigma}}{\d{\tau}} = 0
+\]
+In approssimazione classica, ovvero nel limite di velocità molto più piccole di quelle della luce,  vale che $ (\dot{x^\rho}) \approx (1,0,0,0) $ e
+che $ \tau \approx t $, quindi l'equazione delle geodetiche diventa:
+\[
+  \frac{\dd{x^\mu}}{\d{t^2}} = -\Gamma^\mu_{\; tt} = -\frac{1}{2}g^{\mu\alpha} (\pd_t g_{\alpha t} + \pd_t g_{t \alpha} - \pd_\alpha g_{tt} )
+\]
+Siccome la metrica non dipende esplicitamente dal tempo le derivate temporali sono nulle:
+\[
+  \frac{\dd{x^\mu}}{\d{t^2}} = \frac{1}{2}g^{\mu i} \pd_i g_{tt} \quad \rightarrow \quad  \frac{\dd{x^i}}{\d{t^2}} = \frac{1}{2}g^{i j}\pd_j g_{tt}
+\]
+Fermando lo sviluppo ai termini di ordine $ \mathcal{O}(\frac{1}{r}) $ si trova $ g_{tt} = - 1 + \frac{m}{r}(2 + \sinh^2 \gamma) $, da cui:
+\[
+  \frac{\dd{x^i}}{\d{t^2}} = \frac{1}{2} \pd_i \left(\frac{m}{r}(2 + \sinh^2 \gamma) \right)
+\]
+In meccanica classica il moto di una massa in un campo gravitazionale generato da una massa puntiforme è descritto da:
+\[
+  \frac{\dd{x^i}}{\d{t^2}} = \pd_i \frac{M}{r}
+\]
+Per cui l'identificazione $  M = \frac{m}{2} \left( 2 + \sinh^2 \gamma \right) $. \\ \\
+%
+Utilizzando la metrica nella forma \eqref{eq:metrica_con_lapse} calcolo la temperatura passando alla sezione euclidea, cioè mandando $ t \to -i \tau $:
+\[
+  \d s^2_E = N^2 \d \tau^2 + \frac{\d r^2}{N^2} + \Delta^{\frac{1}{2}}r^2 \d \Omega^2
+\]
+L'orizzonte è definito da $ N(r_H) = 0 $, quindi si ottiene $ r_H = 2m $, per il quale si nota che $ \Delta(r_H) = 1 + \frac{2m}{r_H}\sinh^2 \gamma = \cosh^2 \gamma $.
+Sviluppando $ N^2 $ vicino all'orizzonte $ r_H $:
+\[
+  N^2 = \cancel{N^2(r_H)} + \frac{\d N^2}{\d r} \Biggr\lvert_{r_H} \left( r - r_H \right) + \dots \approx \alpha \left( r - r_H \right)
+\]
+Nella quale si è definita la costante $ \alpha =  \frac{\d N^2}{\d r} \lvert_{r_H} $.
+Definendo anche $ \rho^2 = r - r_H $ si ha:
+\[
+  \d r = 2 \rho \d \rho \quad \rightarrow \quad \d r^2 = 4 \rho^2 \d \rho^2
+\]
+Sostituendo lo sviluppo nella metrica:
+\[
+  \d s^2_E = \alpha \d \tau^2 + \frac{4 \rho^2 \d \rho^2}{\alpha} + \Delta^{\frac{1}{2}}(r_H)r_H^2 \d \Omega^2
+\]
+Considerando solo i termini singolari:
+\[
+  \d s^2_E \to \frac{4}{\alpha} \left[ \d \rho^2 + \rho^2 \d{ \left( \frac{\alpha \tau}{2} \right)^2} \right]
+\]
+La metrica non presenta singolarità coniche se:
+\[
+  \tau \sim \tau + \frac{4\pi}{\alpha}
+\]
+Quindi:
+\[
+  \beta = \frac{1}{T} = \frac{4\pi}{\alpha}
+\]
+Ma:
+\[
+  \alpha =  \frac{\d N^2}{\d r} \Biggr\lvert_{r_H} = \frac{m \left( 2r + (2m + r) \sinh^2 \gamma \right)}{r^2 (r + 2m \sinh^2\gamma) \sqrt{1 + \frac{2m\sinh^2 \gamma}{r}}}
+  \Biggr\lvert_{r_H} = \frac{1}{2m \cosh \gamma}
+\]
+Quindi la temperatura vale:
+\[
+  T = \frac{1}{8 \pi m \cosh \gamma}
+\]
+L'area dell'orizzonte $ r_H $ è:
+\[
+  \mathcal{A}_{\mathrm{orizz.}} = \int \sqrt{g_{\theta\theta}g_{\phi\phi}}\; r^2 \sin\theta \d{\theta} \d{\phi} = 4 r_H^2 \pi \Delta^{\frac{1}{2}}(r_H) = 16 m^2 \pi \cosh \gamma
+\]
+Da cui si ottiene l'entropia di Bekenstein-Hawking:
+\[
+  S = \frac{\mathcal{A}}{4} =  4 m^2 \pi \cosh \gamma
+\]
+Il potenziale elettrico invece è:
+\[
+  \phi = A_t \lvert_{\mathrm{orizz.}} = \frac{m \sinh 2 \gamma}{r_H \Delta(r_H)} = \frac{\cosh \gamma \sinh \gamma}{\cosh^2 \gamma} = \tanh \gamma
+\]
+Ricapitolando le proprietà elettro-termomeccaniche del buco nero:
+\begin{align*}
+  M & = m \left( 1 + \frac{1}{2}\sinh^2 \gamma \right) \\
+  T & = \frac{1}{8 \pi m \cosh \gamma} \\
+  S & = 4 \pi m^2 \cosh \gamma \\
+  \phi & = \tanh \gamma \\
+  Q & = 2m \cosh \gamma \sinh \gamma
+\end{align*}
+Da cui si può verificare la legge di Smarr $ M = 2 TS + \frac{1}{4}\phi Q $. Questa legge ha una forma inattesa, in quanto
+ci si aspettava $ M = 2 TS + \phi Q $, che riflette il fatto che l'entropia ha dimensioni $ [M]^2 $ mentre la carica $ [M] $.
+Se si ridefinisce o la carica o il potenziale con un fattore $ 4 $ correttivo si verifica esplicitamente la prima
+legge delle meccanica dei buchi neri: %
+\begin{gather*}
+  \d M  = \d m \left( 1 + \frac{1}{2}\sinh^2\gamma \right) \\
+  T \d S + \phi \d  Q  = \frac{1}{8 \pi m \cosh \gamma} 8 \pi m \cosh \gamma \d m +  \frac{1}{4} \frac{\sinh}{\cosh} \cosh \gamma \sinh \gamma \d m  = \d m \left( 1 + \frac{1}{2}\sinh^2\gamma \right)
+\end{gather*}
+Da cui:
+\[
+  \d M = T \d S + \phi \d Q
+\]
+% Vale cioè che:
+% \[
+%   M(\lambda^2 S, \lambda Q) = \lambda M \qquad \forall \lambda \in \mathbb{R}
+% \]
+% Derivando per $ \lambda $ e poi ponendo $ \lambda = 1 $:
+% \[
+%   M = 2 \frac{\pd M}{\pd S} \Biggr \lvert_Q S + \frac{\pd M}{\pd Q} \Biggr \lvert_S Q
+% \]
+% Ma vale la legge di Smarr, differenziandola:
+% \[
+%   \d M = 2 T \d S + \phi \d Q
+% \]
+% Da cui si trova:
+% \[
+%   \frac{\pd M}{\pd S} \Biggr \lvert_Q = T \qquad \frac{\pd M}{\pd Q} \Biggr \lvert_S = \phi
+% \]
+
+% Per definizione di differenziale:
+% \[
+%   M = \frac{\pd M}{\pd S} \Biggr \lvert_Q S + \frac{\pd M}{\pd Q} \Biggr \lvert_S Q = T \d S + \phi \d Q
+% \]
+% Esplicitamente:
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
